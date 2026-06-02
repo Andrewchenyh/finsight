@@ -4,7 +4,7 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
-from schemas import FilingMetadata
+from backend.schemas import FilingMetadata
 
 
 load_dotenv()
