@@ -2,7 +2,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from schemas import RawFiling
+from backend.schemas import RawFiling
 
 
 def clean_filing_html(raw_filing: RawFiling) -> str:
