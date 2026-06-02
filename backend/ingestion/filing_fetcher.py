@@ -4,7 +4,7 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
-from schemas import FilingMetadata, RawFiling
+from backend.schemas import FilingMetadata, RawFiling
 
 
 load_dotenv()
