@@ -2,7 +2,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from backend.schemas import FilingSection, FilingSectionName, RawFiling
+from backend.schemas import FilingSection, RawFiling
 
 
 SECTION_TITLES: dict[str, str] = {
@@ -96,9 +96,9 @@ def extract_filing_sections(
 ) -> list[FilingSection]:
     """Extract major 10-K sections from a raw filing.
 
-    SEC filings often repeat Item headings in a table of contents. To avoid
-    selecting tiny table-of-contents spans, this function keeps the largest
-    plausible span found for each target section.
+    SEC filings often repeat Item headings in page headers. For a candidate
+    heading, the section should end at the next different Item heading, not the
+    next repeated heading for the same Item.
     """
     clean_text = clean_filing_html(raw_filing)
     heading_matches = _find_item_headings(clean_text)
@@ -108,17 +108,19 @@ def extract_filing_sections(
 
     best_spans: dict[str, tuple[int, int]] = {}
 
-    for index, heading in enumerate(heading_matches[:-1]):
-        section_name = heading["section"]
+    for index, heading in enumerate(heading_matches):
+        section_name = str(heading["section"])
 
         if section_name not in target_sections:
             continue
 
-        start = heading["start"]
-        end = heading_matches[index + 1]["start"]
-
-        if end <= start:
-            continue
+        start = int(heading["start"])
+        end = _find_next_different_heading_start(
+            heading_matches=heading_matches,
+            current_index=index,
+            current_section=section_name,
+            fallback_end=len(clean_text),
+        )
 
         section_length = end - start
 
@@ -152,6 +154,22 @@ def extract_filing_sections(
         )
 
     return sections
+
+
+def _find_next_different_heading_start(
+    heading_matches: list[dict[str, int | str]],
+    current_index: int,
+    current_section: str,
+    fallback_end: int,
+) -> int:
+    """Find the start offset of the next different Item heading."""
+    for next_heading in heading_matches[current_index + 1:]:
+        next_section = str(next_heading["section"])
+
+        if next_section != current_section:
+            return int(next_heading["start"])
+
+    return fallback_end
 
 
 def _find_item_headings(clean_text: str) -> list[dict[str, int | str]]:
