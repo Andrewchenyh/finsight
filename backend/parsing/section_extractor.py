@@ -74,7 +74,7 @@ def clean_filing_html(raw_filing: RawFiling) -> str:
 
 
 def normalize_whitespace(text: str) -> str:
-    """Normalize SEC filing whitespace while preserving paragraph boundaries."""
+    """Normalize SEC filing whitespace."""
     text = text.replace("\xa0", " ")
 
     lines = []
