@@ -93,7 +93,10 @@ def chunk_single_section(
         if local_end >= len(text):
             break
 
-        local_start = max(local_end - overlap_chars, local_start + step_chars)
+        if local_start + max_chars - local_end > overlap_chars:
+            local_start = local_end
+        else:
+            local_start = max(local_end - overlap_chars, local_start + step_chars)
 
     return chunks
 
