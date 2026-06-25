@@ -17,6 +17,8 @@ class LocalVectorStore:
         self.index_name = index_name
         self.index_dir = Path(index_dir)
         self.index_dir.mkdir(parents=True, exist_ok=True)
+        self._chunks: list[DocumentChunk]
+        self._embeddings: np.ndarray
 
     @property
     def chunks_path(self) -> Path:
@@ -51,22 +53,25 @@ class LocalVectorStore:
 
     def load(self) -> tuple[list[DocumentChunk], np.ndarray]:
         """Load chunks and embeddings from disk."""
-        if not self.chunks_path.exists():
-            raise FileNotFoundError(f"Missing chunks file: {self.chunks_path}")
+        if self._chunks is None or self._embeddings is None:
+            if not self.chunks_path.exists():
+                raise FileNotFoundError(f"Missing chunks file: {self.chunks_path}")
 
-        if not self.embeddings_path.exists():
-            raise FileNotFoundError(f"Missing embeddings file: {self.embeddings_path}")
+            if not self.embeddings_path.exists():
+                raise FileNotFoundError(f"Missing embeddings file: {self.embeddings_path}")
 
-        chunk_payload = json.loads(self.chunks_path.read_text(encoding="utf-8"))
-        chunks = [DocumentChunk.model_validate(item) for item in chunk_payload]
-        embeddings = np.load(self.embeddings_path)
+            chunk_payload = json.loads(self.chunks_path.read_text(encoding="utf-8"))
+            chunks = [DocumentChunk.model_validate(item) for item in chunk_payload]
+            embeddings = np.load(self.embeddings_path)
 
-        if len(chunks) != embeddings.shape[0]:
-            raise ValueError(
-                f"Chunk count ({len(chunks)}) does not match embedding rows ({embeddings.shape[0]})."
-            )
+            if len(chunks) != embeddings.shape[0]:
+                raise ValueError(
+                    f"Chunk count ({len(chunks)}) does not match embedding rows ({embeddings.shape[0]})."
+                )
+            self._chunks = chunks
+            self._embeddings = embeddings
 
-        return chunks, embeddings
+        return self._chunks, self._embeddings
 
     def search(
         self,
