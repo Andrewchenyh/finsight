@@ -56,16 +56,22 @@ def chunk_single_section(
     chunk_index = 0
 
     while local_start < len(text):
+        local_start = _move_start_to_boundary(text=text, proposed_start=local_start)
         local_end = min(local_start + max_chars, len(text))
 
         if local_end < len(text):
-            local_end = _move_end_to_boundary(text=text, start=local_start, proposed_end=local_end)
+            local_end = _move_end_to_boundary(
+                text=text,
+                start=local_start,
+                proposed_end=local_end,
+            )
 
-        chunk_text = text[local_start:local_end].strip()
+        trimmed_start, trimmed_end = _trim_span(text=text, start=local_start, end=local_end)
+        chunk_text = text[trimmed_start:trimmed_end]
 
         if chunk_text:
-            absolute_start = section.char_start + local_start
-            absolute_end = section.char_start + local_end
+            absolute_start = section.char_start + trimmed_start
+            absolute_end = section.char_start + trimmed_end
             token_count = estimate_token_count(chunk_text)
 
             chunks.append(
@@ -93,12 +99,60 @@ def chunk_single_section(
         if local_end >= len(text):
             break
 
-        if local_start + max_chars - local_end > overlap_chars:
-            local_start = local_end
-        else:
-            local_start = max(local_end - overlap_chars, local_start + step_chars)
+        next_start = max(local_end - overlap_chars, local_start + step_chars)
+        if next_start <= local_start:
+            next_start = local_start + 1
+
+        local_start = next_start
 
     return chunks
+
+
+def _move_start_to_boundary(text: str, proposed_start: int) -> int:
+    """Move chunk start forward if it lands in the middle of a word."""
+    if proposed_start <= 0:
+        return 0
+
+    if proposed_start >= len(text):
+        return len(text)
+
+    start = proposed_start
+
+    while start < len(text) and text[start].isspace():
+        start += 1
+
+    if start >= len(text):
+        return len(text)
+
+    previous_char = text[start - 1]
+    current_char = text[start]
+
+    if not (previous_char.isalnum() and current_char.isalnum()):
+        return start
+
+    search_limit = min(start + 120, len(text))
+
+    while start < search_limit and text[start].isalnum():
+        start += 1
+
+    while start < len(text) and text[start].isspace():
+        start += 1
+
+    if start >= search_limit:
+        return proposed_start
+
+    return start
+
+
+def _trim_span(text: str, start: int, end: int) -> tuple[int, int]:
+    """Trim whitespace while preserving accurate offsets."""
+    while start < end and text[start].isspace():
+        start += 1
+
+    while end > start and text[end - 1].isspace():
+        end -= 1
+
+    return start, end
 
 
 def _move_end_to_boundary(text: str, start: int, proposed_end: int) -> int:
