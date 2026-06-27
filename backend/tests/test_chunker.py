@@ -138,3 +138,17 @@ def test_overlap_must_be_smaller_than_max_tokens(sample_sections: list[FilingSec
             max_tokens=120,
             overlap_tokens=120,
         )
+        
+def test_chunks_do_not_start_in_middle_of_word(sample_sections: list[FilingSection]) -> None:
+    chunks = chunk_filing_sections(
+        sections=sample_sections,
+        max_tokens=120,
+        overlap_tokens=20,
+    )
+
+    for chunk in chunks[1:]:
+        assert not (
+            chunk.text[0].isalnum()
+            and chunk.char_start > sample_sections[0].char_start
+            and sample_sections[0].text[chunk.char_start - sample_sections[0].char_start - 1].isalnum()
+        )
