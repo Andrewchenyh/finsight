@@ -4,12 +4,13 @@ from backend.api.schemas import (
     ChatRequest,
     ChatResponse,
     HealthResponse,
+    IngestRequest,
+    IngestResponse,
     RetrieveRequest,
     RetrieveResponse,
 )
 from backend.retrieval.retriever import DenseRetriever
-from backend.service import answer_sec_question
-
+from backend.service import answer_sec_question, build_sec_index
 
 app = FastAPI(
     title="FinSight API",
@@ -64,6 +65,27 @@ async def chat(request: ChatRequest) -> ChatResponse:
 
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    
+    
+@app.post("/ingest", response_model=IngestResponse)
+async def ingest(request: IngestRequest) -> IngestResponse:
+    try:
+        index_name = build_sec_index(
+            ticker=request.ticker,
+            fiscal_year=request.fiscal_year,
+            index_name=request.index_name,
+        )
+
+        return IngestResponse(
+            status="success",
+            index_name=index_name,
+            message=f"Built local index '{index_name}'.",
+        )
+
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
