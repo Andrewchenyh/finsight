@@ -1,7 +1,14 @@
 from fastapi import FastAPI, HTTPException
 
-from backend.api.schemas import HealthResponse, RetrieveRequest, RetrieveResponse
+from backend.api.schemas import (
+    ChatRequest,
+    ChatResponse,
+    HealthResponse,
+    RetrieveRequest,
+    RetrieveResponse,
+)
 from backend.retrieval.retriever import DenseRetriever
+from backend.service import answer_sec_question
 
 
 app = FastAPI(
@@ -31,6 +38,29 @@ async def retrieve(request: RetrieveRequest) -> RetrieveResponse:
             index_name=request.index_name,
             results=results,
         )
+
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    
+    
+@app.post("/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest) -> ChatResponse:
+    try:
+        result = answer_sec_question(
+            query=request.query,
+            index_name=request.index_name,
+            ticker=request.ticker,
+            fiscal_year=request.fiscal_year,
+            section=request.section,
+            filing_type=request.filing_type,
+            top_k=request.top_k,
+        )
+
+        return ChatResponse(result=result)
 
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
