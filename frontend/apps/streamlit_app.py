@@ -18,6 +18,13 @@ SECTION_OPTIONS = [
     "Item 8",
 ]
 
+EXAMPLE_QUESTIONS = [
+    "What cybersecurity risks does Microsoft describe?",
+    "What risks does Microsoft describe related to AI?",
+    "How does Microsoft describe competition in its business?",
+    "What does Microsoft say about cloud infrastructure risks?",
+    "What does Microsoft say in MD&A about economic conditions?",
+]
 
 def get_api_url() -> str:
     return os.getenv("FINSIGHT_API_URL", DEFAULT_API_URL).rstrip("/")
@@ -100,7 +107,9 @@ def render_citations(citations: list[dict[str, Any]]) -> None:
         source_url = citation["source_url"]
         excerpt = citation["excerpt"]
 
-        with st.expander(f"[{citation_id}] {ticker} {fiscal_year} {section} - {section_title}"):
+        label = f"[{citation_id}] {ticker} {fiscal_year} 10-K | {section} - {section_title}"
+
+        with st.expander(label, expanded=citation_id == 1):
             st.markdown(f"[Open SEC filing]({source_url})")
             st.write(excerpt)
 
@@ -123,7 +132,7 @@ def render_retrieved_chunks(retrieved_chunks: list[dict[str, Any]]) -> None:
             f"{chunk['section']} | {chunk['chunk_id']}"
         )
 
-        with st.expander(label):
+        with st.expander(label, expanded=rank == 1):
             st.caption(f"Retrieval method: {method}")
             st.write(chunk["text"])
 
@@ -139,9 +148,13 @@ def main() -> None:
 
     st.title("FinSight")
     st.caption("SEC 10-K Q&A with grounded citations")
+    st.info(
+        "Ask questions over SEC 10-K filings. FinSight retrieves relevant filing passages "
+        "and generates answers with source citations."
+    )
 
     with st.sidebar:
-        st.header("Query Settings")
+        st.header("Filing Settings")
 
         api_online = call_health_api(api_url)
         if api_online:
@@ -190,10 +203,19 @@ def main() -> None:
         st.divider()
         st.caption(f"API: {api_url}")
 
+    st.markdown("### Ask a filing question")
+
+    example_question = st.selectbox(
+        "Example questions",
+        EXAMPLE_QUESTIONS,
+        index=0,
+    )
+
     query = st.text_area(
-        "Ask a question about the filing",
-        value="What cybersecurity risks does Microsoft describe?",
+        "Question",
+        value=example_question,
         height=100,
+        help="Ask about the selected company's 10-K filing. Answers are grounded in retrieved SEC filing excerpts.",
     )
 
     submitted = st.button("Ask FinSight", type="primary", disabled=not query.strip())
@@ -223,16 +245,18 @@ def main() -> None:
                 return
 
         result = payload["result"]
-
-        st.subheader("Answer")
+            
+        st.markdown("### Answer")
         st.markdown(result["answer"])
 
-        left, right = st.columns([1, 1])
+        st.markdown("### Evidence")
 
-        with left:
+        citation_tab, debug_tab = st.tabs(["Citations", "Retrieval Debug"])
+
+        with citation_tab:
             render_citations(result["citations"])
 
-        with right:
+        with debug_tab:
             render_retrieved_chunks(result["retrieved_chunks"])
 
         if result.get("limitations"):
