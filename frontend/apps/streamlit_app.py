@@ -58,6 +58,30 @@ def call_health_api(api_url: str) -> bool:
         return True
     except requests.RequestException:
         return False
+    
+
+def call_ingest_api(
+    api_url: str,
+    ticker: str,
+    fiscal_year: int,
+    index_name: str | None = None,
+) -> dict[str, Any]:
+    payload: dict[str, Any] = {
+        "ticker": ticker,
+        "fiscal_year": fiscal_year,
+    }
+
+    if index_name:
+        payload["index_name"] = index_name
+
+    response = requests.post(
+        f"{api_url}/ingest",
+        json=payload,
+        timeout=240,
+    )
+    response.raise_for_status()
+
+    return response.json()
 
 
 def render_citations(citations: list[dict[str, Any]]) -> None:
@@ -141,7 +165,28 @@ def main() -> None:
             value=f"{ticker}_{fiscal_year}",
             help="Local index name built by the API or scripts.",
         )
+        rebuild_index = st.button(
+            "Build / Rebuild Index",
+            disabled=not api_online or not ticker,
+            help="Fetch the filing, extract sections, embed chunks, and save the local index.",
+        )
 
+        if rebuild_index:
+            with st.spinner(f"Building index {index_name}..."):
+                try:
+                    ingest_result = call_ingest_api(
+                        api_url=api_url,
+                        ticker=ticker,
+                        fiscal_year=int(fiscal_year),
+                        index_name=index_name,
+                    )
+                    st.success(ingest_result["message"])
+                except requests.HTTPError as exc:
+                    detail = exc.response.text if exc.response is not None else str(exc)
+                    st.error(f"Ingest failed: {detail}")
+                except requests.RequestException as exc:
+                    st.error(f"Ingest request failed: {exc}")
+                    
         st.divider()
         st.caption(f"API: {api_url}")
 
