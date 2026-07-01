@@ -28,52 +28,57 @@ Figures above reflect management disclosures, not independently audited
 incident data.
 ```
 
+The full pipeline — fetch, parse, chunk, embed, retrieve, generate — now runs end to end locally against a real filing (MSFT 2023), verified via `scripts/smoke_test_rag.py`.
+
 ---
 
 ## Architecture
 
 ```
-CLI / API / Streamlit UI
-         │
-         ▼
-┌─────────────────────────────────────────────────────┐
-│                  FinSight Service                   │
-│  answer_sec_question(query, ticker, year, section)  │
-│  retrieve_sec_chunks(query, filters)                │
-│  ingest_10k(ticker, year)                           │
-│  compare_filings(query, tickers, years)             │
-└──────────┬──────────────────────────────────────────┘
-           │
-    ┌──────┴────────────────────────────┐
-    │                                   │
-    ▼                                   ▼
-┌──────────────────────┐      ┌─────────────────────────────┐
-│  Ingestion Pipeline  │      │  Retrieval Engine           │
-│                      │      │                             │
-│  ticker + year       │      │  query                      │
-│    → CIK lookup      │      │    → dense retrieval        │
-│    → SEC submissions │      │    → BM25 retrieval         │
-│    → filing metadata │      │    → RRF fusion             │
-│    → HTML download   │      │    → rerank top-k           │
-│    → section extract │      │    → citation context pack  │
-│    → section-aware   │      └─────────────────────────────┘
-│      chunking        │
-│    → embed + index   │
-└──────────────────────┘
+   CLI (scripts/)   /   FastAPI (backend/api/app.py)   /   Streamlit (frontend/apps/streamlit_app.py)
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────────┐
+│                  FinSight Service (backend/service.py)     │
+│   answer_sec_question(query, ticker, year, section)        │
+│   retrieve_sec_chunks(query, filters)                      │
+│   ingest_10k(ticker, year)                                 │
+│   compare_filings(query, tickers, years)                   │
+└──────────┬────────────────────────────────────────┬────────┘
+           │                                        │
+           ▼                                        ▼
+┌───────────────────────────────────┐      ┌───────────────────────────────────┐
+│  Ingestion → Parsing → Chunking   │      │  Retrieval → Generation           │
+│                                   │      │                                   │
+│  backend/ingestion/               │      │  backend/retrieval/               │
+│    sec_client.py                  │      │    embedding_client.py            │
+│      → CIK lookup, EDGAR fetch    │      │      → OpenAI embeddings          │
+│    filing_fetcher.py              │      │    vector_store.py                │
+│      → HTML download + cache      │      │      → local JSON + NumPy index   │
+│                                   │      │    retriever.py                   │
+│  backend/parsing/                 │      │      → cosine similarity search   │
+│    section_extractor.py           │      │                                   │
+│      → Item 1/1A/7/7A/8 extract   │      │  backend/generation/              │
+│                                   │      │    answer_generator.py            │
+│  backend/chunking/                │      │      → grounded answer + cites    │
+│    chunker.py                     │      │      → uncertainty flagging       │
+│      → section-aware, token-      │      │                                   │
+│        budgeted, stable chunk IDs │      │                                   │
+└───────────────────────────────────┘      └───────────────────────────────────┘
            │
            ▼
-┌─────────────────────────────────────────────────────┐
-│  Local Index  (Phase 4)  →  Pinecone  (Phase 7+)   │
-│                                                     │
-│  data/index/                                        │
-│    msft_2023_chunks.json                            │
-│    msft_2023_embeddings.npy                         │
-│                                                     │
-│  Rich metadata per chunk:                           │
-│  ticker · cik · accession_number · year             │
-│  section · section_title · chunk_type               │
-│  source_url · char_start · char_end · token_count   │
-└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  Local Index  (data/index/)          →  Pinecone (Phase 7+) │
+│    MSFT_2023_chunks.json                                    │
+│    MSFT_2023_embeddings.npy                                 │
+│    test_msft_2023_chunks.json        (test fixtures)        │
+│    test_msft_2023_embeddings.npy                            │
+│                                                             │
+│  Rich metadata per chunk:                                   │
+│  ticker · cik · accession_number · year                     │
+│  section · section_title · chunk_type                       │
+│  source_url · char_start · char_end · token_count           │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -82,7 +87,7 @@ CLI / API / Streamlit UI
 
 Most RAG demos split documents by arbitrary token windows. SEC 10-Ks have explicit, legally-defined structure — Item 1A is Risk Factors, Item 7 is MD&A, Item 8 is Financial Statements. Fixed-size chunking destroys that structure, meaning a retrieved chunk about "revenue" gives no signal about whether it came from management's optimistic outlook or the auditor's footnote.
 
-FinSight chunks by Item section first, then by token budget within each section:
+`backend/chunking/chunker.py` chunks by Item section first, then by token budget within each section:
 
 - Items 1, 1A, 7, 7A, and 8 are extracted as first-class sections before any chunking
 - Chunks target 500 tokens with 50–75 token overlap
@@ -90,6 +95,7 @@ FinSight chunks by Item section first, then by token budget within each section:
 - Tables are typed and serialized separately, not flattened into prose
 - Every chunk carries `ticker`, `year`, `section`, `section_title`, `chunk_type`, and `source_url`
 - Chunk IDs are stable and reproducible across runs
+- Covered by `backend/tests/test_chunker.py`
 
 ---
 
@@ -100,15 +106,15 @@ FinSight chunks by Item section first, then by token budget within each section:
 | Filing source | SEC EDGAR (HTML/XBRL — not PDF) |
 | Data validation | Pydantic v2 (all internal contracts) |
 | Embeddings | OpenAI `text-embedding-3-small` |
-| Local index | JSON + NumPy (`.npy`) |
+| Local index | JSON + NumPy (`.npy`) — ✅ live for MSFT 2023 |
 | Vector store | Pinecone *(Phase 7+)* |
 | Keyword search | BM25 *(Phase 7)* |
 | Fusion | Reciprocal Rank Fusion *(Phase 7)* |
 | Reranking | Planned *(Phase 7)* |
 | LLM | OpenAI GPT-4o |
-| API | FastAPI *(Phase 5)* |
-| Frontend | Streamlit *(Phase 6)* |
-| Testing | pytest |
+| API | FastAPI — `backend/api/app.py` |
+| Frontend | Streamlit — `frontend/apps/streamlit_app.py` |
+| Testing | pytest — `backend/tests/` |
 
 > Filings are fetched from SEC EDGAR HTML/XBRL rather than PDFs. HTML preserves section boundaries and avoids the extraction artifacts common in PDF parsing.
 
@@ -117,34 +123,69 @@ FinSight chunks by Item section first, then by token budget within each section:
 ## Project Structure
 
 ```
-finsight/
-├── ingestion/       # SECClient — CIK lookup, filing metadata, HTML fetch, local cache
-├── parsing/         # HTML cleaning, section extraction, FilingSection objects
-├── chunking/        # Section-aware chunker, token budget, stable chunk IDs
-├── retrieval/       # Dense retrieval, BM25, RRF fusion, reranking (Phase 7)
-├── generation/      # Grounded answer builder, citation formatter, uncertainty flagging
-├── evals/           # Golden dataset, retrieval metrics, faithfulness scoring (Phase 8)
-├── api/             # FastAPI app and route handlers (Phase 5)
-├── schemas.py       # Shared Pydantic schemas — FilingMetadata, DocumentChunk, FinSightAnswer, ...
-└── service.py       # Public interface — the only entry point consumers need
-
-scripts/             # CLI entry points for ingestion, extraction, evaluation
-tests/               # Deterministic unit tests for chunking, parsing, retrieval math
-data/
-└── index/           # Local chunk + embedding files (not committed)
+.
+├── backend
+│   ├── api/                 # FastAPI app + request/response schemas
+│   │   ├── app.py
+│   │   └── schemas.py
+│   ├── chunking/             # Section-aware chunker
+│   │   └── chunker.py
+│   ├── ingestion/             # SEC EDGAR client, filing fetch + local cache
+│   │   ├── filing_fetcher.py
+│   │   └── sec_client.py
+│   ├── parsing/               # HTML cleaning, Item section extraction
+│   │   └── section_extractor.py
+│   ├── retrieval/             # Embeddings, local vector store, retriever
+│   │   ├── embedding_client.py
+│   │   ├── retriever.py
+│   │   └── vector_store.py
+│   ├── generation/            # Grounded answer generation, citations, uncertainty flagging
+│   │   └── answer_generator.py
+│   ├── evals/                 # Golden dataset + metrics (Phase 8)
+│   ├── data/sec_filings/raw/  # Cached raw filing HTML
+│   ├── schemas.py             # Shared Pydantic schemas
+│   ├── service.py             # Public interface — the only entry point consumers need
+│   └── tests/
+│       └── test_chunker.py
+├── data
+│   ├── index/                 # Local chunk + embedding files
+│   └── sec_filings/raw/       # Cached raw filing HTML
+├── frontend
+│   └── apps/
+│       └── streamlit_app.py   # Streamlit demo UI
+├── scripts/
+│   ├── build_index.py         # Fetch → parse → chunk → embed → save index
+│   └── smoke_test_rag.py      # End-to-end pipeline check
+├── requirements.txt
+└── README.md
 ```
+
+> Note: raw filing HTML currently lives in both `backend/data/sec_filings/raw/` and `data/sec_filings/raw/`. 
 
 ---
 
 ## CLI Usage
 
 ```bash
-# Fetch and cache a 10-K filing
-python -m scripts.ingest_filing --ticker MSFT --year 2023
+# Build the local index for a filing (fetch, parse, chunk, embed, save to data/index/)
+python -m scripts.build_index --ticker MSFT --year 2023
 
-# Extract and preview sections
-python -m scripts.extract_sections --ticker MSFT --year 2023
-# → prints clean previews of Item 1A (Risk Factors) and Item 7 (MD&A)
+# Run an end-to-end smoke test against the local RAG pipeline
+python -m scripts.smoke_test_rag
+```
+
+*(Exact flags may differ slightly — check `argparse` in each script.)*
+
+Run the API locally:
+
+```bash
+uvicorn backend.api.app:app --reload
+```
+
+Run the Streamlit demo:
+
+```bash
+streamlit run frontend/apps/streamlit_app.py
 ```
 
 ---
@@ -156,13 +197,13 @@ python -m scripts.extract_sections --ticker MSFT --year 2023
 | 0 | Standalone repo, project structure, Pydantic schemas | ✅ Complete |
 | 1 | SEC ingestion — CIK lookup, EDGAR fetch, local filing cache | ✅ Complete |
 | 2 | HTML cleaning, section extraction, `FilingSection` objects | ✅ Complete |
-| 3 | Section-aware chunking, token budget enforcement, pytest suite | 🔄 In progress |
-| 4 | Local minimal RAG — embed, store locally, cosine retrieval, grounded answers with citations | 📋 Planned |
-| 5 | FastAPI — `/health`, `/ingest`, `/chat`, `/retrieve` | 📋 Planned |
-| 6 | Streamlit demo — ticker/year selector, answer display, citation cards, chunk debug view | 📋 Planned |
-| 7 | Hybrid retrieval — dense + BM25 + RRF fusion + reranking, Pinecone migration | 📋 Planned |
-| 8 | Eval suite — 20–25 golden prompts, Recall@5, Precision@5, faithfulness scoring | 📋 Planned |
-| 9 | Portfolio polish — README, architecture diagram, screenshots, demo GIF, limitations | 📋 Planned |
+| 3 | Section-aware chunking, token budget enforcement, pytest suite | ✅ Complete |
+| 4 | Local minimal RAG — embed, store locally, cosine retrieval, grounded answers with citations | ✅ Complete |
+| 5 | FastAPI — `/health`, `/ingest`, `/chat`, `/retrieve` | ✅ Complete |
+| 6 | Streamlit demo — ticker/year selector, answer display, citation cards, chunk debug view | ✅ Complete |
+| 7 | Hybrid retrieval — dense + BM25 + RRF fusion + reranking, Pinecone migration | 🔄 In progress |
+| 8 | Eval suite — 20–25 golden prompts, Recall@5, Precision@5, faithfulness scoring | 🔄 In progress |
+| 9 | Portfolio polish — README, architecture diagram, screenshots, demo GIF, limitations | 🔄 In progress |
 
 ---
 
@@ -240,14 +281,14 @@ SEC_USER_AGENT="Your Name your@email.com"   # required by SEC EDGAR fair-use pol
 Run the test suite:
 
 ```bash
-pytest tests/
+pytest backend/tests/
 ```
 
-Ingest a filing and ask a question:
+Build the index and run a smoke test:
 
 ```bash
-python -m scripts.ingest_filing --ticker MSFT --year 2023
-# → Phase 4: local Q&A coming soon
+python -m scripts.build_index --ticker MSFT --year 2023
+python -m scripts.smoke_test_rag
 ```
 
 ---
