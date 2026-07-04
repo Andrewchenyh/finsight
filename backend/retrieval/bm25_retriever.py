@@ -98,3 +98,8 @@ class BM25Retriever:
             matching_chunks.append(chunk)
 
         return matching_chunks
+
+
+def tokenize(text: str) -> list[str]:
+    """Tokenize text for BM25 keyword retrieval."""
+    return [match.group(0).lower() for match in TOKEN_PATTERN.finditer(text)]
