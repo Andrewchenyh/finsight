@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+
 from backend.retrieval.bm25_retriever import BM25Retriever
 from backend.retrieval.retriever import DenseRetriever
 from backend.schemas import RetrievalFilter, RetrievedChunk
@@ -8,7 +10,13 @@ DEFAULT_FETCH_K = 20
 
 
 class HybridRetriever:
-    """Hybrid dense + BM25 retriever fused with Reciprocal Rank Fusion."""
+    """Hybrid dense + BM25 retriever fused with Reciprocal Rank Fusion.
+
+    Dense and BM25 retrieval are run concurrently in a thread pool. The dense
+    retriever is I/O-bound (OpenAI API call), so it releases Python's GIL and
+    allows the BM25 CPU work to overlap. Total latency becomes
+    max(dense_time, bm25_time) rather than dense_time + bm25_time.
+    """
 
     def __init__(
         self,
@@ -36,7 +44,12 @@ class HybridRetriever:
         top_k: int = 5,
         filters: RetrievalFilter | None = None,
     ) -> list[RetrievedChunk]:
-        """Retrieve chunks using dense + BM25 results fused by RRF."""
+        """Retrieve chunks using dense + BM25 results fused by RRF.
+
+        Each sub-retriever fetches fetch_k >= top_k candidates so that RRF
+        has enough overlap to work with. The final list is trimmed to top_k
+        after fusion.
+        """
         cleaned_query = " ".join(query.split())
 
         if not cleaned_query:
@@ -47,16 +60,25 @@ class HybridRetriever:
 
         fetch_k = max(top_k, self.fetch_k)
 
-        dense_results = self.dense_retriever.retrieve(
-            query=cleaned_query,
-            top_k=fetch_k,
-            filters=filters,
-        )
-        bm25_results = self.bm25_retriever.retrieve(
-            query=cleaned_query,
-            top_k=fetch_k,
-            filters=filters,
-        )
+        # Submit both retrievals concurrently. The dense retriever makes a
+        # network call to the OpenAI embeddings API; the BM25 retriever does
+        # CPU work over the in-memory index. Because the network call releases
+        # the GIL, both can make progress at the same time.
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            dense_future = executor.submit(
+                self.dense_retriever.retrieve,
+                cleaned_query,
+                fetch_k,
+                filters,
+            )
+            bm25_future = executor.submit(
+                self.bm25_retriever.retrieve,
+                cleaned_query,
+                fetch_k,
+                filters,
+            )
+            dense_results = dense_future.result()
+            bm25_results = bm25_future.result()
 
         return reciprocal_rank_fusion(
             result_lists=[dense_results, bm25_results],
@@ -70,7 +92,17 @@ def reciprocal_rank_fusion(
     top_k: int,
     rrf_k: int = DEFAULT_RRF_K,
 ) -> list[RetrievedChunk]:
-    """Fuse ranked retrieval lists using Reciprocal Rank Fusion."""
+    """Fuse ranked retrieval lists using Reciprocal Rank Fusion.
+
+    RRF score for a chunk = sum over all lists of 1 / (rrf_k + rank).
+
+    Key properties:
+    - Scale-invariant: raw scores from each retriever are discarded; only
+      rank position matters. This makes it safe to fuse dense cosine scores
+      (range ~0–1) with BM25 TF-IDF scores (unbounded range).
+    - Robust to rank outliers: rrf_k=60 (Cormack et al., 2009) prevents a
+      single top-ranked result from dominating the fused score.
+    """
     if top_k <= 0:
         raise ValueError("top_k must be positive.")
 
