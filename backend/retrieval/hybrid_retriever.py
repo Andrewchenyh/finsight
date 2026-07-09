@@ -5,7 +5,7 @@ from backend.retrieval.retriever import DenseRetriever
 from backend.schemas import RetrievalFilter, RetrievedChunk
 
 
-DEFAULT_RRF_K = 60
+DEFAULT_RRF_K = 10
 DEFAULT_FETCH_K = 20
 
 
