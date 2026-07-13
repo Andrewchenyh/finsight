@@ -4,6 +4,7 @@ from backend.schemas import (
     FilingSectionName,
     FilingType,
     FinSightAnswer,
+    RetrievalMode,
     RetrievedChunk,
     RetrievalFilter,
 )
@@ -22,7 +23,11 @@ class RetrieveRequest(BaseModel):
     section: FilingSectionName | None = Field(default=None, description="Optional 10-K section filter.")
     filing_type: FilingType | None = Field(default=None, description="Optional filing type filter.")
     top_k: int = Field(default=5, ge=1, le=20, description="Number of chunks to retrieve.")
-
+    retrieval_mode: RetrievalMode = Field(
+        default="hybrid_rerank",
+        description="Retrieval strategy: dense, bm25, hybrid, or hybrid_rerank.",
+    )
+    
     def to_filter(self) -> RetrievalFilter:
         return RetrievalFilter(
             ticker=self.ticker,
@@ -35,6 +40,7 @@ class RetrieveRequest(BaseModel):
 class RetrieveResponse(BaseModel):
     query: str
     index_name: str
+    retrieval_mode: RetrievalMode
     results: list[RetrievedChunk]
 
 
@@ -46,6 +52,10 @@ class ChatRequest(BaseModel):
     section: FilingSectionName | None = Field(default=None, description="Optional 10-K section filter.")
     filing_type: FilingType | None = Field(default=None, description="Optional filing type filter.")
     top_k: int = Field(default=5, ge=1, le=20, description="Number of chunks to retrieve.")
+    retrieval_mode: RetrievalMode = Field(
+        default="hybrid_rerank",
+        description="Retrieval strategy: dense, bm25, hybrid, or hybrid_rerank.",
+    )
 
     def to_filter(self) -> RetrievalFilter:
         return RetrievalFilter(
