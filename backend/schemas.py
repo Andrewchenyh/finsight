@@ -29,6 +29,7 @@ FilingSectionName = Literal[
     "Unknown",
 ]
 ChunkType = Literal["text", "table", "heading"]
+RetrievalMode = Literal["dense", "bm25", "hybrid", "hybrid_rerank"]
 
 
 class FilingMetadata(BaseModel):
