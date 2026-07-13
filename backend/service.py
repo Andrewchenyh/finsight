@@ -112,3 +112,19 @@ def retrieve_sec_chunks(
         top_k=top_k,
         filters=filters,
     )
+
+
+def _build_retriever(index_name: str, retrieval_mode: RetrievalMode):
+    if retrieval_mode == "dense":
+        return DenseRetriever(index_name=index_name)
+
+    if retrieval_mode == "bm25":
+        return BM25Retriever(index_name=index_name)
+
+    if retrieval_mode == "hybrid":
+        return HybridRetriever(index_name=index_name)
+
+    if retrieval_mode == "hybrid_rerank":
+        return HybridRerankRetriever(index_name=index_name)
+
+    raise ValueError(f"Unsupported retrieval_mode: {retrieval_mode}")
