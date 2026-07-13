@@ -7,6 +7,18 @@ from backend.ingestion.sec_client import SECClient
 from backend.parsing.section_extractor import extract_filing_sections
 from backend.retrieval.embedding_client import EmbeddingClient
 from backend.retrieval.vector_store import LocalVectorStore
+from backend.retrieval.bm25_retriever import BM25Retriever
+from backend.retrieval.hybrid_retriever import HybridRetriever
+from backend.retrieval.rerank_retriever import HybridRerankRetriever
+from backend.retrieval.retriever import DenseRetriever
+from backend.schemas import (
+    FinSightAnswer,
+    FilingSectionName,
+    FilingType,
+    RetrievalFilter,
+    RetrievalMode,
+    RetrievedChunk,
+)
 
 
 def answer_sec_question(
@@ -72,3 +84,33 @@ def build_sec_index(
     store.save(chunks=chunks, embeddings=embeddings)
 
     return resolved_index_name
+
+
+def retrieve_sec_chunks(
+    query: str,
+    index_name: str,
+    ticker: str | None = None,
+    fiscal_year: int | None = None,
+    section: FilingSectionName | None = None,
+    filing_type: FilingType | None = None,
+    top_k: int = 5,
+    retrieval_mode: RetrievalMode = "hybrid_rerank",
+) -> list[RetrievedChunk]:
+    """Retrieve SEC filing chunks using the selected retrieval mode."""
+    filters = RetrievalFilter(
+        ticker=ticker,
+        fiscal_year=fiscal_year,
+        section=section,
+        filing_type=filing_type,
+    )
+
+    retriever = _build_retriever(
+        index_name=index_name,
+        retrieval_mode=retrieval_mode,
+    )
+
+    return retriever.retrieve(
+        query=query,
+        top_k=top_k,
+        filters=filters,
+    )
