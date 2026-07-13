@@ -29,20 +29,18 @@ def answer_sec_question(
     section: FilingSectionName | None = None,
     filing_type: FilingType | None = None,
     top_k: int = 5,
+    retrieval_mode: RetrievalMode = "hybrid_rerank",
 ) -> FinSightAnswer:
     """Answer a question using a local SEC filing index."""
-    filters = RetrievalFilter(
+    retrieved_chunks = retrieve_sec_chunks(
+        query=query,
+        index_name=index_name,
         ticker=ticker,
         fiscal_year=fiscal_year,
         section=section,
         filing_type=filing_type,
-    )
-
-    retriever = DenseRetriever(index_name=index_name)
-    retrieved_chunks = retriever.retrieve(
-        query=query,
         top_k=top_k,
-        filters=filters,
+        retrieval_mode=retrieval_mode,
     )
 
     generator = AnswerGenerator()
