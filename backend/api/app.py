@@ -10,7 +10,7 @@ from backend.api.schemas import (
     RetrieveResponse,
 )
 from backend.retrieval.retriever import DenseRetriever
-from backend.service import answer_sec_question, build_sec_index
+from backend.service import answer_sec_question, build_sec_index, retrieve_sec_chunks
 
 app = FastAPI(
     title="FinSight API",
@@ -27,16 +27,21 @@ async def health() -> HealthResponse:
 @app.post("/retrieve", response_model=RetrieveResponse)
 async def retrieve(request: RetrieveRequest) -> RetrieveResponse:
     try:
-        retriever = DenseRetriever(index_name=request.index_name)
-        results = retriever.retrieve(
+        results = retrieve_sec_chunks(
             query=request.query,
+            index_name=request.index_name,
+            ticker=request.ticker,
+            fiscal_year=request.fiscal_year,
+            section=request.section,
+            filing_type=request.filing_type,
             top_k=request.top_k,
-            filters=request.to_filter(),
+            retrieval_mode=request.retrieval_mode,
         )
 
         return RetrieveResponse(
             query=request.query,
             index_name=request.index_name,
+            retrieval_mode=request.retrieval_mode,
             results=results,
         )
 
@@ -59,6 +64,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
             section=request.section,
             filing_type=request.filing_type,
             top_k=request.top_k,
+            retrieval_mode=request.retrieval_mode,
         )
 
         return ChatResponse(result=result)
