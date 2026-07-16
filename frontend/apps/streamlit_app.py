@@ -26,6 +26,9 @@ EXAMPLE_QUESTIONS = [
     "What does Microsoft say in MD&A about economic conditions?",
 ]
 
+RETRIEVAL_MODES = ["hybrid_rerank", "hybrid", "dense", "bm25"]
+
+
 def get_api_url() -> str:
     return os.getenv("FINSIGHT_API_URL", DEFAULT_API_URL).rstrip("/")
 
@@ -38,6 +41,7 @@ def call_chat_api(
     fiscal_year: int,
     section: str,
     top_k: int,
+    retrieval_mode: str,
 ) -> dict[str, Any]:
     payload = {
         "query": query,
@@ -46,6 +50,7 @@ def call_chat_api(
         "fiscal_year": fiscal_year,
         "section": section,
         "top_k": top_k,
+        "retrieval_mode": retrieval_mode,
     }
 
     response = requests.post(
@@ -172,6 +177,12 @@ def main() -> None:
         )
         section = st.selectbox("10-K section", SECTION_OPTIONS, index=1)
         top_k = st.slider("Retrieved chunks", min_value=1, max_value=10, value=5)
+        retrieval_mode = st.selectbox(
+            "Retrieval mode",
+            RETRIEVAL_MODES,
+            index=0,
+            help="hybrid_rerank gives best quality but calls Cohere. dense is cheaper/faster.",
+        )
 
         index_name = st.text_input(
             "Index name",
@@ -235,6 +246,7 @@ def main() -> None:
                     fiscal_year=int(fiscal_year),
                     section=section,
                     top_k=top_k,
+                    retrieval_mode=retrieval_mode,
                 )
             except requests.HTTPError as exc:
                 detail = exc.response.text if exc.response is not None else str(exc)
