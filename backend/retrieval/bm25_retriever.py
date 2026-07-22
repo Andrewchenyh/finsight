@@ -90,7 +90,7 @@ class BM25Retriever:
                 # <= 0. Stop early rather than iterating the full corpus.
                 break
 
-            chunk = self._chunks[int(candidate_index)]
+            chunk = self._chunks[int(candidate_index)] # type: ignore
 
             if not self._matches_filters(chunk, filters):
                 # Skip this chunk but do NOT increment rank — that was the
