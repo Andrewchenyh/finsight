@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  test:
+    name: Test Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile source
+        run: |
+          python -m py_compile \
+            backend/schemas.py \
+            backend/service.py \
+            backend/api/schemas.py \
+            backend/api/app.py \
+            backend/chunking/chunker.py \
+            backend/ingestion/sec_client.py \
+            backend/ingestion/filing_fetcher.py \
+            backend/parsing/section_extractor.py \
+            backend/retrieval/embedding_client.py \
+            backend/retrieval/vector_store.py \
+            backend/retrieval/retriever.py \
+            backend/retrieval/bm25_retriever.py \
+            backend/retrieval/hybrid_retriever.py \
+            backend/retrieval/reranker.py \
+            backend/retrieval/rerank_retriever.py \
+            backend/generation/answer_generator.py \
+            apps/streamlit_app.py
+
+      - name: Run tests
+        run: pytest backend/tests/
