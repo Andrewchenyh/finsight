@@ -46,4 +46,4 @@ jobs:
             frontend/apps/streamlit_app.py
 
       - name: Run tests
-        run: pytest backend/tests/
+        run: python -m pytest
