@@ -43,7 +43,7 @@ jobs:
             backend/retrieval/reranker.py \
             backend/retrieval/rerank_retriever.py \
             backend/generation/answer_generator.py \
-            apps/streamlit_app.py
+            frontend/apps/streamlit_app.py
 
       - name: Run tests
         run: pytest backend/tests/
