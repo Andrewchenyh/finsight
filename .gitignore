@@ -13,5 +13,6 @@ venv/
 *.log
 
 # Data
+backend/data
 data/sec_filings/raw/
 data/index/
