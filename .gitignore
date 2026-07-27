@@ -13,4 +13,5 @@ venv/
 *.log
 
 # Data
-data/
+data/sec_filings/raw/
+data/index/
