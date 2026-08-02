@@ -452,26 +452,6 @@ Live smoke/eval scripts call OpenAI and/or Cohere and require local indexes plus
 
 ---
 
-## Roadmap
-
-| Phase | Goal | Status |
-|---|---|---|
-| 0 | Standalone repo, structure, core schemas | Complete |
-| 1 | SEC ingestion, CIK lookup, filing fetch/cache | Complete |
-| 2 | HTML cleaning and 10-K section extraction | Complete |
-| 3 | Section-aware chunking and tests | Complete |
-| 4 | Local RAG: embeddings, vector store, retrieval, generation | Complete |
-| 5 | FastAPI backend: `/health`, `/ingest`, `/retrieve`, `/chat` | Complete |
-| 6 | Streamlit demo UI | Complete |
-| 7 | Better retrieval: BM25, hybrid search, Cohere reranking | Complete |
-| 7.5 | GitHub Actions CI foundation | Complete |
-| 8 | Evaluation: starter golden dataset and retrieval metrics | Complete |
-| 8.5 | Dockerization | Complete |
-| 9 | Portfolio polish: architecture diagram, screenshots, demo video, deployment notes | Planned |
-| 10 | Optional AI Investment Copilot integration | Planned |
-
----
-
 ## Future Integration With AI Investment Copilot
 
 Once FinSight is solid as a standalone product, it can be consumed by the AI Investment Copilot as an external SEC filing research service.
@@ -500,17 +480,6 @@ Possible agent flow:
 ```
 
 This lets the copilot ground investment analysis in both market data and audited company disclosures.
-
----
-
-## Limitations
-
-- Starter evaluation currently covers MSFT 2023 only
-- `/ingest` is synchronous
-- No production auth yet
-- No production deployment setup yet
-- Citation excerpts are chunk-based, not exact sentence-level spans
-- Hybrid rerank uses external APIs and is slower/costlier than dense mode
 
 ---
 
