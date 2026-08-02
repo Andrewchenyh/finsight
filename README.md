@@ -1,101 +1,155 @@
 # FinSight
 
-> A RAG-powered **SEC 10-K research assistant**. Ask grounded questions over real company filings, compare risk disclosures across companies and years, and verify every answer with citations traced back to the exact filing section.
+![CI](https://github.com/Andrewchenyh/finsight/actions/workflows/ci.yml/badge.svg)
 
-FinSight is built as a standalone system — demoable and deployable on its own. It is also designed so that it can later plug into a broader [AI Investment Copilot](https://github.com/Andrewchenyh/ai-investment-copilot) as a dedicated filing research service.
+> A RAG-powered SEC 10-K research assistant. Ask grounded questions over real company filings and verify answers with citations traced back to filing sections.
+
+FinSight is a standalone AI research tool for SEC filings. It ingests 10-K filings from SEC EDGAR, extracts major filing sections, builds a local retrieval index, retrieves relevant filing passages, and generates citation-backed answers.
+
+It is also designed so it can later plug into a broader [AI Investment Copilot](https://github.com/Andrewchenyh/ai-investment-copilot) as a dedicated filing research service.
 
 ---
 
-## What it does
+## What It Does
 
-Ask a question like *"What risks does Microsoft disclose related to cybersecurity in their 2023 10-K?"* and FinSight:
+Ask a question like:
 
-1. Retrieves the most relevant chunks from the indexed filing
-2. Generates a grounded answer with inline citations
-3. Explicitly flags when retrieved evidence is insufficient to support a claim
+> What cybersecurity risks does Microsoft describe in its 2023 10-K?
 
-```
+FinSight:
+
+1. Retrieves relevant passages from the indexed 10-K
+2. Generates a grounded answer using only retrieved filing excerpts
+3. Returns citations with ticker, year, filing type, section, source URL, and excerpt
+4. Exposes the workflow through scripts, FastAPI, and a Streamlit demo UI
+
+Example answer shape:
+
+```text
 Answer:
-Microsoft's 2023 10-K identifies cyberattacks, nation-state threats, and
-vulnerabilities in third-party software as material cybersecurity risks...
+Microsoft describes cybersecurity risks including evolving threats, vulnerabilities
+in products and services, possible data breaches, supply chain cyberattacks, and
+customer reliance on cloud infrastructure security [1][2][3].
 
-Evidence:
-[1] MSFT 2023 10-K · Item 1A · Risk Factors
-[2] MSFT 2023 10-K · Item 7 · MD&A
-
-Limitations:
-Figures above reflect management disclosures, not independently audited
-incident data.
+Citations:
+[1] MSFT 2023 10-K - Item 1A - Risk Factors
+[2] MSFT 2023 10-K - Item 1A - Risk Factors
+[3] MSFT 2023 10-K - Item 1A - Risk Factors
 ```
-
-The full pipeline — fetch, parse, chunk, embed, retrieve, generate — now runs end to end locally against a real filing (MSFT 2023), verified via `scripts/smoke_test_rag.py`.
 
 ---
 
 ## Architecture
 
+```text
+Scripts / FastAPI / Streamlit UI
+              |
+              v
+      FinSight Service Layer
+              |
+      +-------+--------+
+      |                |
+      v                v
+ Ingestion         Retrieval + Generation
+ Pipeline          Pipeline
+      |                |
+      v                v
+ SEC EDGAR       Local Retrieval Index
+ 10-K HTML       JSON chunks + NumPy embeddings
 ```
-   CLI (scripts/)   /   FastAPI (backend/api/app.py)   /   Streamlit (frontend/apps/streamlit_app.py)
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────────┐
-│                  FinSight Service (backend/service.py)     │
-│   answer_sec_question(query, ticker, year, section)        │
-│   retrieve_sec_chunks(query, filters)                      │
-│   ingest_10k(ticker, year)                                 │
-│   compare_filings(query, tickers, years)                   │
-└──────────┬────────────────────────────────────────┬────────┘
-           │                                        │
-           ▼                                        ▼
-┌───────────────────────────────────┐      ┌───────────────────────────────────┐
-│  Ingestion → Parsing → Chunking   │      │  Retrieval → Generation           │
-│                                   │      │                                   │
-│  backend/ingestion/               │      │  backend/retrieval/               │
-│    sec_client.py                  │      │    embedding_client.py            │
-│      → CIK lookup, EDGAR fetch    │      │      → OpenAI embeddings          │
-│    filing_fetcher.py              │      │    vector_store.py                │
-│      → HTML download + cache      │      │      → local JSON + NumPy index   │
-│                                   │      │    retriever.py                   │
-│  backend/parsing/                 │      │      → cosine similarity search   │
-│    section_extractor.py           │      │                                   │
-│      → Item 1/1A/7/7A/8 extract   │      │  backend/generation/              │
-│                                   │      │    answer_generator.py            │
-│  backend/chunking/                │      │      → grounded answer + cites    │
-│    chunker.py                     │      │      → uncertainty flagging       │
-│      → section-aware, token-      │      │                                   │
-│        budgeted, stable chunk IDs │      │                                   │
-└───────────────────────────────────┘      └───────────────────────────────────┘
-           │
-           ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Local Index  (data/index/)          →  Pinecone (Phase 7+) │
-│    MSFT_2023_chunks.json                                    │
-│    MSFT_2023_embeddings.npy                                 │
-│    test_msft_2023_chunks.json        (test fixtures)        │
-│    test_msft_2023_embeddings.npy                            │
-│                                                             │
-│  Rich metadata per chunk:                                   │
-│  ticker · cik · accession_number · year                     │
-│  section · section_title · chunk_type                       │
-│  source_url · char_start · char_end · token_count           │
-└─────────────────────────────────────────────────────────────┘
+
+Detailed flow:
+
+```text
+ticker + fiscal year
+  -> CIK lookup
+  -> SEC submissions metadata
+  -> 10-K source URL
+  -> raw HTML download/cache
+  -> clean filing text
+  -> extract Item sections
+  -> section-aware chunks
+  -> OpenAI embeddings
+  -> local vector index
+  -> dense/BM25/hybrid retrieval
+  -> optional Cohere rerank
+  -> grounded answer generation
+  -> citations
 ```
 
 ---
 
-## Why section-aware chunking
+## Why Section-Aware Chunking
 
-Most RAG demos split documents by arbitrary token windows. SEC 10-Ks have explicit, legally-defined structure — Item 1A is Risk Factors, Item 7 is MD&A, Item 8 is Financial Statements. Fixed-size chunking destroys that structure, meaning a retrieved chunk about "revenue" gives no signal about whether it came from management's optimistic outlook or the auditor's footnote.
+Most RAG demos split documents by arbitrary token windows. SEC 10-Ks have legally meaningful structure:
 
-`backend/chunking/chunker.py` chunks by Item section first, then by token budget within each section:
+- Item 1: Business
+- Item 1A: Risk Factors
+- Item 7: Management's Discussion and Analysis
+- Item 7A: Market Risk
+- Item 8: Financial Statements
 
-- Items 1, 1A, 7, 7A, and 8 are extracted as first-class sections before any chunking
-- Chunks target 500 tokens with 50–75 token overlap
-- No chunk crosses a major Item boundary
-- Tables are typed and serialized separately, not flattened into prose
-- Every chunk carries `ticker`, `year`, `section`, `section_title`, `chunk_type`, and `source_url`
-- Chunk IDs are stable and reproducible across runs
-- Covered by `backend/tests/test_chunker.py`
+FinSight extracts these sections first, then chunks within each section. This preserves provenance and makes citations more useful.
+
+Each chunk carries metadata such as:
+
+```text
+ticker
+company
+CIK
+accession number
+fiscal year
+filing type
+section
+section title
+source URL
+character offsets
+estimated token count
+```
+
+Chunking behavior is covered by `backend/tests/test_chunker.py`.
+
+---
+
+## Retrieval Modes
+
+FinSight supports four retrieval modes:
+
+| Mode | Description |
+|---|---|
+| `dense` | OpenAI embedding retrieval over local chunk vectors |
+| `bm25` | Keyword-based lexical retrieval |
+| `hybrid` | Dense + BM25 candidate fusion with Reciprocal Rank Fusion |
+| `hybrid_rerank` | Hybrid candidate retrieval followed by Cohere reranking |
+
+`hybrid_rerank` is the quality-oriented default. `dense` remains useful as a faster, cheaper baseline.
+
+---
+
+## Retrieval Evaluation
+
+FinSight includes a starter 10-question retrieval benchmark over the Microsoft 2023 10-K. The benchmark covers risk factors, MD&A, business competition, revenue recognition, market risk, and datacenter dependencies.
+
+Metrics:
+
+- `Recall@5`: whether at least one expected chunk appeared in the top 5
+- `Mean Precision@5`: approximate relevance rate across retrieved chunks
+- `Mean Expected Chunk Rank`: average rank of the first expected chunk hit
+
+| Retrieval Mode | Recall@5 | Mean Precision@5 | Mean Expected Chunk Rank |
+|---|---:|---:|---:|
+| Dense | 0.90 | 0.58 | 1.56 |
+| BM25 | 1.00 | 0.50 | 2.10 |
+| Hybrid | 1.00 | 0.60 | 1.70 |
+| Hybrid + Rerank | 1.00 | 0.70 | 1.40 |
+
+Takeaway: hybrid retrieval with Cohere reranking produced the strongest overall retrieval quality, improving Mean Precision@5 from `0.58` to `0.70` versus dense retrieval while maintaining perfect Recall@5 on the starter benchmark. Reranking was especially useful for MD&A queries such as Economic Conditions and Foreign Exchange impacts, moving both target chunks to rank 1.
+
+Run the eval:
+
+```bash
+python -m scripts.run_retrieval_eval
+```
 
 ---
 
@@ -103,197 +157,267 @@ Most RAG demos split documents by arbitrary token windows. SEC 10-Ks have explic
 
 | Layer | Technology |
 |---|---|
-| Filing source | SEC EDGAR (HTML/XBRL — not PDF) |
-| Data validation | Pydantic v2 (all internal contracts) |
+| Filing source | SEC EDGAR HTML/XBRL |
+| Backend | Python |
+| Data validation | Pydantic v2 |
 | Embeddings | OpenAI `text-embedding-3-small` |
-| Local index | JSON + NumPy (`.npy`) — ✅ live for MSFT 2023 |
-| Vector store | Pinecone *(Phase 7+)* |
-| Keyword search | BM25 *(Phase 7)* |
-| Fusion | Reciprocal Rank Fusion *(Phase 7)* |
-| Reranking | Planned *(Phase 7)* |
-| LLM | OpenAI GPT-4o |
-| API | FastAPI — `backend/api/app.py` |
-| Frontend | Streamlit — `frontend/apps/streamlit_app.py` |
-| Testing | pytest — `backend/tests/` |
+| Generation | OpenAI `gpt-4o-mini` |
+| Dense retrieval | NumPy dot-product search over local vectors |
+| Lexical retrieval | BM25 via `rank-bm25` |
+| Fusion | Reciprocal Rank Fusion |
+| Reranking | Cohere Rerank |
+| Local index | JSON + NumPy `.npy` |
+| API | FastAPI |
+| Frontend | Streamlit |
+| Tests/CI | pytest + GitHub Actions |
 
-> Filings are fetched from SEC EDGAR HTML/XBRL rather than PDFs. HTML preserves section boundaries and avoids the extraction artifacts common in PDF parsing.
+Filings are fetched from SEC EDGAR HTML/XBRL rather than PDFs. HTML preserves section boundaries and avoids many PDF extraction artifacts.
 
 ---
 
 ## Project Structure
 
-```
-.
-├── backend
-│   ├── api/                 # FastAPI app + request/response schemas
-│   │   ├── app.py
-│   │   └── schemas.py
-│   ├── chunking/             # Section-aware chunker
-│   │   └── chunker.py
-│   ├── ingestion/             # SEC EDGAR client, filing fetch + local cache
-│   │   ├── filing_fetcher.py
-│   │   └── sec_client.py
-│   ├── parsing/               # HTML cleaning, Item section extraction
-│   │   └── section_extractor.py
-│   ├── retrieval/             # Embeddings, local vector store, retriever
-│   │   ├── embedding_client.py
-│   │   ├── retriever.py
-│   │   └── vector_store.py
-│   ├── generation/            # Grounded answer generation, citations, uncertainty flagging
-│   │   └── answer_generator.py
-│   ├── evals/                 # Golden dataset + metrics (Phase 8)
-│   ├── data/sec_filings/raw/  # Cached raw filing HTML
-│   ├── schemas.py             # Shared Pydantic schemas
-│   ├── service.py             # Public interface — the only entry point consumers need
-│   └── tests/
-│       └── test_chunker.py
-├── data
-│   ├── index/                 # Local chunk + embedding files
-│   └── sec_filings/raw/       # Cached raw filing HTML
-├── frontend
-│   └── apps/
-│       └── streamlit_app.py   # Streamlit demo UI
-├── scripts/
-│   ├── build_index.py         # Fetch → parse → chunk → embed → save index
-│   └── smoke_test_rag.py      # End-to-end pipeline check
-├── requirements.txt
-└── README.md
-```
+```text
+backend/
+  api/
+    app.py                 # FastAPI app
+    schemas.py             # API request/response models
 
-> Note: raw filing HTML currently lives in both `backend/data/sec_filings/raw/` and `data/sec_filings/raw/`. 
+  chunking/
+    chunker.py             # Section-aware chunking
+
+  evals/
+    schemas.py             # Eval dataset/result models
+    retrieval_metrics.py   # Retrieval metric helpers
+
+  generation/
+    answer_generator.py    # Grounded answer generation
+
+  ingestion/
+    sec_client.py          # SEC ticker/CIK/submissions client
+    filing_fetcher.py      # Raw filing download/cache
+
+  parsing/
+    section_extractor.py   # HTML cleaning + 10-K section extraction
+
+  retrieval/
+    embedding_client.py    # OpenAI embedding wrapper
+    retriever.py           # DenseRetriever
+    bm25_retriever.py      # BM25Retriever
+    hybrid_retriever.py    # Dense + BM25 RRF fusion
+    reranker.py            # Cohere reranker
+    rerank_retriever.py    # Hybrid + rerank wrapper
+    vector_store.py        # Local JSON + NumPy vector store
+
+  schemas.py               # Shared Pydantic models
+  service.py               # Public service functions
+  tests/                   # Unit tests
+
+frontend/
+  apps/
+    streamlit_app.py       # Streamlit demo UI
+
+scripts/
+  build_index.py           # Build local index for ticker/year
+  smoke_test_rag.py        # End-to-end RAG smoke test
+  retrieval_baseline.py    # Dense baseline inspection
+  compare_retrieval_modes.py
+  run_retrieval_eval.py    # Starter benchmark runner
+
+data/
+  evals/                   # Golden retrieval datasets, committed
+  sec_filings/raw/         # Cached raw filings, not committed
+  index/                   # Local chunks + embeddings, not committed
+```
 
 ---
 
-## CLI Usage
+## Setup
+
+Prerequisites:
+
+- Python 3.11+
+- OpenAI API key
+- Cohere API key for reranking
+- SEC-compliant user agent string
 
 ```bash
-# Build the local index for a filing (fetch, parse, chunk, embed, save to data/index/)
-python -m scripts.build_index --ticker MSFT --year 2023
+git clone https://github.com/Andrewchenyh/finsight
+cd finsight
 
-# Run an end-to-end smoke test against the local RAG pipeline
-python -m scripts.smoke_test_rag
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env
 ```
 
-*(Exact flags may differ slightly — check `argparse` in each script.)*
+Edit `.env`:
 
-Run the API locally:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+COHERE_API_KEY=your_cohere_api_key_here
+SEC_USER_AGENT="FinSight your_email@example.com"
+FINSIGHT_API_URL=http://127.0.0.1:8000
+```
+
+---
+
+## Build A Local Index
+
+Build the Microsoft 2023 10-K index:
+
+```bash
+python -m scripts.build_index --ticker MSFT --year 2023
+```
+
+This creates:
+
+```text
+data/index/MSFT_2023_chunks.json
+data/index/MSFT_2023_embeddings.npy
+```
+
+---
+
+## Run The API
 
 ```bash
 uvicorn backend.api.app:app --reload
 ```
 
-Run the Streamlit demo:
+Open Swagger docs:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Available endpoints:
+
+```text
+GET  /health
+POST /ingest
+POST /retrieve
+POST /chat
+```
+
+Example chat request:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What cybersecurity risks does Microsoft describe?",
+    "index_name": "MSFT_2023",
+    "ticker": "MSFT",
+    "fiscal_year": 2023,
+    "section": "Item 1A",
+    "top_k": 5,
+    "retrieval_mode": "hybrid_rerank"
+  }'
+```
+
+---
+
+## Run The Streamlit Demo
+
+Start the FastAPI backend first:
+
+```bash
+uvicorn backend.api.app:app --reload
+```
+
+Then in another terminal:
 
 ```bash
 streamlit run frontend/apps/streamlit_app.py
 ```
 
----
+The UI includes:
 
-## Roadmap
-
-| Phase | Goal | Status |
-|---|---|---|
-| 0 | Standalone repo, project structure, Pydantic schemas | ✅ Complete |
-| 1 | SEC ingestion — CIK lookup, EDGAR fetch, local filing cache | ✅ Complete |
-| 2 | HTML cleaning, section extraction, `FilingSection` objects | ✅ Complete |
-| 3 | Section-aware chunking, token budget enforcement, pytest suite | ✅ Complete |
-| 4 | Local minimal RAG — embed, store locally, cosine retrieval, grounded answers with citations | ✅ Complete |
-| 5 | FastAPI — `/health`, `/ingest`, `/chat`, `/retrieve` | ✅ Complete |
-| 6 | Streamlit demo — ticker/year selector, answer display, citation cards, chunk debug view | ✅ Complete |
-| 7 | Hybrid retrieval — dense + BM25 + RRF fusion + reranking, Pinecone migration | 🔄 In progress |
-| 8 | Eval suite — 20–25 golden prompts, Recall@5, Precision@5, faithfulness scoring | 🔄 In progress |
-| 9 | Portfolio polish — README, architecture diagram, screenshots, demo GIF, limitations | 🔄 In progress |
+- ticker selector
+- fiscal year selector
+- 10-K section filter
+- retrieval mode selector
+- index build/rebuild button
+- question input
+- generated answer
+- citation cards
+- retrieval debug view
 
 ---
 
-## Planned Evaluation
+## Tests And CI
 
-The goal of Phase 8 is to measure whether retrieval improvements actually produce better answers, not just higher similarity scores. The golden dataset will span:
+Run deterministic tests:
 
-- Factual lookups ("What does MSFT say about cloud revenue?")
-- Section-specific questions ("What risks does AAPL disclose in Item 1A?")
-- MD&A questions
-- Intentionally unanswerable questions (to test hallucination guardrails)
-- Year-over-year comparisons
-
-Target output — a results table like:
-
-| Retrieval Strategy | Precision@5 | Citation Accuracy |
-|---|---|---|
-| Dense only | ~0.58 | — |
-| Hybrid + RRF | ~0.72 | — |
-| Hybrid + Rerank | ~0.80 | — |
-
-*(Exact numbers will be filled in once Phase 8 is complete.)*
-
----
-
-## Future: Integration with AI Investment Copilot
-
-Once FinSight is solid as a standalone system, it can be consumed as an external research service by the [AI Investment Copilot](https://github.com/YOUR_USERNAME/ai-investment-copilot).
-
-The copilot's ReAct agent would gain new tools:
-
+```bash
+python -m pytest
 ```
+
+Run compile checks locally if needed:
+
+```bash
+python -m py_compile backend/schemas.py backend/service.py backend/api/schemas.py backend/api/app.py
+```
+
+Run optional live smoke tests:
+
+```bash
+python -m scripts.smoke_test_rag
+python -m scripts.compare_retrieval_modes
+python -m scripts.run_retrieval_eval
+```
+
+Live smoke/eval scripts call OpenAI and/or Cohere and require local indexes plus API keys.
+
+---
+
+## Future Integration With AI Investment Copilot
+
+Once FinSight is solid as a standalone product, it can be consumed by the AI Investment Copilot as an external SEC filing research service.
+
+Potential tools:
+
+```text
 sec_filing_qa
 sec_risk_factor_lookup
 sec_mda_lookup
 sec_filing_compare
 ```
 
-This enables blended queries like:
+Example blended query:
 
-> *"Is it a good time to write a cash-secured put on MSFT?"*
+> Is it a good time to write a cash-secured put on MSFT?
 
+Possible agent flow:
+
+```text
+1. Fetch current MSFT price
+2. Fetch options chain
+3. Calculate volatility and risk/reward
+4. Ask FinSight for latest MSFT 10-K risk factors
+5. Synthesize market risk + business risk
 ```
-Agent:
-  1. fetch current MSFT price
-  2. fetch options chain
-  3. calculate implied / historical volatility
-  4. sec_risk_factor_lookup(ticker="MSFT", year="latest")  ← FinSight
-  5. synthesize options risk + business risk
-```
 
-The agent stops reasoning only from market data — it grounds the trade discussion in audited business risk from the company's own 10-K filing.
+This lets the copilot ground investment analysis in both market data and audited company disclosures.
 
 ---
 
-## Getting Started
+## Limitations
 
-> Full Docker setup and deployment notes will be added in Phase 9. The steps below cover local development.
-
-**Prerequisites:** Python 3.11+, OpenAI API key
-
-```bash
-git clone https://github.com/YOUR_USERNAME/finsight
-cd finsight
-pip install -r requirements.txt
-cp .env.example .env   # fill in your keys
-```
-
-```bash
-# .env
-OPENAI_API_KEY=...
-SEC_USER_AGENT="Your Name your@email.com"   # required by SEC EDGAR fair-use policy
-```
-
-Run the test suite:
-
-```bash
-pytest backend/tests/
-```
-
-Build the index and run a smoke test:
-
-```bash
-python -m scripts.build_index --ticker MSFT --year 2023
-python -m scripts.smoke_test_rag
-```
+- Starter evaluation currently covers MSFT 2023 only
+- `/ingest` is synchronous
+- No production auth yet
+- No Docker/deployment setup yet
+- Citation excerpts are chunk-based, not exact sentence-level spans
+- Hybrid rerank uses external APIs and is slower/costlier than dense mode
 
 ---
 
 ## Author
 
-**Andrew** · Statistics & Economics, UC Davis  
+Andrew Chen  
+Statistics & Economics, UC Davis  
+
 [LinkedIn](https://linkedin.com/in/andrew-yihanchen) · [GitHub](https://github.com/Andrewchenyh)
