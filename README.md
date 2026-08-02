@@ -39,26 +39,57 @@ Citations:
 
 ---
 
+## Demo Preview
+
+### Grounded Filing Q&A
+
+![FinSight chat answer](assets/screenshots/chat_answer.png)
+
+### Citation Review
+
+![FinSight citation cards](assets/screenshots/citation_cards.png)
+
+### Retrieval Debug View
+
+![FinSight retrieval debug](assets/screenshots/retrieval_debug.png)
+
+---
+
 ## Architecture
 
-```text
-Scripts / FastAPI / Streamlit UI
-              |
-              v
-      FinSight Service Layer
-              |
-      +-------+--------+
-      |                |
-      v                v
- Ingestion         Retrieval + Generation
- Pipeline          Pipeline
-      |                |
-      v                v
- SEC EDGAR       Local Retrieval Index
- 10-K HTML       JSON chunks + NumPy embeddings
+```mermaid
+flowchart TD
+    User[User] --> UI[Streamlit UI]
+    User --> API[FastAPI API]
+    Dev[Developer Scripts] --> Service[FinSight Service Layer]
+    UI --> API
+    API --> Service
+
+    Service --> Ingest[Ingestion Pipeline]
+    Service --> Retrieve[Retrieval Pipeline]
+    Service --> Generate[Grounded Answer Generation]
+
+    Ingest --> SEC[SEC EDGAR]
+    SEC --> Raw[Raw 10-K HTML Cache]
+    Raw --> Parse[HTML Cleaning + Item Section Extraction]
+    Parse --> Chunk[Section-Aware Chunking]
+    Chunk --> Embed[OpenAI Embeddings]
+    Embed --> Index[Local Index: JSON Chunks + NumPy Vectors]
+
+    Retrieve --> Dense[Dense Vector Retrieval]
+    Retrieve --> BM25[BM25 Lexical Retrieval]
+    Dense --> Hybrid[RRF Hybrid Fusion]
+    BM25 --> Hybrid
+    Hybrid --> Rerank[Cohere Rerank]
+    Index --> Dense
+    Index --> BM25
+
+    Rerank --> Context[Citation Context Pack]
+    Context --> Generate
+    Generate --> Answer[Answer + Citations + Retrieved Chunks]
 ```
 
-Detailed flow:
+End-to-end flow:
 
 ```text
 ticker + fiscal year
@@ -72,7 +103,7 @@ ticker + fiscal year
   -> OpenAI embeddings
   -> local vector index
   -> dense/BM25/hybrid retrieval
-  -> optional Cohere rerank
+  -> Cohere rerank
   -> grounded answer generation
   -> citations
 ```
@@ -347,6 +378,54 @@ The UI includes:
 
 ---
 
+## Run With Docker
+
+Build and run both the FastAPI backend and Streamlit frontend:
+
+```bash
+docker compose up --build
+```
+
+Services:
+
+```text
+FastAPI:   http://127.0.0.1:8000
+Swagger:   http://127.0.0.1:8000/docs
+Streamlit: http://127.0.0.1:8501
+```
+
+The Compose setup mounts local index and raw filing data:
+
+```text
+./data/index -> /app/data/index
+./data/sec_filings/raw -> /app/data/sec_filings/raw
+```
+
+Make sure `.env` exists before running Docker:
+
+```bash
+cp .env.example .env
+```
+
+Required environment variables:
+
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+COHERE_API_KEY=your_cohere_api_key_here
+SEC_USER_AGENT="FinSight your_email@example.com"
+FINSIGHT_API_URL=http://127.0.0.1:8000
+```
+
+For the Streamlit container, Compose overrides `FINSIGHT_API_URL` to:
+
+```text
+http://api:8000
+```
+
+because containers communicate through the Compose service name.
+
+---
+
 ## Tests And CI
 
 Run deterministic tests:
@@ -370,6 +449,26 @@ python -m scripts.run_retrieval_eval
 ```
 
 Live smoke/eval scripts call OpenAI and/or Cohere and require local indexes plus API keys.
+
+---
+
+## Roadmap
+
+| Phase | Goal | Status |
+|---|---|---|
+| 0 | Standalone repo, structure, core schemas | Complete |
+| 1 | SEC ingestion, CIK lookup, filing fetch/cache | Complete |
+| 2 | HTML cleaning and 10-K section extraction | Complete |
+| 3 | Section-aware chunking and tests | Complete |
+| 4 | Local RAG: embeddings, vector store, retrieval, generation | Complete |
+| 5 | FastAPI backend: `/health`, `/ingest`, `/retrieve`, `/chat` | Complete |
+| 6 | Streamlit demo UI | Complete |
+| 7 | Better retrieval: BM25, hybrid search, Cohere reranking | Complete |
+| 7.5 | GitHub Actions CI foundation | Complete |
+| 8 | Evaluation: starter golden dataset and retrieval metrics | Complete |
+| 8.5 | Dockerization | Complete |
+| 9 | Portfolio polish: architecture diagram, screenshots, demo video, deployment notes | Planned |
+| 10 | Optional AI Investment Copilot integration | Planned |
 
 ---
 
@@ -409,7 +508,7 @@ This lets the copilot ground investment analysis in both market data and audited
 - Starter evaluation currently covers MSFT 2023 only
 - `/ingest` is synchronous
 - No production auth yet
-- No Docker/deployment setup yet
+- No production deployment setup yet
 - Citation excerpts are chunk-based, not exact sentence-level spans
 - Hybrid rerank uses external APIs and is slower/costlier than dense mode
 
