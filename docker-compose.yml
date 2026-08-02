@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: finsight-api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/index:/app/data/index
+      - ./data/sec_filings/raw:/app/data/sec_filings/raw
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    container_name: finsight-streamlit
+    env_file:
+      - .env
+    environment:
+      FINSIGHT_API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
