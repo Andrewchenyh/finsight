@@ -113,6 +113,44 @@ def test_chunks_do_not_cross_section_boundaries(sample_sections: list[FilingSect
         assert chunk.char_end <= section.char_end
 
 
+def test_boundary_adjustment_does_not_leave_gaps(sample_metadata: FilingMetadata) -> None:
+    section_text = (
+        ("Alpha beta gamma delta. " * 45)
+        + ("Subsequent filing disclosure continues without a sentence boundary " * 80)
+    )
+    section = FilingSection(
+        metadata=sample_metadata,
+        section="Item 1A",
+        section_title="Risk Factors",
+        text=section_text,
+        char_start=1_000,
+        char_end=1_000 + len(section_text),
+    )
+
+    chunks = chunk_filing_sections(sections=[section])
+
+    assert len(chunks) > 1
+    for current_chunk, next_chunk in zip(chunks, chunks[1:]):
+        assert next_chunk.char_start <= current_chunk.char_end
+
+
+def test_chunks_start_at_sentence_boundaries(sample_sections: list[FilingSection]) -> None:
+    section = sample_sections[0]
+    chunks = chunk_filing_sections(
+        sections=sample_sections,
+        max_tokens=120,
+        overlap_tokens=20,
+    )
+
+    for chunk in chunks[1:]:
+        local_start = chunk.char_start - section.char_start
+        preceding_text = section.text[:local_start].rstrip()
+
+        assert preceding_text.endswith((".", ";")) or "\n" in section.text[
+            max(0, local_start - 1):local_start
+        ]
+
+
 def test_invalid_max_tokens_raises_error(sample_sections: list[FilingSection]) -> None:
     with pytest.raises(ValueError, match="max_tokens must be positive"):
         chunk_filing_sections(
