@@ -44,7 +44,6 @@ def chunk_single_section(
     """Chunk one filing section without crossing section boundaries."""
     max_chars = max_tokens * CHARS_PER_TOKEN_ESTIMATE
     overlap_chars = overlap_tokens * CHARS_PER_TOKEN_ESTIMATE
-    step_chars = max_chars - overlap_chars
 
     text = section.text.strip()
 
@@ -56,7 +55,6 @@ def chunk_single_section(
     chunk_index = 0
 
     while local_start < len(text):
-        local_start = _move_start_to_boundary(text=text, proposed_start=local_start)
         local_end = min(local_start + max_chars, len(text))
 
         if local_end < len(text):
@@ -99,7 +97,11 @@ def chunk_single_section(
         if local_end >= len(text):
             break
 
-        next_start = max(local_end - overlap_chars, local_start + step_chars)
+        next_start = _move_start_to_boundary(
+            text=text,
+            proposed_start=local_end - overlap_chars,
+            minimum_start=local_start + 1,
+        )
         if next_start <= local_start:
             next_start = local_start + 1
 
@@ -108,13 +110,44 @@ def chunk_single_section(
     return chunks
 
 
-def _move_start_to_boundary(text: str, proposed_start: int) -> int:
-    """Move chunk start forward if it lands in the middle of a word."""
+def _move_start_to_boundary(
+    text: str,
+    proposed_start: int,
+    minimum_start: int = 0,
+) -> int:
+    """Move a chunk start to a sentence boundary without moving backward forever.
+
+    Prefer the beginning of the sentence containing proposed_start. The
+    minimum_start bound guarantees that successive chunks still make forward
+    progress. If no sentence boundary exists in that range, fall back to the
+    next word boundary.
+    """
     if proposed_start <= 0:
         return 0
 
     if proposed_start >= len(text):
         return len(text)
+
+    minimum_start = max(0, min(minimum_start, proposed_start))
+    sentence_starts: list[int] = []
+
+    newline_index = text.rfind("\n", minimum_start, proposed_start)
+    if newline_index >= 0:
+        sentence_starts.append(newline_index + 1)
+
+    for boundary in (". ", "; "):
+        boundary_index = text.rfind(boundary, minimum_start, proposed_start)
+        if boundary_index >= 0:
+            sentence_starts.append(boundary_index + len(boundary))
+
+    if sentence_starts:
+        start = max(sentence_starts)
+
+        while start < len(text) and text[start].isspace():
+            start += 1
+
+        if start < len(text):
+            return start
 
     start = proposed_start
 
