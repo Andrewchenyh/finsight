@@ -32,19 +32,18 @@ class BM25Retriever:
         self.index_name = index_name
         self.vector_store = vector_store or LocalVectorStore(index_name=index_name)
 
-        # Populated on first retrieve() call via _ensure_index().
         self._chunks: list[DocumentChunk] | None = None
         self._bm25: BM25Okapi | None = None
 
     def _ensure_index(self) -> None:
         """Build BM25 index over the full corpus, lazily on first call."""
         if self._bm25 is not None:
-            return  # already built; nothing to do
+            return
 
         self._chunks, _ = self.vector_store.load()
 
         if not self._chunks:
-            return  # empty corpus; _bm25 stays None
+            return
 
         tokenized_corpus = [tokenize(chunk.text) for chunk in self._chunks]
         self._bm25 = BM25Okapi(tokenized_corpus)
@@ -66,7 +65,7 @@ class BM25Retriever:
 
         self._ensure_index()
 
-        if self._bm25 is None:  # empty corpus after load
+        if self._bm25 is None:
             return []
 
         tokenized_query = tokenize(cleaned_query)
@@ -76,26 +75,20 @@ class BM25Retriever:
 
         scores = np.array(self._bm25.get_scores(tokenized_query), dtype=np.float32)
 
-        # Descending sort: highest BM25 score first.
         ranked_indices = np.argsort(scores)[::-1]
 
         results: list[RetrievedChunk] = []
-        rank = 0  # incremented only when a chunk is actually kept
+        rank = 0
 
         for candidate_index in ranked_indices:
             score = float(scores[int(candidate_index)])
 
             if score <= 0:
-                # Scores are sorted descending; every remaining score is also
-                # <= 0. Stop early rather than iterating the full corpus.
                 break
 
             chunk = self._chunks[int(candidate_index)] # type: ignore
 
             if not self._matches_filters(chunk, filters):
-                # Skip this chunk but do NOT increment rank — that was the
-                # original bug. Rank must reflect position in the kept list,
-                # not position in the full scored list.
                 continue
 
             rank += 1
