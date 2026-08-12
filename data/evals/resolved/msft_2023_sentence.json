@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "cf4f8947d60c422b7c1fe988d9a896849a128d9963d64c1d09df439c61432e81"
+    "sha256": "d2e7761b1a09ac81e4e5b2c816936ca0c95a58c032ae6527ed6911618ffcb197"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -27,6 +27,12 @@
         "document_char_start": 116652,
         "document_char_end": 185191,
         "normalized_text_sha256": "e2e4fb469433d43dad4f02207daac059158145023836890cbd43dfc5268f2412"
+      },
+      {
+        "section": "Item 1",
+        "document_char_start": 42016,
+        "document_char_end": 116651,
+        "normalized_text_sha256": "7f70241b93f8664ceb4a3386aa977a960ecec20b71b654d26a2213bd46a75d59"
       }
     ]
   },
@@ -571,13 +577,331 @@
         "resolved_evidence_count": 8,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_business_competition",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "competition_office",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_office_quote",
+              "section": "Item 1",
+              "quote_sha256": "b0fc89cec59569fc42bca970906adbb8fd1a96b17e3a4f5888f047007ee70f68",
+              "section_char_start": 35055,
+              "section_char_end": 35309,
+              "document_char_start": 77071,
+              "document_char_end": 77325,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_22_3b60ca275e76"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_22_3b60ca275e76"
+          ]
+        },
+        {
+          "fact_id": "competition_linkedin_dynamics",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_linkedin_dynamics_quote",
+              "section": "Item 1",
+              "quote_sha256": "33fe435c858dd0a1d47ab5ecea5d39bb801e6b0cbfe5fea792533a0d8599c659",
+              "section_char_start": 36380,
+              "section_char_end": 37065,
+              "document_char_start": 78396,
+              "document_char_end": 79081,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_23_3f7010318222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_23_3f7010318222"
+          ]
+        },
+        {
+          "fact_id": "competition_azure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_azure_quote",
+              "section": "Item 1",
+              "quote_sha256": "949f5ba4a3748297ca60fd24f39715b63bb16fd9ce72c2b24a3d81205b1d90a5",
+              "section_char_start": 40414,
+              "section_char_end": 40802,
+              "document_char_start": 82430,
+              "document_char_end": 82818,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_26_ecaa3ce71e10"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_26_ecaa3ce71e10"
+          ]
+        },
+        {
+          "fact_id": "competition_server_products",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_server_products_quote",
+              "section": "Item 1",
+              "quote_sha256": "e3a16d3c06d467f790649aec614c6568eb008c353b7b25104509aec2385509a8",
+              "section_char_start": 41544,
+              "section_char_end": 41701,
+              "document_char_start": 83560,
+              "document_char_end": 83717,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_26_ecaa3ce71e10"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_26_ecaa3ce71e10"
+          ]
+        },
+        {
+          "fact_id": "competition_windows",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_windows_quote",
+              "section": "Item 1",
+              "quote_sha256": "a892265cee13a5a678962f0cc4290cb25e9be4241c9738a93cb75fef38661994",
+              "section_char_start": 50217,
+              "section_char_end": 50347,
+              "document_char_start": 92233,
+              "document_char_end": 92363,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_32_65e57fd1731a"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_32_65e57fd1731a"
+          ]
+        },
+        {
+          "fact_id": "competition_gaming",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_gaming_quote",
+              "section": "Item 1",
+              "quote_sha256": "13a7ca65ea356ee4f39757ad8d2376a0c88867b7569002b94af6d79edb406adc",
+              "section_char_start": 50920,
+              "section_char_end": 51333,
+              "document_char_start": 92936,
+              "document_char_end": 93349,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_33_26a784a3500d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_33_26a784a3500d"
+          ]
+        },
+        {
+          "fact_id": "competition_search_advertising",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_search_advertising_quote",
+              "section": "Item 1",
+              "quote_sha256": "01968475c356a07cf69d8f28cf77cbaa6c1391bc884680df7ab99fe0eea9218d",
+              "section_char_start": 51725,
+              "section_char_end": 51912,
+              "document_char_start": 93741,
+              "document_char_end": 93928,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_33_26a784a3500d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_33_26a784a3500d"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "competition_office_differentiation",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_office_differentiation_quote",
+              "section": "Item 1",
+              "quote_sha256": "f9c7100420d113c138d9a4a38ecfae8ca7a5a48002a19b9b6aee61ea50b8ae97",
+              "section_char_start": 36103,
+              "section_char_end": 36379,
+              "document_char_start": 78119,
+              "document_char_end": 78395,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_23_3f7010318222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_23_3f7010318222"
+          ]
+        },
+        {
+          "fact_id": "competition_azure_ai",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_azure_ai_quote",
+              "section": "Item 1",
+              "quote_sha256": "43e7a14fa89b19c198c89c62fb28ffae0a58622935432c66515f450ae4720b33",
+              "section_char_start": 40803,
+              "section_char_end": 41087,
+              "document_char_start": 82819,
+              "document_char_end": 83103,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_26_ecaa3ce71e10"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_26_ecaa3ce71e10"
+          ]
+        },
+        {
+          "fact_id": "competition_enterprise_software",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_enterprise_software_quote",
+              "section": "Item 1",
+              "quote_sha256": "c711f30fbd6211c8669d3040238e44811230a6ff5490ae07042140affd852551",
+              "section_char_start": 42263,
+              "section_char_end": 42562,
+              "document_char_start": 84279,
+              "document_char_end": 84578,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_27_a9d319dd1207"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_27_a9d319dd1207"
+          ]
+        },
+        {
+          "fact_id": "competition_server_differentiation",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_server_differentiation_quote",
+              "section": "Item 1",
+              "quote_sha256": "879cac60e56dc3f0946a2eea198cb6f06466e7b2a737a2b938b33737861925d9",
+              "section_char_start": 43589,
+              "section_char_end": 43868,
+              "document_char_start": 85605,
+              "document_char_end": 85884,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_28_3310e288bf44"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_28_3310e288bf44"
+          ]
+        },
+        {
+          "fact_id": "competition_devices",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_devices_quote",
+              "section": "Item 1",
+              "quote_sha256": "739a09b4c090fc044b854093c7b321c88493538902ecf55d65b0e5b4884722b9",
+              "section_char_start": 50590,
+              "section_char_end": 50919,
+              "document_char_start": 92606,
+              "document_char_end": 92935,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_32_65e57fd1731a"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_32_65e57fd1731a"
+          ]
+        },
+        {
+          "fact_id": "competition_gaming_differentiation",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "competition_gaming_differentiation_quote",
+              "section": "Item 1",
+              "quote_sha256": "b93239752de3a4f24857e0dff3fe90a2c5bb29add62c214b8035d033d718f903",
+              "section_char_start": 51334,
+              "section_char_end": 51724,
+              "document_char_start": 93350,
+              "document_char_end": 93740,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1_33_26a784a3500d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1_33_26a784a3500d"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item1_22_3b60ca275e76",
+        "MSFT_2023_Item1_23_3f7010318222",
+        "MSFT_2023_Item1_26_ecaa3ce71e10",
+        "MSFT_2023_Item1_32_65e57fd1731a",
+        "MSFT_2023_Item1_33_26a784a3500d"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item1_22_3b60ca275e76",
+        "MSFT_2023_Item1_23_3f7010318222",
+        "MSFT_2023_Item1_26_ecaa3ce71e10",
+        "MSFT_2023_Item1_32_65e57fd1731a",
+        "MSFT_2023_Item1_33_26a784a3500d",
+        "MSFT_2023_Item1_27_a9d319dd1207",
+        "MSFT_2023_Item1_28_3310e288bf44"
+      ],
+      "validation": {
+        "required_fact_count": 7,
+        "resolved_required_fact_count": 7,
+        "optional_fact_count": 6,
+        "resolved_optional_fact_count": 6,
+        "evidence_count": 13,
+        "resolved_evidence_count": 13,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 2,
-    "required_fact_count": 8,
-    "optional_fact_count": 13,
-    "evidence_count": 21,
+    "question_count": 3,
+    "required_fact_count": 15,
+    "optional_fact_count": 19,
+    "evidence_count": 34,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
