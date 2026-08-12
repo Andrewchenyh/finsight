@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "f8eb690f5a6a50c5e055f9f6877adc88927a5fa552fb8eae9013cd7261c1e687"
+    "sha256": "cf4f8947d60c422b7c1fe988d9a896849a128d9963d64c1d09df439c61432e81"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -362,13 +362,222 @@
         "resolved_evidence_count": 13,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_ai_risks",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "ai_model_data_output_failures",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_model_data_output_failures_quote",
+              "section": "Item 1A",
+              "quote_sha256": "82e9f9e93bf6d8320aa56362fc8a5945c7205ef2769ebfbe8a6242e78e3eca53",
+              "section_char_start": 33042,
+              "section_char_end": 33249,
+              "document_char_start": 149694,
+              "document_char_end": 149901,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_21_4b998f5dff7d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_21_4b998f5dff7d"
+          ]
+        },
+        {
+          "fact_id": "ai_development_deployment_failures",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_development_deployment_failures_quote",
+              "section": "Item 1A",
+              "quote_sha256": "341e3ef3e2f3fc65802bd956139d9f85d32d600ac2bc35401155749d25028158",
+              "section_char_start": 33250,
+              "section_char_end": 33572,
+              "document_char_start": 149902,
+              "document_char_end": 150224,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_21_4b998f5dff7d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_21_4b998f5dff7d"
+          ]
+        },
+        {
+          "fact_id": "ai_legal_regulatory_reputational_exposure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_legal_regulatory_reputational_exposure_quote",
+              "section": "Item 1A",
+              "quote_sha256": "4ea3e047b59c6ff2fcf244c9eee960176085b300610ae648657fe802ec839311",
+              "section_char_start": 33573,
+              "section_char_end": 33995,
+              "document_char_start": 150225,
+              "document_char_end": 150647,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_21_4b998f5dff7d",
+                "MSFT_2023_Item1A_22_49bb423e539e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_21_4b998f5dff7d",
+            "MSFT_2023_Item1A_22_49bb423e539e"
+          ]
+        },
+        {
+          "fact_id": "ai_ethical_unintended_use_consequences",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_ethical_unintended_use_consequences_quote",
+              "section": "Item 1A",
+              "quote_sha256": "e5a5480dbef6214432ca9bb4bf4b609090db51f31e061997288166a90d729628",
+              "section_char_start": 33996,
+              "section_char_end": 34458,
+              "document_char_start": 150648,
+              "document_char_end": 151110,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_22_49bb423e539e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_22_49bb423e539e"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "ai_competition_development_costs",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_competition_development_costs_quote",
+              "section": "Item 1A",
+              "quote_sha256": "e07e5fe70b5ca308830dd4b71d769656642ad6ede96bae09ab692ed6a48d21f1",
+              "section_char_start": 5195,
+              "section_char_end": 5588,
+              "document_char_start": 121847,
+              "document_char_end": 122240,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_3_5a589e67c5fa"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_3_5a589e67c5fa"
+          ]
+        },
+        {
+          "fact_id": "ai_cyberattack_methods",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_cyberattack_methods_quote",
+              "section": "Item 1A",
+              "quote_sha256": "33630e20a53492af8dcbacc791878a697c92d2275a21c70475fa313b093d6903",
+              "section_char_start": 19044,
+              "section_char_end": 19153,
+              "document_char_start": 135696,
+              "document_char_end": 135805,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_11_3859158f318b",
+                "MSFT_2023_Item1A_12_07285533f9e5"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_11_3859158f318b",
+            "MSFT_2023_Item1A_12_07285533f9e5"
+          ]
+        },
+        {
+          "fact_id": "ai_data_regulatory_constraints",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_data_regulatory_constraints_quote",
+              "section": "Item 1A",
+              "quote_sha256": "663896c623ebf21bc524a79f439c35dd742f479e22da9cf6cb2e38152296cbd4",
+              "section_char_start": 47609,
+              "section_char_end": 48002,
+              "document_char_start": 164261,
+              "document_char_end": 164654,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_31_1a37f3edaf65"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_31_1a37f3edaf65"
+          ]
+        },
+        {
+          "fact_id": "ai_regulatory_costs_restrictions",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "ai_regulatory_costs_restrictions_quote",
+              "section": "Item 1A",
+              "quote_sha256": "124f71b4424b950f3fe284048a8cd088c9445e51d7ca636f4662cbdcc07d5b8d",
+              "section_char_start": 50546,
+              "section_char_end": 50860,
+              "document_char_start": 167198,
+              "document_char_end": 167512,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_33_7588f0b2ea13"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_33_7588f0b2ea13"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item1A_21_4b998f5dff7d",
+        "MSFT_2023_Item1A_22_49bb423e539e"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item1A_21_4b998f5dff7d",
+        "MSFT_2023_Item1A_22_49bb423e539e",
+        "MSFT_2023_Item1A_3_5a589e67c5fa",
+        "MSFT_2023_Item1A_11_3859158f318b",
+        "MSFT_2023_Item1A_12_07285533f9e5",
+        "MSFT_2023_Item1A_31_1a37f3edaf65",
+        "MSFT_2023_Item1A_33_7588f0b2ea13"
+      ],
+      "validation": {
+        "required_fact_count": 4,
+        "resolved_required_fact_count": 4,
+        "optional_fact_count": 4,
+        "resolved_optional_fact_count": 4,
+        "evidence_count": 8,
+        "resolved_evidence_count": 8,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 1,
-    "required_fact_count": 4,
-    "optional_fact_count": 9,
-    "evidence_count": 13,
+    "question_count": 2,
+    "required_fact_count": 8,
+    "optional_fact_count": 13,
+    "evidence_count": 21,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
