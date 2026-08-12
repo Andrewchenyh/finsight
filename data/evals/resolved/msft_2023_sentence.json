@@ -1,0 +1,375 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "resolved_retrieval_gold",
+  "resolution_name": "msft_2023_sentence",
+  "resolver": {
+    "name": "exact_quote_chunk_resolver",
+    "version": "1.0",
+    "quote_match_policy": "unique_exact_match",
+    "chunk_match_policy": "full_quote_containment"
+  },
+  "gold_source": {
+    "dataset_name": "msft_2023_retrieval",
+    "path": "data/evals/gold/msft_2023_questions.json",
+    "sha256": "f8eb690f5a6a50c5e055f9f6877adc88927a5fa552fb8eae9013cd7261c1e687"
+  },
+  "filing_source": {
+    "ticker": "MSFT",
+    "fiscal_year": 2023,
+    "filing_type": "10-K",
+    "accession_number": "0000950170-23-035122",
+    "raw_path": "data/sec_filings/raw/MSFT_2023_000095017023035122.html",
+    "raw_sha256": "6506060f3f928e31abcbcfe46792ff4e0ae5c60bd9ad40964933c37ac854a9ea",
+    "normalization_method": "clean_filing_html_v1",
+    "sections": [
+      {
+        "section": "Item 1A",
+        "document_char_start": 116652,
+        "document_char_end": 185191,
+        "normalized_text_sha256": "e2e4fb469433d43dad4f02207daac059158145023836890cbd43dfc5268f2412"
+      }
+    ]
+  },
+  "index_source": {
+    "index_name": "MSFT_2023",
+    "chunks_path": "data/index/MSFT_2023_chunks.json",
+    "chunks_sha256": "480495b598167d9e3affcde13bc2c5809e45c9aa0776959cc6e47f6992fc4558",
+    "chunk_count": 193
+  },
+  "questions": [
+    {
+      "question_id": "msft_2023_cybersecurity_risks",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "cyber_threat_evolution",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_threat_evolution_quote",
+              "section": "Item 1A",
+              "quote_sha256": "4870cb5e4a7257240b0ffae12d64439e603393ed215c95afca8cf610097097ab",
+              "section_char_start": 17478,
+              "section_char_end": 17647,
+              "document_char_start": 134130,
+              "document_char_end": 134299,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_10_d4daa62ff465",
+                "MSFT_2023_Item1A_11_3859158f318b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_10_d4daa62ff465",
+            "MSFT_2023_Item1A_11_3859158f318b"
+          ]
+        },
+        {
+          "fact_id": "cyber_breach_consequences",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_breach_consequences_quote",
+              "section": "Item 1A",
+              "quote_sha256": "c0c8aa69783a951e99dc81aa7224921e4b548bc78b8dd5bb2262df42d9c8dc08",
+              "section_char_start": 17973,
+              "section_char_end": 18583,
+              "document_char_start": 134625,
+              "document_char_end": 135235,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_11_3859158f318b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_11_3859158f318b"
+          ]
+        },
+        {
+          "fact_id": "cyber_supply_chain_attacks",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_supply_chain_attacks_quote",
+              "section": "Item 1A",
+              "quote_sha256": "a47eb8a5abd90445a81badf6ad0a26efd8826081638cdf33809d5ded3218a57d",
+              "section_char_start": 18584,
+              "section_char_end": 18740,
+              "document_char_start": 135236,
+              "document_char_end": 135392,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_11_3859158f318b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_11_3859158f318b"
+          ]
+        },
+        {
+          "fact_id": "cyber_product_vulnerabilities",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_product_vulnerabilities_quote",
+              "section": "Item 1A",
+              "quote_sha256": "1162599b2c0f441985d9942cd3d182df24ff78c8e4410e439273e29aa8e457b8",
+              "section_char_start": 20436,
+              "section_char_end": 20725,
+              "document_char_start": 137088,
+              "document_char_end": 137377,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_12_07285533f9e5"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_12_07285533f9e5"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "cyber_account_compromise",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_account_compromise_quote",
+              "section": "Item 1A",
+              "quote_sha256": "fa9246354e84081494be6496a131d379e00b2c19244b0d50cd021a7ac5c7b461",
+              "section_char_start": 20842,
+              "section_char_end": 21226,
+              "document_char_start": 137494,
+              "document_char_end": 137878,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_13_64f13a7774a9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_13_64f13a7774a9"
+          ]
+        },
+        {
+          "fact_id": "cyber_open_source_vulnerabilities",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_open_source_vulnerabilities_quote",
+              "section": "Item 1A",
+              "quote_sha256": "c6ca9fbb93669ff1fe715276262862f6399564d1fce74388471b3f2baeb8c37f",
+              "section_char_start": 21301,
+              "section_char_end": 21409,
+              "document_char_start": 137953,
+              "document_char_end": 138061,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_13_64f13a7774a9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_13_64f13a7774a9"
+          ]
+        },
+        {
+          "fact_id": "cyber_generative_ai_threats",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_generative_ai_threats_quote",
+              "section": "Item 1A",
+              "quote_sha256": "3a0414276253d2947faa77aa14506e9b611c8d923ec0f19bc611977eb1df653a",
+              "section_char_start": 21491,
+              "section_char_end": 21726,
+              "document_char_start": 138143,
+              "document_char_end": 138378,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_13_64f13a7774a9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_13_64f13a7774a9"
+          ]
+        },
+        {
+          "fact_id": "cyber_customer_security_limitations",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_customer_security_limitations_quote",
+              "section": "Item 1A",
+              "quote_sha256": "d47137287ef76248de32e1c0796b9cb07b50d3f0b84ace89f5634bb6c8d220c3",
+              "section_char_start": 22229,
+              "section_char_end": 22598,
+              "document_char_start": 138881,
+              "document_char_end": 139250,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_13_64f13a7774a9",
+                "MSFT_2023_Item1A_14_37677b66f5bc"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_13_64f13a7774a9",
+            "MSFT_2023_Item1A_14_37677b66f5bc"
+          ]
+        },
+        {
+          "fact_id": "cyber_limited_customer_visibility",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_limited_customer_visibility_quote",
+              "section": "Item 1A",
+              "quote_sha256": "f0054612984ccc08206e4576ffd9d15cafa3ee74d5519177c7075a59fdb0661f",
+              "section_char_start": 23318,
+              "section_char_end": 23637,
+              "document_char_start": 139970,
+              "document_char_end": 140289,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_14_37677b66f5bc",
+                "MSFT_2023_Item1A_15_15f1444606a5"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_14_37677b66f5bc",
+            "MSFT_2023_Item1A_15_15f1444606a5"
+          ]
+        },
+        {
+          "fact_id": "cyber_defensive_measure_costs",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_defensive_measure_costs_quote",
+              "section": "Item 1A",
+              "quote_sha256": "f527a29adf0293cf97a395b93be3f47c10b4df4ae159d243ade01dc09b6d097f",
+              "section_char_start": 24681,
+              "section_char_end": 25261,
+              "document_char_start": 141333,
+              "document_char_end": 141913,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_15_15f1444606a5"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_15_15f1444606a5"
+          ]
+        },
+        {
+          "fact_id": "cyber_third_party_components",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_third_party_components_quote",
+              "section": "Item 1A",
+              "quote_sha256": "3461223d5be6e36b6bb820aa52e2f3c3040ea3009a06cb26b96c44a4e6916f5d",
+              "section_char_start": 25972,
+              "section_char_end": 26331,
+              "document_char_start": 142624,
+              "document_char_end": 142983,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_16_9978700ed323"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_16_9978700ed323"
+          ]
+        },
+        {
+          "fact_id": "cyber_personal_data_misuse",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_personal_data_misuse_quote",
+              "section": "Item 1A",
+              "quote_sha256": "bf2616c128482f437018a6a6862da2dffd306459c76e097500b97ce70004c31e",
+              "section_char_start": 26745,
+              "section_char_end": 27439,
+              "document_char_start": 143397,
+              "document_char_end": 144091,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_17_7ab83fb6f17a"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_17_7ab83fb6f17a"
+          ]
+        },
+        {
+          "fact_id": "cyber_data_protection_perceptions",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cyber_data_protection_perceptions_quote",
+              "section": "Item 1A",
+              "quote_sha256": "75b1760d165b99553b1bf11ee50ab02d38cb0545d3eb9fb84e5c92bec3f4d9d0",
+              "section_char_start": 27886,
+              "section_char_end": 28201,
+              "document_char_start": 144538,
+              "document_char_end": 144853,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_17_7ab83fb6f17a",
+                "MSFT_2023_Item1A_18_631958dc192d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_17_7ab83fb6f17a",
+            "MSFT_2023_Item1A_18_631958dc192d"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item1A_10_d4daa62ff465",
+        "MSFT_2023_Item1A_11_3859158f318b",
+        "MSFT_2023_Item1A_12_07285533f9e5"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item1A_10_d4daa62ff465",
+        "MSFT_2023_Item1A_11_3859158f318b",
+        "MSFT_2023_Item1A_12_07285533f9e5",
+        "MSFT_2023_Item1A_13_64f13a7774a9",
+        "MSFT_2023_Item1A_14_37677b66f5bc",
+        "MSFT_2023_Item1A_15_15f1444606a5",
+        "MSFT_2023_Item1A_16_9978700ed323",
+        "MSFT_2023_Item1A_17_7ab83fb6f17a",
+        "MSFT_2023_Item1A_18_631958dc192d"
+      ],
+      "validation": {
+        "required_fact_count": 4,
+        "resolved_required_fact_count": 4,
+        "optional_fact_count": 9,
+        "resolved_optional_fact_count": 9,
+        "evidence_count": 13,
+        "resolved_evidence_count": 13,
+        "status": "passed"
+      }
+    }
+  ],
+  "validation_summary": {
+    "question_count": 1,
+    "required_fact_count": 4,
+    "optional_fact_count": 9,
+    "evidence_count": 13,
+    "unresolved_evidence_ids": [],
+    "status": "passed"
+  }
+}
