@@ -436,7 +436,125 @@
       "annotation": {
         "method": "manual_source_review",
         "annotator": "project_author",
-        "review_status": "draft"
+        "review_status": "verified"
+      }
+    },
+    {
+      "id": "msft_2023_cloud_infrastructure_risks",
+      "query": "What does Microsoft say about cloud infrastructure risks?",
+      "scope": {
+        "sections": [
+          "Item 1A"
+        ]
+      },
+      "reference_answer": "Microsoft says growing user traffic, service growth, and product complexity require more computing power and substantial datacenter and network investment. Its datacenters depend on buildable land, predictable energy, networking supplies, servers, GPUs, and other components whose cost or availability can be affected by the clean-energy transition, environmental regulation, and geopolitical disruption. Maintaining, securing, and expanding this infrastructure is expensive and complex and requires robust, reliable Internet connectivity and storage and compute capacity within evolving competitive and regulatory constraints. Data loss or insufficient connectivity, power, storage, or compute capacity could degrade products and user experience and lead to liability, customer claims, regulatory action, reputational damage, loss of users and advertisers, and adverse financial effects.",
+      "required_facts": [
+        {
+          "fact_id": "cloud_infrastructure_scaling_demand",
+          "claim": "Growing traffic, service usage, and product complexity require more computing power and substantial investment in datacenters, equipment, technology, and network infrastructure.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_scaling_demand_quote",
+              "section": "Item 1A",
+              "quote": "Our increasing user traffic, growth in services, and the complexity of our products and services demand more computing power. We spend substantial amounts to build, purchase, or lease datacenters and equipment and to upgrade our technology and network infrastructure to handle more traffic on our websites and in our datacenters."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_critical_dependencies",
+          "claim": "Microsoft's datacenters depend on buildable land, predictable energy, networking supplies, servers, GPUs, and other components.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_critical_dependencies_quote",
+              "section": "Item 1A",
+              "quote": "Our datacenters depend on the availability of permitted and buildable land, predictable energy, networking supplies, and servers, including graphics processing units (“GPUs”) and other components."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_external_pressures",
+          "claim": "The cost or availability of datacenter dependencies can be adversely affected by the clean-energy transition, environmental regulations, and geopolitical disruptions.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_external_pressures_quote",
+              "section": "Item 1A",
+              "quote": "The cost or availability of these dependencies could be adversely affected by a variety of factors, including the transition to a clean energy economy, local and regional environmental regulations, and geopolitical disruptions."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_resilience_complexity",
+          "claim": "Maintaining, securing, and expanding cloud infrastructure is expensive and complex and requires robust, reliable Internet connectivity and storage and compute capacity within evolving constraints.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_resilience_complexity_quote",
+              "section": "Item 1A",
+              "quote": "Maintaining, securing, and expanding this infrastructure is expensive and complex, and requires development of principles for datacenter builds in geographies with higher safety and reliability risks. It requires that we maintain an Internet connectivity infrastructure and storage and compute capacity that is robust and reliable within competitive and regulatory constraints that continue to evolve."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_failure_consequences",
+          "claim": "Data loss or insufficient connectivity, power, storage, or compute capacity can reduce product and user-experience quality and cause liability, claims, regulatory action, reputational harm, user and advertiser losses, and adverse financial effects.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_failure_consequences_quote",
+              "section": "Item 1A",
+              "quote": "Inefficiencies or operational failures, including temporary or permanent loss of customer data, insufficient Internet connectivity, insufficient or unavailable power supply, or inadequate storage and compute capacity, could diminish the quality of our products, services, and user experience resulting in contractual liability, claims by customers and other third parties, regulatory actions, damage to our reputation, and loss of current and potential users, subscribers, and advertisers, each of which may adversely impact our consolidated financial statements."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "cloud_infrastructure_margin_pressure",
+          "claim": "Building and maintaining cloud-computing infrastructure creates costs that reduce operating margins.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_margin_pressure_quote",
+              "section": "Item 1A",
+              "quote": "Besides software development costs, we are incurring costs to build and maintain infrastructure to support cloud computing services. These costs will reduce the operating margins we have previously achieved."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_supplier_constraints",
+          "claim": "Limited component suppliers, competing demand, shortages, capacity constraints, and supply restrictions can reduce sales or leave inadequate datacenter capacity.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_supplier_constraints_quote",
+              "section": "Item 1A",
+              "quote": "There are limited suppliers for certain device and datacenter components. Our competitors use some of the same suppliers and their demand for hardware components can affect the capacity available to us. If components are delayed or become unavailable, whether because of supplier capacity constraint, industry shortages, legal or regulatory changes that restrict supply sources, or other reasons, we may not obtain timely replacement supplies, resulting in reduced sales or inadequate datacenter capacity to support the delivery and continued development of our products and services."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_catastrophic_resilience",
+          "claim": "Catastrophic disruption to critical systems or supporting infrastructure can interrupt normal operations, while cloud services increase the importance of resilience and business continuity and the impact of prolonged outages.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_catastrophic_resilience_quote",
+              "section": "Item 1A",
+              "quote": "A catastrophic event that results in the destruction or disruption of any of our critical business or IT systems, or the infrastructure or systems they rely on, such as power grids, could harm our ability to conduct normal business operations. Providing our customers with more services and solutions in the cloud puts a premium on the resilience of our systems and strength of our business continuity management plans and magnifies the potential impact of prolonged service outages in our consolidated financial statements."
+            }
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_location_constraints",
+          "claim": "Security measures and customer, user, or government constraints on datacenter operations may raise operating expenses or hinder growth.",
+          "evidence_units": [
+            {
+              "evidence_id": "cloud_infrastructure_location_constraints_quote",
+              "section": "Item 1A",
+              "quote": "Additional security measures we may take to address customer or user concerns, or constraints on our flexibility to determine where and how to operate datacenters in response to customer or user expectations or governmental rules or actions, may cause higher operating expenses or hinder growth of our products and services."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
       }
     }
   ]
