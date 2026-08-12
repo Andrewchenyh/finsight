@@ -1,130 +1,115 @@
-from backend.evals.schemas import EvalQuestion, EvalQuestionResult, EvalRunResult
-from backend.schemas import RetrievalMode, RetrievedChunk
+from backend.evals.schemas import (
+    QuestionResolution,
+    RetrievalQuestionMetrics,
+    RetrievalRunMetrics,
+)
+from backend.schemas import RetrievalMode
 
 
-def evaluate_retrieval_results(
-    dataset_name: str,
+def score_retrieval_question(
+    *,
+    question: QuestionResolution,
+    retrieved_chunk_ids: list[str],
+    top_k: int,
+) -> RetrievalQuestionMetrics:
+    """Score one ranked retrieval result against generated fact mappings."""
+    if top_k <= 0:
+        raise ValueError("top_k must be positive.")
+    if len(retrieved_chunk_ids) != len(set(retrieved_chunk_ids)):
+        raise ValueError("retrieved_chunk_ids must not contain duplicates.")
+
+    top_chunk_ids = retrieved_chunk_ids[:top_k]
+    required_evidence_chunk_ids = question.required_evidence_chunk_ids
+    required_evidence_chunk_id_set = set(required_evidence_chunk_ids)
+    relevant_context_chunk_ids = question.relevant_context_chunk_ids
+    relevant_context_chunk_id_set = set(relevant_context_chunk_ids)
+    relevant_context_retrieved_chunk_ids = [
+        chunk_id
+        for chunk_id in top_chunk_ids
+        if chunk_id in relevant_context_chunk_id_set
+    ]
+
+    retrieved_chunk_id_set = set(top_chunk_ids)
+    covered_fact_ids = [
+        fact.fact_id
+        for fact in question.required_fact_resolutions
+        if retrieved_chunk_id_set.intersection(fact.resolved_chunk_ids)
+    ]
+    required_fact_count = len(question.required_fact_resolutions)
+    covered_fact_count = len(covered_fact_ids)
+
+    first_required_evidence_rank = next(
+        (
+            rank
+            for rank, chunk_id in enumerate(top_chunk_ids, start=1)
+            if chunk_id in required_evidence_chunk_id_set
+        ),
+        None,
+    )
+
+    return RetrievalQuestionMetrics(
+        question_id=question.question_id,
+        top_k=top_k,
+        retrieved_chunk_ids=top_chunk_ids,
+        required_evidence_chunk_ids=required_evidence_chunk_ids,
+        relevant_context_chunk_ids=relevant_context_chunk_ids,
+        relevant_context_retrieved_chunk_ids=(
+            relevant_context_retrieved_chunk_ids
+        ),
+        covered_fact_ids=covered_fact_ids,
+        required_fact_count=required_fact_count,
+        covered_fact_count=covered_fact_count,
+        required_fact_hit_at_k=covered_fact_count > 0,
+        fact_recall_at_k=covered_fact_count / required_fact_count,
+        full_coverage_at_k=covered_fact_count == required_fact_count,
+        context_precision_at_k=(
+            len(relevant_context_retrieved_chunk_ids) / top_k
+        ),
+        first_required_evidence_rank=first_required_evidence_rank,
+        required_evidence_reciprocal_rank_at_k=(
+            1.0 / first_required_evidence_rank
+            if first_required_evidence_rank is not None
+            else 0.0
+        ),
+    )
+
+
+def aggregate_retrieval_metrics(
+    *,
+    resolution_name: str,
     retrieval_mode: RetrievalMode,
-    question_results: list[EvalQuestionResult],
-) -> EvalRunResult:
-    """Aggregate retrieval metrics for one retrieval mode."""
+    top_k: int,
+    question_results: list[RetrievalQuestionMetrics],
+) -> RetrievalRunMetrics:
+    """Macro-average question metrics for one retrieval mode and cutoff."""
     if not question_results:
         raise ValueError("question_results must not be empty.")
 
-    recall_at_k = sum(result.expected_chunk_hit for result in question_results) / len(question_results)
-
-    mean_precision_at_k = sum(result.precision_at_k for result in question_results) / len(question_results)
-
-    ranks = [
-        result.expected_chunk_rank
-        for result in question_results
-        if result.expected_chunk_rank is not None
-    ]
-    mean_expected_chunk_rank = sum(ranks) / len(ranks) if ranks else None
-
-    return EvalRunResult(
-        dataset_name=dataset_name,
+    question_count = len(question_results)
+    return RetrievalRunMetrics(
+        resolution_name=resolution_name,
         retrieval_mode=retrieval_mode,
+        top_k=top_k,
         question_results=question_results,
-        recall_at_k=recall_at_k,
-        mean_precision_at_k=mean_precision_at_k,
-        mean_expected_chunk_rank=mean_expected_chunk_rank,
+        required_fact_hit_rate_at_k=sum(
+            result.required_fact_hit_at_k for result in question_results
+        )
+        / question_count,
+        macro_fact_recall_at_k=sum(
+            result.fact_recall_at_k for result in question_results
+        )
+        / question_count,
+        full_coverage_rate_at_k=sum(
+            result.full_coverage_at_k for result in question_results
+        )
+        / question_count,
+        mean_context_precision_at_k=sum(
+            result.context_precision_at_k for result in question_results
+        )
+        / question_count,
+        required_evidence_mrr_at_k=sum(
+            result.required_evidence_reciprocal_rank_at_k
+            for result in question_results
+        )
+        / question_count,
     )
-
-
-def score_question_result(
-    question: EvalQuestion,
-    retrieved_chunks: list[RetrievedChunk],
-    retrieval_mode: RetrievalMode,
-) -> EvalQuestionResult:
-    """Score one query's retrieved chunks against expected IDs/terms."""
-    retrieved_chunk_ids = [result.chunk.chunk_id for result in retrieved_chunks]
-
-    expected_chunk_rank = find_first_expected_chunk_rank(
-        expected_chunk_ids=question.expected_chunk_ids,
-        retrieved_chunk_ids=retrieved_chunk_ids,
-    )
-
-    expected_chunk_hit = expected_chunk_rank is not None
-
-    expected_terms_hit_count = count_expected_terms(
-        expected_terms=question.expected_terms,
-        retrieved_chunks=retrieved_chunks,
-    )
-
-    expected_terms_total = len(question.expected_terms)
-
-    precision_at_k = estimate_precision_at_k(
-        question=question,
-        retrieved_chunks=retrieved_chunks,
-    )
-
-    return EvalQuestionResult(
-        question_id=question.id,
-        retrieval_mode=retrieval_mode,
-        retrieved_chunk_ids=retrieved_chunk_ids,
-        expected_chunk_hit=expected_chunk_hit,
-        expected_chunk_rank=expected_chunk_rank,
-        expected_terms_hit_count=expected_terms_hit_count,
-        expected_terms_total=expected_terms_total,
-        precision_at_k=precision_at_k,
-    )
-
-
-def find_first_expected_chunk_rank(
-    expected_chunk_ids: list[str],
-    retrieved_chunk_ids: list[str],
-) -> int | None:
-    """Return one-based rank of the first expected chunk hit."""
-    if not expected_chunk_ids:
-        return None
-
-    expected = set(expected_chunk_ids)
-
-    for index, chunk_id in enumerate(retrieved_chunk_ids, start=1):
-        if chunk_id in expected:
-            return index
-
-    return None
-
-
-def count_expected_terms(
-    expected_terms: list[str],
-    retrieved_chunks: list[RetrievedChunk],
-) -> int:
-    """Count expected terms that appear anywhere in retrieved chunk text."""
-    if not expected_terms:
-        return 0
-
-    combined_text = "\n".join(result.chunk.text for result in retrieved_chunks).lower()
-
-    return sum(1 for term in expected_terms if term.lower() in combined_text)
-
-
-def estimate_precision_at_k(
-    question: EvalQuestion,
-    retrieved_chunks: list[RetrievedChunk],
-) -> float:
-    """Estimate precision@k using expected chunk IDs and expected term matches.
-
-    A chunk is counted relevant if:
-    - its chunk ID is listed as expected, or
-    - it contains at least one expected term.
-    """
-    if not retrieved_chunks:
-        return 0.0
-
-    expected_chunk_ids = set(question.expected_chunk_ids)
-    expected_terms = [term.lower() for term in question.expected_terms]
-
-    relevant_count = 0
-
-    for result in retrieved_chunks:
-        chunk_id_hit = result.chunk.chunk_id in expected_chunk_ids
-        chunk_text = result.chunk.text.lower()
-        term_hit = any(term in chunk_text for term in expected_terms)
-
-        if chunk_id_hit or term_hit:
-            relevant_count += 1
-
-    return relevant_count / len(retrieved_chunks)
