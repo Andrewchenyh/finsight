@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "dataset_name": "msft_2023_retrieval",
+  "filing": {
+    "ticker": "MSFT",
+    "fiscal_year": 2023,
+    "filing_type": "10-K",
+    "accession_number": "0000950170-23-035122"
+  },
+  "questions": [
+    {
+      "id": "msft_2023_cybersecurity_risks",
+      "query": "What cybersecurity risks does Microsoft describe?",
+      "scope": {
+        "sections": [
+          "Item 1A"
+        ]
+      },
+      "reference_answer": "Microsoft says cyberthreats are becoming more sophisticated and difficult to detect; security breaches can disrupt services, expose customer data, compromise intellectual property, enable ransomware, damage its reputation or competitive position, and increase remediation costs; supply-chain attacks can introduce malware through software updates; and product vulnerabilities can persist when customers have not installed security updates or attackers exploited the vulnerabilities before patches were available.",
+      "required_facts": [
+        {
+          "fact_id": "cyber_threat_evolution",
+          "claim": "Cyberthreats are evolving, increasingly sophisticated, and harder to detect and defend against.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_threat_evolution_quote",
+              "section": "Item 1A",
+              "quote": "Cyberthreats are constantly evolving and becoming increasingly sophisticated and complex, increasing the difficulty of detecting and successfully defending against them."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_breach_consequences",
+          "claim": "Security breaches can cause operational disruption, privacy harm, intellectual-property loss, ransomware exposure, reputational or competitive harm, remediation costs, and product development delays.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_breach_consequences_quote",
+              "section": "Item 1A",
+              "quote": "Breaches of our facilities, network, or data security could disrupt the security of our systems and business applications, impair our ability to provide services to our customers and protect the privacy of their data, result in product development delays, compromise confidential or technical business information harming our reputation or competitive position, result in theft or misuse of our intellectual property or other assets, subject us to ransomware attacks, require us to allocate more resources to improve technologies or remediate the impacts of attacks, or otherwise adversely affect our business."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_supply_chain_attacks",
+          "claim": "Supply-chain cyberattacks can introduce malware through a software provider's updates.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_supply_chain_attacks_quote",
+              "section": "Item 1A",
+              "quote": "We are also subject to supply chain cyberattacks where malware can be introduced to a software provider’s customers, including us, through software updates."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_product_vulnerabilities",
+          "claim": "Product vulnerabilities can persist when customers do not install security updates or attackers exploit the vulnerabilities before patching.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_product_vulnerabilities_quote",
+              "section": "Item 1A",
+              "quote": "Vulnerabilities in these or any product can persist even after we have issued security patches if customers have not installed the most recent updates, or if the attackers exploited the vulnerabilities before patching to install additional malware to further compromise customers’ systems."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "cyber_account_compromise",
+          "claim": "Stolen account information and inadequate account-security practices can enable account compromise, unauthorized access, ransomware, or other malicious software.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_account_compromise_quote",
+              "section": "Item 1A",
+              "quote": "Adversaries that acquire user account information can use that information to compromise our users’ accounts, including where accounts share the same attributes such as passwords. Inadequate account security practices may also result in unauthorized access, and user activity may result in ransomware or other malicious software impacting a customer’s use of our products or services."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_open_source_vulnerabilities",
+          "claim": "Vulnerabilities in open-source software can make Microsoft's products susceptible to cyberattacks.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_open_source_vulnerabilities_quote",
+              "section": "Item 1A",
+              "quote": "There may be vulnerabilities in open source software that may make our products susceptible to cyberattacks."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_generative_ai_threats",
+          "claim": "Generative-AI features may face unanticipated security threats while risks and protections are still developing.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_generative_ai_threats_quote",
+              "section": "Item 1A",
+              "quote": "Because generative AI is a new field, understanding of security risks and protection methods continues to develop; features that rely on generative AI may be susceptible to unanticipated security threats from sophisticated adversaries."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_customer_security_limitations",
+          "claim": "Outdated security standards and customers' limited technical capabilities can increase vulnerability to attacks.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_customer_security_limitations_quote",
+              "section": "Item 1A",
+              "quote": "Failure to utilize the most current security advances and standards can increase our customers’ vulnerability to attack. Further, customers of widely varied size and technical sophistication use our technology, and consequently may still\nhave limited capabilities and resources to help them adopt and implement state of the art cybersecurity practices and technologies."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_limited_customer_visibility",
+          "claim": "Microsoft may be unable to detect or track attacks in customer environments where it has limited visibility, particularly on-premises systems.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_limited_customer_visibility_quote",
+              "section": "Item 1A",
+              "quote": "We may not be able to detect the existence or extent of these attacks for all of our customers or have information on how to detect or track an attack, especially where an attack involves on-premises software such as Exchange Server where we may have no or limited visibility into our customers’ computing environments."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_defensive_measure_costs",
+          "claim": "Security investments can reduce operating margins, while inadequate defenses can harm Microsoft's reputation and delay customer purchases or adoption.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_defensive_measure_costs_quote",
+              "section": "Item 1A",
+              "quote": "The cost of measures to protect products and customer-facing services could reduce our operating margins. If we fail to do these things well, actual or perceived security vulnerabilities in our products and services, data corruption issues, or reduced performance could harm our reputation and lead customers to reduce or delay future purchases of products or subscriptions to services, or to use competing products or services. Customers may also spend more on protecting their existing computer systems from attack, which could delay adoption of additional products or services."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_third_party_components",
+          "claim": "Security vulnerabilities in third-party components can cause costs, liability, lost revenue, and reputational or competitive harm.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_third_party_components_quote",
+              "section": "Item 1A",
+              "quote": "Our products operate in conjunction with and are dependent on products and components across a broad ecosystem of third parties. If there is a security vulnerability in one of these components, and if there is a security exploit targeting it, we could face increased costs, liability claims, reduced revenue, or harm to our reputation or competitive position."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_personal_data_misuse",
+          "claim": "Security controls may not prevent improper disclosure or misuse of personal data, creating reputational, legal, cost, and revenue risks.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_personal_data_misuse_quote",
+              "section": "Item 1A",
+              "quote": "Despite our efforts to improve the security controls across our business groups and geographies, it is possible our security controls over personal data, our training of employees and third parties on data security, and other practices we follow may not prevent the improper disclosure or misuse of customer or user data we or our vendors store and manage. In addition, third parties who have limited access to our customer or user data may use this data in unauthorized ways. Improper disclosure or misuse could harm our reputation, lead to legal exposure to customers or users, or subject us to liability under laws that protect personal data, resulting in increased costs or loss of revenue."
+            }
+          ]
+        },
+        {
+          "fact_id": "cyber_data_protection_perceptions",
+          "claim": "Perceptions that personal information is inadequately protected can inhibit sales and cloud adoption.",
+          "evidence_units": [
+            {
+              "evidence_id": "cyber_data_protection_perceptions_quote",
+              "section": "Item 1A",
+              "quote": "Despite our efforts to protect customer and user data, perceptions that the collection, use, and retention of personal information is not satisfactorily protected could inhibit sales of our products or services and could limit adoption of our cloud-based solutions by consumers, businesses, and government entities."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
+    }
+  ]
+}
