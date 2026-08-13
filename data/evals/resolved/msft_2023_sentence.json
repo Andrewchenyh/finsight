@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "be5dbb441dab7b1ceb88ff237ae6545b0b9184327542433425a44b78c48d645d"
+    "sha256": "4a9d11d9f2ec6fe0e03b787485da15896b37a0a74a840553852696f72629a083"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -39,6 +39,12 @@
         "document_char_start": 189095,
         "document_char_end": 244731,
         "normalized_text_sha256": "2ca0e044edd37ebbf9fc8eb4a3b3457764de719c659103cc6b1b1a7d3fde4b62"
+      },
+      {
+        "section": "Item 8",
+        "document_char_start": 246670,
+        "document_char_end": 351431,
+        "normalized_text_sha256": "2eeb344164569f4beeb0dc74ae894266553973e09183c29106f7a41ae02e52d1"
       }
     ]
   },
@@ -1906,13 +1912,334 @@
         "resolved_evidence_count": 16,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_revenue_recognition",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "revenue_recognition_general_principle",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_general_principle_quote",
+              "section": "Item 8",
+              "quote_sha256": "26a3e3653e28e05d309e8b0009117a077ac8d3f04bedb263cccfc9493fc6f581",
+              "section_char_start": 10147,
+              "section_char_end": 10691,
+              "document_char_start": 256817,
+              "document_char_end": 257361,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_6_3a244e509d86"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_6_3a244e509d86"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_on_premises_software",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_on_premises_software_quote",
+              "section": "Item 8",
+              "quote_sha256": "4592eec511c6211e7c0a256bccede25cc58c61957233f8c3564b0365d7997595",
+              "section_char_start": 10724,
+              "section_char_end": 11466,
+              "document_char_start": 257394,
+              "document_char_end": 258136,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_6_3a244e509d86"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_6_3a244e509d86"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_software_assurance",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_software_assurance_quote",
+              "section": "Item 8",
+              "quote_sha256": "ea1ecd663f68ab2f24d53e29319dee2acfa3c65b8ed263604771b20cc2411c16",
+              "section_char_start": 11876,
+              "section_char_end": 12101,
+              "document_char_start": 258546,
+              "document_char_end": 258771,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_7_e864c2b5e197"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_7_e864c2b5e197"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_cloud_services",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_cloud_services_quote",
+              "section": "Item 8",
+              "quote_sha256": "b785d4635f2423eecfab24555d5ed275ae818fcbdae7537d59907a09efed4450",
+              "section_char_start": 12102,
+              "section_char_end": 12827,
+              "document_char_start": 258772,
+              "document_char_end": 259497,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_7_e864c2b5e197"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_7_e864c2b5e197"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_advertising_consulting",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_advertising_consulting_quote",
+              "section": "Item 8",
+              "quote_sha256": "238668a1936598f500587b930dddc8e045aee6bc0013b2b58fa7dcea62955485",
+              "section_char_start": 12828,
+              "section_char_end": 13068,
+              "document_char_start": 259498,
+              "document_char_end": 259738,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_7_e864c2b5e197"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_7_e864c2b5e197"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_hardware",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_hardware_quote",
+              "section": "Item 8",
+              "quote_sha256": "dba41766c027575a435e83480d7abbf2e0beca13fa65a57d4e86f2db72940f08",
+              "section_char_start": 13069,
+              "section_char_end": 13489,
+              "document_char_start": 259739,
+              "document_char_end": 260159,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_7_e864c2b5e197"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_7_e864c2b5e197"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "revenue_recognition_office365_distinct_judgment",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_distinct_judgment_quote",
+              "section": "Item 8",
+              "quote_sha256": "c09e00e8e8cf1243fa8acf9f30fe5d3fde764aae00185352c73989a991bf1313",
+              "section_char_start": 13659,
+              "section_char_end": 14247,
+              "document_char_start": 260329,
+              "document_char_end": 260917,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_8_6d3af596a131"
+              ]
+            },
+            {
+              "evidence_id": "revenue_recognition_office365_quote",
+              "section": "Item 8",
+              "quote_sha256": "fde77a3d0049c340cf5dfb4815ac8bcf09261df5e06730cdd77eabd154c44cc0",
+              "section_char_start": 14248,
+              "section_char_end": 14593,
+              "document_char_start": 260918,
+              "document_char_end": 261263,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_8_6d3af596a131"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_8_6d3af596a131"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_ssp_judgment",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_ssp_judgment_quote",
+              "section": "Item 8",
+              "quote_sha256": "b8f0e5cf46790dcf68cb0de71f7f336ab1538c1258cc37a58c29736584a2ad25",
+              "section_char_start": 14612,
+              "section_char_end": 14695,
+              "document_char_start": 261282,
+              "document_char_end": 261365,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_8_6d3af596a131"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_8_6d3af596a131"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_variable_consideration",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_variable_consideration_quote",
+              "section": "Item 8",
+              "quote_sha256": "8cbf3598dc374cb98cf586a5b358c5b7921f3f9c7da29d6b6c5b6e4843f72579",
+              "section_char_start": 15813,
+              "section_char_end": 16339,
+              "document_char_start": 262483,
+              "document_char_end": 263009,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_9_abd474d4117c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_9_abd474d4117c"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_contract_balances",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_contract_balances_quote",
+              "section": "Item 8",
+              "quote_sha256": "826efa0c290a5863490d9aa866f8689c13346faf3a8d0abcfc58e0f01ceaa7e8",
+              "section_char_start": 16380,
+              "section_char_end": 16916,
+              "document_char_start": 263050,
+              "document_char_end": 263586,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_10_c6683863f885"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_10_c6683863f885"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_revenue_categories",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_revenue_categories_quote",
+              "section": "Item 8",
+              "quote_sha256": "b7d7cb39dc781bcd5458ac4357f21b3b463ca22d174a6979353d20be201c2827",
+              "section_char_start": 9426,
+              "section_char_end": 10108,
+              "document_char_start": 256096,
+              "document_char_end": 256778,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_5_931c44dc3c63"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_5_931c44dc3c63"
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_auditor_assessment",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_recognition_auditor_principle_quote",
+              "section": "Item 8",
+              "quote_sha256": "a8b938512cd17dd422bff108079c72426224ea39116202963f09f6b1e91ea9dc",
+              "section_char_start": 99277,
+              "section_char_end": 99701,
+              "document_char_start": 345947,
+              "document_char_end": 346371,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_60_7e2e9881c38f"
+              ]
+            },
+            {
+              "evidence_id": "revenue_recognition_auditor_judgment_quote",
+              "section": "Item 8",
+              "quote_sha256": "00de208ee1420d5ad41f11b0f4a85c394556e76cc3be2cb6065f29f66ca9afd3",
+              "section_char_start": 99720,
+              "section_char_end": 99862,
+              "document_char_start": 346390,
+              "document_char_end": 346532,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item8_60_7e2e9881c38f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item8_60_7e2e9881c38f"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item8_6_3a244e509d86",
+        "MSFT_2023_Item8_7_e864c2b5e197"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item8_6_3a244e509d86",
+        "MSFT_2023_Item8_7_e864c2b5e197",
+        "MSFT_2023_Item8_8_6d3af596a131",
+        "MSFT_2023_Item8_9_abd474d4117c",
+        "MSFT_2023_Item8_10_c6683863f885",
+        "MSFT_2023_Item8_5_931c44dc3c63",
+        "MSFT_2023_Item8_60_7e2e9881c38f"
+      ],
+      "validation": {
+        "required_fact_count": 6,
+        "resolved_required_fact_count": 6,
+        "optional_fact_count": 6,
+        "resolved_optional_fact_count": 6,
+        "evidence_count": 14,
+        "resolved_evidence_count": 14,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 7,
-    "required_fact_count": 33,
-    "optional_fact_count": 36,
-    "evidence_count": 77,
+    "question_count": 8,
+    "required_fact_count": 39,
+    "optional_fact_count": 42,
+    "evidence_count": 91,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
