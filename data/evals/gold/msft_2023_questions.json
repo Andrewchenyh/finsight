@@ -441,7 +441,7 @@
     },
     {
       "id": "msft_2023_cloud_infrastructure_risks",
-      "query": "What does Microsoft say about cloud infrastructure risks?",
+      "query": "What operational risks does Microsoft describe in maintaining its datacenter and cloud infrastructure?",
       "scope": {
         "sections": [
           "Item 1A"
@@ -547,6 +547,135 @@
               "evidence_id": "cloud_infrastructure_location_constraints_quote",
               "section": "Item 1A",
               "quote": "Additional security measures we may take to address customer or user concerns, or constraints on our flexibility to determine where and how to operate datacenters in response to customer or user expectations or governmental rules or actions, may cause higher operating expenses or hinder growth of our products and services."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
+    },
+    {
+      "id": "msft_2023_economic_conditions_mda",
+      "query": "What economic conditions, challenges, and risks does Microsoft discuss in MD&A?",
+      "scope": {
+        "sections": [
+          "Item 7"
+        ]
+      },
+      "reference_answer": "Microsoft describes dynamic, highly competitive software, device, and cloud markets in which customer preferences evolve rapidly and aggregate demand is tied to changing global macroeconomic and geopolitical factors. Investments in cloud and AI infrastructure and devices will raise operating costs and may reduce operating margins, while growing AI demand requires additional datacenter locations and server capacity. Datacenters depend on land, energy, networking supplies, servers, GPUs, and other components. Although Microsoft can use alternative manufacturers for most products, some components have very few qualified suppliers, so extended disruptions could delay device production. Microsoft also depends on attracting and retaining qualified employees. Because international operations provide a significant share of revenue and expenses, foreign-exchange movements can materially affect both, and U.S.-dollar fluctuations reduced reported international revenue and expenses in fiscal 2023.",
+      "required_facts": [
+        {
+          "fact_id": "economic_competition_and_demand",
+          "claim": "Microsoft operates in dynamic, highly competitive markets with rapidly changing customer preferences, while aggregate demand is correlated with global macroeconomic and geopolitical factors.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_competition_and_demand_quote",
+              "section": "Item 7",
+              "quote": "The markets for software, devices, and cloud-based services are dynamic and highly competitive. Our competitors are developing new software and devices, while also deploying competing cloud-based services for consumers and businesses. The devices and form factors customers prefer evolve rapidly, influencing how users access services in the cloud and, in some cases, the user’s choice of which suite of cloud-based services to use. Aggregate demand for our software, services, and devices is also correlated to global macroeconomic and geopolitical factors, which remain dynamic. We must continue to evolve and adapt over an extended time in pace with this changing environment."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_infrastructure_costs",
+          "claim": "Cloud, AI-infrastructure, and device investments will increase operating costs and may reduce operating margins, while growing AI demand drives expansion of datacenter locations and server capacity.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_infrastructure_costs_quote",
+              "section": "Item 7",
+              "quote": "The investments we are making in cloud and AI infrastructure and devices will continue to increase our operating costs and may decrease our operating margins. We continue to identify and evaluate opportunities to expand our datacenter locations and increase our server capacity to meet the evolving needs of our customers, particularly given the growing demand for AI services."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_datacenter_dependencies",
+          "claim": "Microsoft's datacenters depend on buildable land, predictable energy, networking supplies, servers, GPUs, and other components.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_datacenter_dependencies_quote",
+              "section": "Item 7",
+              "quote": "Our datacenters depend on the availability of permitted and buildable land, predictable energy, networking supplies, and servers, including graphics processing units (“GPUs”) and other components."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_supplier_disruption",
+          "claim": "Although Microsoft can use alternative manufacturers for most products, some components have very few qualified suppliers, and extended supplier disruptions could delay device production.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_supplier_disruption_quote",
+              "section": "Item 7",
+              "quote": "For the majority of our products, we have the ability to use other manufacturers if a current vendor becomes unavailable or unable to meet our requirements. However, some of our products contain certain components for which there are very few qualified suppliers. Extended disruptions at these suppliers could impact our ability to manufacture devices on time to meet consumer demand."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_talent_dependency",
+          "claim": "Microsoft's success depends heavily on attracting and retaining qualified employees.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_talent_dependency_quote",
+              "section": "Item 7",
+              "quote": "Our success is highly dependent on our ability to attract and retain qualified employees."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_foreign_exchange_exposure",
+          "claim": "International operations contribute significant revenue and expenses, exposing Microsoft to foreign-exchange movements that reduced reported international revenue and expenses in fiscal 2023.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_foreign_exchange_exposure_quote",
+              "section": "Item 7",
+              "quote": "Our international operations provide a significant portion of our total revenue and expenses. Many of these revenue and expenses are denominated in currencies other than the U.S. dollar. As a result, changes in foreign exchange rates may significantly affect revenue and expenses. Fluctuations in the U.S. dollar relative to certain foreign currencies reduced reported revenue and expenses from our international operations in fiscal year 2023."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "economic_contract_manufacturing",
+          "claim": "Microsoft's devices are primarily produced by third-party contract manufacturers.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_contract_manufacturing_quote",
+              "section": "Item 7",
+              "quote": "Our devices are primarily manufactured by third-party contract manufacturers."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_talent_competition",
+          "claim": "Microsoft recruits university and industry talent globally and competes through its work environment, reach, resources, career opportunities, compensation, and benefits.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_talent_competition_quote",
+              "section": "Item 7",
+              "quote": "We hire a mix of university and industry talent worldwide. We compete for talented individuals globally by offering an exceptional working environment, broad customer reach, scale in resources, the ability to grow one’s career across many different products and businesses, and competitive compensation and benefits."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_cost_alignment_charge",
+          "claim": "Microsoft aligned costs with revenue and demand, prioritized strategic investments, consolidated office space, recorded a $1.2 billion charge, and reduced its workforce by about 10,000 jobs.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_cost_alignment_charge_quote",
+              "section": "Item 7",
+              "quote": "On January 18, 2023, we announced decisions we made to align our cost structure with our revenue and customer demand, prioritize our investments in strategic areas, and consolidate office space. As a result, we recorded a $1.2 billion charge in the second quarter of fiscal year 2023 (“Q2 charge”), which included employee severance expenses of $800 million, impairment charges resulting from changes to our hardware portfolio, and costs related to lease consolidation activities. First, we reduced our overall workforce by approximately 10,000 jobs through the third quarter of fiscal year 2023 related to the Q2 charge, which represents less than 5% of our total employee base."
+            }
+          ]
+        },
+        {
+          "fact_id": "economic_ongoing_cost_actions",
+          "claim": "Microsoft continued hiring in strategic areas, shifted capital and talent toward secular growth and competitiveness, and consolidated leases to increase workspace density.",
+          "evidence_units": [
+            {
+              "evidence_id": "economic_ongoing_cost_actions_quote",
+              "section": "Item 7",
+              "quote": "While we eliminated roles in some areas, we will continue to hire in key strategic areas. Second, we are allocating both our capital and talent to areas of secular growth and long-term competitiveness, while divesting in other areas. Third, we are consolidating our leases to create higher density across our workspaces, which impacted our financial results through the remainder of fiscal year 2023, and we may make similar decisions in future periods as we continue to evaluate our real estate needs."
             }
           ]
         }
