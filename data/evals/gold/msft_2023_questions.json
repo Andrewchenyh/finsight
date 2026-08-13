@@ -786,6 +786,159 @@
         "annotator": "project_author",
         "review_status": "verified"
       }
+    },
+    {
+      "id": "msft_2023_revenue_growth_mda",
+      "query": "What were Microsoft's main fiscal 2023 revenue growth highlights compared with fiscal 2022?",
+      "scope": {
+        "sections": [
+          "Item 7"
+        ]
+      },
+      "reference_answer": "Microsoft's revenue increased $13.6 billion, or 7%, driven by Intelligent Cloud and Productivity and Business Processes, partly offset by a decline in More Personal Computing. Microsoft Cloud revenue grew 22% to $111.6 billion. Office Commercial revenue grew 10%, Office Consumer grew 2%, LinkedIn grew 10%, and Dynamics grew 16%; Office 365 Commercial and Dynamics 365 grew 13% and 24%, respectively. Server products and cloud services grew 19%, driven by 29% growth in Azure and other cloud services. Results were mixed in More Personal Computing and advertising: Windows OEM declined 25%, Devices declined 24%, Windows Commercial grew 5%, Xbox content and services declined 3%, and search and news advertising excluding traffic-acquisition costs grew 11%.",
+      "required_facts": [
+        {
+          "fact_id": "revenue_consolidated_growth",
+          "claim": "Total revenue increased $13.6 billion, or 7%, as Intelligent Cloud and Productivity and Business Processes growth more than offset a decline in More Personal Computing.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_consolidated_growth_quote",
+              "section": "Item 7",
+              "quote": "Revenue increased $13.6 billion or 7% driven by growth in Intelligent Cloud and Productivity and Business Processes, offset in part by a decline in More Personal Computing. Intelligent Cloud revenue increased driven by Azure and other cloud services. Productivity and Business Processes revenue increased driven by Office 365 Commercial and LinkedIn. More Personal Computing revenue decreased driven by Windows and Devices."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_microsoft_cloud_growth",
+          "claim": "Microsoft Cloud revenue increased 22% to $111.6 billion.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_microsoft_cloud_growth_quote",
+              "section": "Item 7",
+              "quote": "Microsoft Cloud revenue increased 22% to $111.6 billion."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_productivity_growth",
+          "claim": "Office Commercial grew 10%, Office Consumer grew 2%, LinkedIn grew 10%, and Dynamics grew 16%, with Office 365 Commercial and Dynamics 365 growing 13% and 24%, respectively.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_office_commercial_growth_quote",
+              "section": "Item 7",
+              "quote": "Office Commercial products and cloud services revenue increased 10% driven by Office 365 Commercial growth of 13%."
+            },
+            {
+              "evidence_id": "revenue_office_consumer_growth_quote",
+              "section": "Item 7",
+              "quote": "Office Consumer products and cloud services revenue increased 2% and Microsoft 365 Consumer subscribers increased to 67.0 million."
+            },
+            {
+              "evidence_id": "revenue_linkedin_growth_quote",
+              "section": "Item 7",
+              "quote": "LinkedIn revenue increased 10%."
+            },
+            {
+              "evidence_id": "revenue_dynamics_growth_quote",
+              "section": "Item 7",
+              "quote": "Dynamics products and cloud services revenue increased 16% driven by Dynamics 365 growth of 24%."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_server_azure_growth",
+          "claim": "Server products and cloud services revenue increased 19%, driven by 29% growth in Azure and other cloud services.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_server_azure_growth_quote",
+              "section": "Item 7",
+              "quote": "Server products and cloud services revenue increased 19% driven by Azure and other cloud services growth of 29%."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_personal_computing_search_mix",
+          "claim": "Windows OEM and Devices revenue declined 25% and 24%, Windows Commercial grew 5%, Xbox content and services declined 3%, and search and news advertising excluding traffic-acquisition costs grew 11%.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_windows_oem_decline_quote",
+              "section": "Item 7",
+              "quote": "Windows original equipment manufacturer licensing (“Windows OEM”) revenue decreased 25%."
+            },
+            {
+              "evidence_id": "revenue_devices_decline_quote",
+              "section": "Item 7",
+              "quote": "Devices revenue decreased 24%."
+            },
+            {
+              "evidence_id": "revenue_windows_commercial_growth_quote",
+              "section": "Item 7",
+              "quote": "Windows Commercial products and cloud services revenue increased 5%."
+            },
+            {
+              "evidence_id": "revenue_xbox_decline_quote",
+              "section": "Item 7",
+              "quote": "Xbox content and services revenue decreased 3%."
+            },
+            {
+              "evidence_id": "revenue_search_advertising_growth_quote",
+              "section": "Item 7",
+              "quote": "Search and news advertising revenue excluding traffic acquisition costs increased 11%."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "revenue_office_commercial_detail",
+          "claim": "Office Commercial growth included 13% Office 365 Commercial growth with 11% seat growth, while Office Commercial products declined 21% as customers shifted to cloud offerings.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_office_commercial_detail_quote",
+              "section": "Item 7",
+              "quote": "Office Commercial products and cloud services revenue increased $3.7 billion or 10%. Office 365 Commercial revenue grew 13% with seat growth of 11%, driven by small and medium business and frontline worker offerings, as well as growth in revenue per user. Office Commercial products revenue declined 21% driven by continued customer shift to cloud offerings."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_azure_detail",
+          "claim": "Server and cloud revenue increased $12.6 billion or 19%; Azure and other cloud services grew 29% through consumption-based services, while server products declined 1%.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_azure_detail_quote",
+              "section": "Item 7",
+              "quote": "Server products and cloud services revenue increased $12.6 billion or 19% driven by Azure and other cloud services. Azure and other cloud services revenue grew 29% driven by growth in our consumption-based services. Server products revenue decreased 1%."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_windows_detail",
+          "claim": "Windows revenue declined $3.2 billion or 13%; OEM weakness reflected elevated channel inventory and declining PC demand, while Windows Commercial grew through Microsoft 365 demand.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_windows_detail_quote",
+              "section": "Item 7",
+              "quote": "Windows revenue decreased $3.2 billion or 13% driven by a decrease in Windows OEM. Windows OEM revenue decreased 25% as elevated channel inventory levels continued to drive additional weakness beyond declining PC demand. Windows Commercial products and cloud services revenue increased 5% driven by demand for Microsoft 365."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_foreign_currency_effect",
+          "claim": "Foreign currency had unfavorable impacts of 4% on revenue, 4% on gross margin, and 6% on operating income, while cost of revenue and operating expenses each had a favorable 2% impact.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_foreign_currency_effect_quote",
+              "section": "Item 7",
+              "quote": "Revenue, gross margin, and operating income included an unfavorable foreign currency impact of 4%, 4%, and 6%, respectively. Cost of revenue and operating expenses both included a favorable foreign currency impact of 2%."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
     }
   ]
 }
