@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "b5dda1e6f30db16d9c7ee0eda58cfdd5d6d6e5500ebe28eaf9c80082037fc32b"
+    "sha256": "be5dbb441dab7b1ceb88ff237ae6545b0b9184327542433425a44b78c48d645d"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -1581,13 +1581,338 @@
         "resolved_evidence_count": 8,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_revenue_growth_mda",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "revenue_consolidated_growth",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_consolidated_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "317469d90c69917ad2c96b27e17cf0d03c810419e2bc4163eab6af4281e81478",
+              "section_char_start": 15836,
+              "section_char_end": 16259,
+              "document_char_start": 204931,
+              "document_char_end": 205354,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_10_f353b50edb1e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_10_f353b50edb1e"
+          ]
+        },
+        {
+          "fact_id": "revenue_microsoft_cloud_growth",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_microsoft_cloud_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "879e9f5daab7e319193722458b015932cda082def146ed8aa1ad074316db92d6",
+              "section_char_start": 2086,
+              "section_char_end": 2142,
+              "document_char_start": 191181,
+              "document_char_end": 191237,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_1_517e538f81f7"
+          ]
+        },
+        {
+          "fact_id": "revenue_productivity_growth",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_office_commercial_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "6ddc238dd7ce1213b5c5aaa283a40e98212af14cf1ce572860a9fd558b2e67d7",
+              "section_char_start": 2145,
+              "section_char_end": 2259,
+              "document_char_start": 191240,
+              "document_char_end": 191354,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_office_consumer_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "191b5b66ae091c395890c89207da2b2b2def6a1c5ddfa1272b423d56ba3f79d2",
+              "section_char_start": 2262,
+              "section_char_end": 2392,
+              "document_char_start": 191357,
+              "document_char_end": 191487,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_linkedin_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "947e29540cffce0156e5a179a4abd947d24c968c48a425a56e3a897b1f331838",
+              "section_char_start": 2395,
+              "section_char_end": 2426,
+              "document_char_start": 191490,
+              "document_char_end": 191521,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_dynamics_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "fd0ea8e1b02ba115a8ad5b91d1d76ebb1d3d81aa32db13019b41e578539b63dd",
+              "section_char_start": 2429,
+              "section_char_end": 2525,
+              "document_char_start": 191524,
+              "document_char_end": 191620,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_1_517e538f81f7"
+          ]
+        },
+        {
+          "fact_id": "revenue_server_azure_growth",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_server_azure_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "a6320cc6e63649d3112406d9cddc62bb43718f5f22dd8169b63d31c5f246b9a0",
+              "section_char_start": 2528,
+              "section_char_end": 2640,
+              "document_char_start": 191623,
+              "document_char_end": 191735,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_1_517e538f81f7"
+          ]
+        },
+        {
+          "fact_id": "revenue_personal_computing_search_mix",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_windows_oem_decline_quote",
+              "section": "Item 7",
+              "quote_sha256": "09cbea87d23e5d9a326153254555dadf0dcca8bd8c9ded66949edc9e3c59e1ea",
+              "section_char_start": 2643,
+              "section_char_end": 2731,
+              "document_char_start": 191738,
+              "document_char_end": 191826,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_devices_decline_quote",
+              "section": "Item 7",
+              "quote_sha256": "8f2a604b16b203354e55e1807388ec6548b162a64290cd332efce1b59393bfc8",
+              "section_char_start": 2734,
+              "section_char_end": 2764,
+              "document_char_start": 191829,
+              "document_char_end": 191859,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_windows_commercial_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "bc38f8b62c9602e225fddad46dcc55538f609bd3da6dc960d2ffdeb21681c7b1",
+              "section_char_start": 2767,
+              "section_char_end": 2835,
+              "document_char_start": 191862,
+              "document_char_end": 191930,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_xbox_decline_quote",
+              "section": "Item 7",
+              "quote_sha256": "7c5de0b7861e093e80e64b7b556e3c3252859198d17839341b598d43a0658e7a",
+              "section_char_start": 2838,
+              "section_char_end": 2885,
+              "document_char_start": 191933,
+              "document_char_end": 191980,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            },
+            {
+              "evidence_id": "revenue_search_advertising_growth_quote",
+              "section": "Item 7",
+              "quote_sha256": "cf105c338bb0e72b1237856a0a19e78ef171c99c4c02b27124792f502ef86587",
+              "section_char_start": 2888,
+              "section_char_end": 2974,
+              "document_char_start": 191983,
+              "document_char_end": 192069,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_1_517e538f81f7"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_1_517e538f81f7"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "revenue_office_commercial_detail",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_office_commercial_detail_quote",
+              "section": "Item 7",
+              "quote_sha256": "bb301bd2e485b3559df3baa29fe95e55dc0320eb3be7f0b03a7586d213d3074d",
+              "section_char_start": 18932,
+              "section_char_end": 19290,
+              "document_char_start": 208027,
+              "document_char_end": 208385,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_12_91e86e4e2cb3"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_12_91e86e4e2cb3"
+          ]
+        },
+        {
+          "fact_id": "revenue_azure_detail",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_azure_detail_quote",
+              "section": "Item 7",
+              "quote_sha256": "ca0cf42318188e80de5ef8f02a9f381307d0d5aadbb982e6c72c733ee5c07ae0",
+              "section_char_start": 20363,
+              "section_char_end": 20616,
+              "document_char_start": 209458,
+              "document_char_end": 209711,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_12_91e86e4e2cb3",
+                "MSFT_2023_Item7_13_0357984e9102"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_12_91e86e4e2cb3",
+            "MSFT_2023_Item7_13_0357984e9102"
+          ]
+        },
+        {
+          "fact_id": "revenue_windows_detail",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_windows_detail_quote",
+              "section": "Item 7",
+              "quote_sha256": "2d335efe4e42d131309d4f74f292be79023bee02ed646811d2f636f4e5ac28be",
+              "section_char_start": 21697,
+              "section_char_end": 22021,
+              "document_char_start": 210792,
+              "document_char_end": 211116,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_13_0357984e9102"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_13_0357984e9102"
+          ]
+        },
+        {
+          "fact_id": "revenue_foreign_currency_effect",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "revenue_foreign_currency_effect_quote",
+              "section": "Item 7",
+              "quote_sha256": "48e05b4a9011be107c4c49e327d2253803e1cdb6bbc4b84f5aeefc362aaed86b",
+              "section_char_start": 17651,
+              "section_char_end": 17871,
+              "document_char_start": 206746,
+              "document_char_end": 206966,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_11_06e2a36a890d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_11_06e2a36a890d"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item7_10_f353b50edb1e",
+        "MSFT_2023_Item7_1_517e538f81f7"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item7_10_f353b50edb1e",
+        "MSFT_2023_Item7_1_517e538f81f7",
+        "MSFT_2023_Item7_12_91e86e4e2cb3",
+        "MSFT_2023_Item7_13_0357984e9102",
+        "MSFT_2023_Item7_11_06e2a36a890d"
+      ],
+      "validation": {
+        "required_fact_count": 5,
+        "resolved_required_fact_count": 5,
+        "optional_fact_count": 4,
+        "resolved_optional_fact_count": 4,
+        "evidence_count": 16,
+        "resolved_evidence_count": 16,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 6,
-    "required_fact_count": 28,
-    "optional_fact_count": 32,
-    "evidence_count": 61,
+    "question_count": 7,
+    "required_fact_count": 33,
+    "optional_fact_count": 36,
+    "evidence_count": 77,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
