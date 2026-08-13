@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "d2e7761b1a09ac81e4e5b2c816936ca0c95a58c032ae6527ed6911618ffcb197"
+    "sha256": "8ba6db6113c5e56fc68a57a3a93c70cdd29de8ff6b65bcadfde751906a9c225e"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -895,13 +895,250 @@
         "resolved_evidence_count": 13,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_cloud_infrastructure_risks",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "cloud_infrastructure_scaling_demand",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_scaling_demand_quote",
+              "section": "Item 1A",
+              "quote_sha256": "05d29759d22f05be17b6e4df472a29be76bd2658b19042298f3bf1c22c690198",
+              "section_char_start": 34640,
+              "section_char_end": 34969,
+              "document_char_start": 151292,
+              "document_char_end": 151621,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_22_49bb423e539e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_22_49bb423e539e"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_critical_dependencies",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_critical_dependencies_quote",
+              "section": "Item 1A",
+              "quote_sha256": "ad1558bc008f203ac716d4049b542810696f30439091cc959a4f322a7b867606",
+              "section_char_start": 34970,
+              "section_char_end": 35166,
+              "document_char_start": 151622,
+              "document_char_end": 151818,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_22_49bb423e539e",
+                "MSFT_2023_Item1A_23_5995cd2d2b3b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_22_49bb423e539e",
+            "MSFT_2023_Item1A_23_5995cd2d2b3b"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_external_pressures",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_external_pressures_quote",
+              "section": "Item 1A",
+              "quote_sha256": "4c4b21fc269bb9327bb0f11d413defdd1116a6fb5b6d8a97b98af7e7199c790d",
+              "section_char_start": 35167,
+              "section_char_end": 35394,
+              "document_char_start": 151819,
+              "document_char_end": 152046,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_22_49bb423e539e",
+                "MSFT_2023_Item1A_23_5995cd2d2b3b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_22_49bb423e539e",
+            "MSFT_2023_Item1A_23_5995cd2d2b3b"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_resilience_complexity",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_resilience_complexity_quote",
+              "section": "Item 1A",
+              "quote_sha256": "92818e421f8cb1d6fad2035b614d319c52a9cfd47983ff35e0a2095fa48e62a5",
+              "section_char_start": 35893,
+              "section_char_end": 36294,
+              "document_char_start": 152545,
+              "document_char_end": 152946,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_23_5995cd2d2b3b"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_23_5995cd2d2b3b"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_failure_consequences",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_failure_consequences_quote",
+              "section": "Item 1A",
+              "quote_sha256": "b8df3a6e30b0a1824e574891c5d16819e168acfba808e20e8b2ceee1de2787b3",
+              "section_char_start": 36295,
+              "section_char_end": 36858,
+              "document_char_start": 152947,
+              "document_char_end": 153510,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_23_5995cd2d2b3b",
+                "MSFT_2023_Item1A_24_81c04d2a7ba3"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_23_5995cd2d2b3b",
+            "MSFT_2023_Item1A_24_81c04d2a7ba3"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "cloud_infrastructure_margin_pressure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_margin_pressure_quote",
+              "section": "Item 1A",
+              "quote_sha256": "e6c0df7b7292fa9aabd44f97d7784a46f370494c876b28f1c60bdfe5aa94dfa1",
+              "section_char_start": 8193,
+              "section_char_end": 8400,
+              "document_char_start": 124845,
+              "document_char_end": 125052,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_4_19c256f8d809",
+                "MSFT_2023_Item1A_5_1a0703685d22"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_4_19c256f8d809",
+            "MSFT_2023_Item1A_5_1a0703685d22"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_supplier_constraints",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_supplier_constraints_quote",
+              "section": "Item 1A",
+              "quote_sha256": "918b640387169751344cb5b319279434fee8f1cc8dc14b9a7bb203c9bb63df98",
+              "section_char_start": 38216,
+              "section_char_end": 38800,
+              "document_char_start": 154868,
+              "document_char_end": 155452,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_25_ef186f0ca70f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_25_ef186f0ca70f"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_catastrophic_resilience",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_catastrophic_resilience_quote",
+              "section": "Item 1A",
+              "quote_sha256": "1f949b887fa284d31eebfc412db321cd3b6cea9fdb27f97a0e404a760358b08d",
+              "section_char_start": 62179,
+              "section_char_end": 62703,
+              "document_char_start": 178831,
+              "document_char_end": 179355,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_41_ffdaf11d2c4e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_41_ffdaf11d2c4e"
+          ]
+        },
+        {
+          "fact_id": "cloud_infrastructure_location_constraints",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "cloud_infrastructure_location_constraints_quote",
+              "section": "Item 1A",
+              "quote_sha256": "4e9fd7be0bce5f1701d0e5437531eed4bb9740c62145bd4d1ffaaf8952036409",
+              "section_char_start": 28202,
+              "section_char_end": 28526,
+              "document_char_start": 144854,
+              "document_char_end": 145178,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item1A_18_631958dc192d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item1A_18_631958dc192d"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item1A_22_49bb423e539e",
+        "MSFT_2023_Item1A_23_5995cd2d2b3b",
+        "MSFT_2023_Item1A_24_81c04d2a7ba3"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item1A_22_49bb423e539e",
+        "MSFT_2023_Item1A_23_5995cd2d2b3b",
+        "MSFT_2023_Item1A_24_81c04d2a7ba3",
+        "MSFT_2023_Item1A_4_19c256f8d809",
+        "MSFT_2023_Item1A_5_1a0703685d22",
+        "MSFT_2023_Item1A_25_ef186f0ca70f",
+        "MSFT_2023_Item1A_41_ffdaf11d2c4e",
+        "MSFT_2023_Item1A_18_631958dc192d"
+      ],
+      "validation": {
+        "required_fact_count": 5,
+        "resolved_required_fact_count": 5,
+        "optional_fact_count": 4,
+        "resolved_optional_fact_count": 4,
+        "evidence_count": 9,
+        "resolved_evidence_count": 9,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 3,
-    "required_fact_count": 15,
-    "optional_fact_count": 19,
-    "evidence_count": 34,
+    "question_count": 4,
+    "required_fact_count": 20,
+    "optional_fact_count": 23,
+    "evidence_count": 43,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
