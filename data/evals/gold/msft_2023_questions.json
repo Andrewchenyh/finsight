@@ -939,6 +939,167 @@
         "annotator": "project_author",
         "review_status": "verified"
       }
+    },
+    {
+      "id": "msft_2023_revenue_recognition",
+      "query": "How and when does Microsoft recognize revenue for its main products and services?",
+      "scope": {
+        "sections": [
+          "Item 8"
+        ]
+      },
+      "reference_answer": "Microsoft recognizes revenue when control of promised products or services transfers to the customer, in the amount it expects to receive, and generally treats distinct products and services as separate performance obligations. Distinct on-premises software-license revenue is recognized upfront when the software becomes available, while allocated update revenue is generally recognized ratably as updates are provided. Software Assurance revenue is generally recognized ratably over the contract period. Subscription cloud revenue is recognized ratably, consumption-based cloud revenue according to customer usage, and integrated cloud-and-software revenue over the service period. Search-advertising revenue is recognized when the advertisement appears or the earning action is completed, and consulting revenue as services are provided. Interdependent hardware and software are treated as one performance obligation, with revenue recognized when ownership transfers.",
+      "required_facts": [
+        {
+          "fact_id": "revenue_recognition_general_principle",
+          "claim": "Microsoft recognizes revenue when control of promised products or services transfers, based on expected consideration, generally accounts for distinct offerings as separate performance obligations, and reports revenue net of return allowances and collected taxes.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_general_principle_quote",
+              "section": "Item 8",
+              "quote": "Revenue is recognized upon transfer of control of promised products or services to customers in an amount that reflects the consideration we expect to receive in exchange for those products or services. We enter into contracts that can include various combinations of products and services, which are generally capable of being distinct and accounted for as separate performance obligations. Revenue is recognized net of allowances for returns and any taxes collected from customers, which are subsequently remitted to governmental authorities."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_on_premises_software",
+          "claim": "Revenue from distinct on-premises licenses is recognized upfront when the software becomes available, while allocated software-update revenue is generally recognized ratably as updates are provided.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_on_premises_software_quote",
+              "section": "Item 8",
+              "quote": "Licenses for on-premises software provide the customer with a right to use the software as it exists when made available to the customer. Customers may purchase perpetual licenses or subscribe to licenses, which provide customers with the same functionality and differ mainly in the duration over which the customer benefits from the software. Revenue from distinct on-premises licenses is recognized upfront at the point in time when the software is made available to the customer. In cases where we allocate revenue to software updates, primarily because the updates are provided at no additional charge, revenue is recognized as the updates are provided, which is generally ratably over the estimated life of the related device or license."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_software_assurance",
+          "claim": "Software Assurance revenue is generally recognized ratably over the contract period because customers consume its distinct benefits over time.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_software_assurance_quote",
+              "section": "Item 8",
+              "quote": "Revenue allocated to SA is generally recognized ratably over the contract period as customers simultaneously consume and receive benefits, given that SA comprises distinct performance obligations that are satisfied over time."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_cloud_services",
+          "claim": "Subscription cloud revenue is recognized ratably over the contract, consumption-based cloud revenue according to utilization, and integrated cloud-and-software revenue over the service period.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_cloud_services_quote",
+              "section": "Item 8",
+              "quote": "Cloud services, which allow customers to use hosted software over the contract period without taking possession of the software, are provided on either a subscription or consumption basis. Revenue related to cloud services provided on a subscription basis is recognized ratably over the contract period. Revenue related to cloud services provided on a consumption basis, such as the amount of storage used in a period, is recognized based on the customer utilization of such resources. When cloud services require a significant level of integration and interdependency with software and the individual components are not considered distinct, all revenue is recognized over the period in which the cloud services are provided."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_advertising_consulting",
+          "claim": "Search-advertising revenue is recognized when the advertisement appears or the required earning action is completed, while consulting revenue is recognized as services are provided.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_advertising_consulting_quote",
+              "section": "Item 8",
+              "quote": "Revenue from search advertising is recognized when the advertisement appears in the search results or when the action necessary to earn the revenue has been completed. Revenue from consulting services is recognized as services are provided."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_hardware",
+          "claim": "Interdependent hardware and operating-system software are treated as one performance obligation, with revenue recognized when ownership transfers to a reseller or end customer.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_hardware_quote",
+              "section": "Item 8",
+              "quote": "Our hardware is generally highly dependent on, and interrelated with, the underlying operating system and cannot function without the operating system. In these cases, the hardware and software license are accounted for as a single performance obligation and revenue is recognized at the point in time when ownership is transferred to resellers or directly to end customers through retail stores and online marketplaces."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "revenue_recognition_office365_distinct_judgment",
+          "claim": "Determining whether contract components are distinct requires judgment; Microsoft treats Office 365's integrated desktop applications and cloud services as one performance obligation and recognizes its revenue ratably over the service period.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_distinct_judgment_quote",
+              "section": "Item 8",
+              "quote": "Our contracts with customers often include promises to transfer multiple products and services to a customer. Determining whether products and services are considered distinct performance obligations that should be accounted for separately versus together may require significant judgment. When a cloud-based service includes both on-premises software licenses and cloud services, judgment is required to determine whether the software license is considered distinct and accounted for separately, or not distinct and accounted for together with the cloud service and recognized over time."
+            },
+            {
+              "evidence_id": "revenue_recognition_office365_quote",
+              "section": "Item 8",
+              "quote": "Certain cloud services, primarily Office 365, depend on a significant level of integration, interdependency, and interrelation between the desktop applications and cloud services, and are accounted for together as one performance obligation. Revenue from Office 365 is recognized ratably over the period in which the cloud services are provided."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_ssp_judgment",
+          "claim": "Microsoft uses judgment to determine the standalone selling price of each distinct performance obligation.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_ssp_judgment_quote",
+              "section": "Item 8",
+              "quote": "Judgment is required to determine the SSP for each distinct performance obligation."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_variable_consideration",
+          "claim": "Returns, credits, incentives, and estimated customer usage are treated as variable consideration, with estimates established at contract inception and updated each reporting period.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_variable_consideration_quote",
+              "section": "Item 8",
+              "quote": "Our products are generally sold with a right of return, we may provide other credits or incentives, and in certain instances we estimate customer usage of our products and services, which are accounted for as variable consideration when determining the amount of revenue to recognize. Returns and credits are estimated at contract inception and updated at the end of each reporting period if additional information becomes available. Changes to our estimated variable consideration were not material for the periods presented."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_contract_balances",
+          "claim": "Revenue timing may differ from invoicing, resulting in receivables when recognition precedes invoicing and unearned revenue when recognition follows invoicing.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_contract_balances_quote",
+              "section": "Item 8",
+              "quote": "Timing of revenue recognition may differ from the timing of invoicing to customers. We record a receivable when revenue is recognized prior to invoicing, or unearned revenue when revenue is recognized subsequent to invoicing. For multi-year agreements, we generally invoice customers annually at the beginning of each annual coverage period. We record a receivable related to revenue recognized for multi-year on-premises licenses as we have an unconditional right to invoice and receive payment in the future related to those licenses."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_revenue_categories",
+          "claim": "Microsoft classifies software, games, and hardware as product revenue, while service and other revenue includes cloud solutions, support, consulting, advertising, and LinkedIn.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_revenue_categories_quote",
+              "section": "Item 8",
+              "quote": "Product revenue includes sales from operating systems, cross-device productivity and collaboration applications, server applications, business solution applications, desktop and server management tools, software development tools, video games, and hardware such as PCs, tablets, gaming and entertainment consoles, other intelligent devices, and related accessories.\nService and other revenue includes sales from cloud-based solutions that provide customers with software, services, platforms, and content such as Office 365, Azure, Dynamics 365, and Xbox; solution support; and consulting services. Service and other revenue also includes sales from online advertising and LinkedIn."
+            }
+          ]
+        },
+        {
+          "fact_id": "revenue_recognition_auditor_assessment",
+          "claim": "The independent auditor restates Microsoft's transfer-of-control principle and identifies significant judgment in applying revenue recognition to volume-licensing arrangements.",
+          "evidence_units": [
+            {
+              "evidence_id": "revenue_recognition_auditor_principle_quote",
+              "section": "Item 8",
+              "quote": "The Company recognizes revenue upon transfer of control of promised products or services to customers in an amount that reflects the consideration the Company expects to receive in exchange for those products or services. The Company offers customers the ability to acquire multiple licenses of software products and services, including cloud-based services, in its customer agreements through its volume licensing programs."
+            },
+            {
+              "evidence_id": "revenue_recognition_auditor_judgment_quote",
+              "section": "Item 8",
+              "quote": "Significant judgment is exercised by the Company in determining revenue recognition for these customer agreements, and includes the following:"
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
     }
   ]
 }
