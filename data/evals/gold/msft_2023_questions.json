@@ -685,6 +685,107 @@
         "annotator": "project_author",
         "review_status": "verified"
       }
+    },
+    {
+      "id": "msft_2023_foreign_exchange_mda",
+      "query": "What foreign-exchange exposure and company-level fiscal 2023 impacts does Microsoft describe in MD&A?",
+      "scope": {
+        "sections": [
+          "Item 7"
+        ]
+      },
+      "reference_answer": "Microsoft says its international operations provide a significant share of total revenue and expenses, many of which are denominated outside the U.S. dollar, so exchange-rate movements can materially affect both. U.S.-dollar fluctuations reduced reported international revenue and expenses in fiscal 2023. At the company level, foreign currency had unfavorable impacts of 4% on revenue, 4% on gross margin, and 6% on operating income, while cost of revenue and operating expenses each included a favorable 2% impact.",
+      "required_facts": [
+        {
+          "fact_id": "foreign_exchange_international_exposure",
+          "claim": "International operations provide significant revenue and expenses, many denominated outside the U.S. dollar, so exchange-rate movements can materially affect both and reduced reported international revenue and expenses in fiscal 2023.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_international_exposure_quote",
+              "section": "Item 7",
+              "quote": "Our international operations provide a significant portion of our total revenue and expenses. Many of these revenue and expenses are denominated in currencies other than the U.S. dollar. As a result, changes in foreign exchange rates may significantly affect revenue and expenses. Fluctuations in the U.S. dollar relative to certain foreign currencies reduced reported revenue and expenses from our international operations in fiscal year 2023."
+            }
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_consolidated_impact",
+          "claim": "At the company level, foreign currency had unfavorable impacts of 4% on revenue, 4% on gross margin, and 6% on operating income, while cost of revenue and operating expenses each had a favorable 2% impact.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_consolidated_impact_quote",
+              "section": "Item 7",
+              "quote": "Revenue, gross margin, and operating income included an unfavorable foreign currency impact of 4%, 4%, and 6%, respectively. Cost of revenue and operating expenses both included a favorable foreign currency impact of 2%."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "foreign_exchange_productivity_segment_impact",
+          "claim": "In Productivity and Business Processes, foreign currency had unfavorable impacts of 5% on revenue, 5% on gross margin, and 8% on operating income.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_productivity_segment_impact_quote",
+              "section": "Item 7",
+              "quote": "Revenue, gross margin, and operating income included an unfavorable foreign currency impact of 5%, 5%, and 8%, respectively."
+            }
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_intelligent_cloud_impact",
+          "claim": "In Intelligent Cloud, foreign currency had unfavorable impacts of 4% on revenue, 4% on gross margin, and 6% on operating income, while operating expenses included a favorable 2% impact.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_intelligent_cloud_impact_quote",
+              "section": "Item 7",
+              "quote": "Revenue, gross margin, and operating income included an unfavorable foreign currency impact of 4%, 4%, and 6%, respectively. Operating expenses included a favorable foreign currency impact of 2%."
+            }
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_personal_computing_impact",
+          "claim": "In More Personal Computing, foreign currency had unfavorable impacts of 3% on revenue, 4% on gross margin, and 6% on operating income, while operating expenses included a favorable 2% impact.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_personal_computing_impact_quote",
+              "section": "Item 7",
+              "quote": "Revenue, gross margin, and operating income included an unfavorable foreign currency impact of 3%, 4%, and 6%, respectively. Operating expenses included a favorable foreign currency impact of 2%."
+            }
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_expense_function_impacts",
+          "claim": "Sales and marketing and general and administrative expenses each included a favorable foreign-currency impact of 2%.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_sales_marketing_impact_quote",
+              "section": "Item 7",
+              "quote": "Sales and marketing included a favorable foreign currency impact of 2%."
+            },
+            {
+              "evidence_id": "foreign_exchange_general_admin_impact_quote",
+              "section": "Item 7",
+              "quote": "General and administrative included a favorable foreign currency impact of 2%."
+            }
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_derivative_risk_management",
+          "claim": "Microsoft uses derivative instruments to manage foreign-currency and other financial risks.",
+          "evidence_units": [
+            {
+              "evidence_id": "foreign_exchange_derivative_risk_management_quote",
+              "section": "Item 7",
+              "quote": "We use derivative instruments to manage risks related to foreign currencies, equity prices, interest rates, and credit; enhance investment returns; and facilitate portfolio diversification."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
     }
   ]
 }
