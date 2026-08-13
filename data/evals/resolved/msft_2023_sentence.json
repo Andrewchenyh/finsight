@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "8ba6db6113c5e56fc68a57a3a93c70cdd29de8ff6b65bcadfde751906a9c225e"
+    "sha256": "ba38b09ba8d6773ce002f5c7c617ca7fe1e3ba430d1e1ec1ed9358b98e882ae5"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -33,6 +33,12 @@
         "document_char_start": 42016,
         "document_char_end": 116651,
         "normalized_text_sha256": "7f70241b93f8664ceb4a3386aa977a960ecec20b71b654d26a2213bd46a75d59"
+      },
+      {
+        "section": "Item 7",
+        "document_char_start": 189095,
+        "document_char_end": 244731,
+        "normalized_text_sha256": "2ca0e044edd37ebbf9fc8eb4a3b3457764de719c659103cc6b1b1a7d3fde4b62"
       }
     ]
   },
@@ -1132,13 +1138,258 @@
         "resolved_evidence_count": 9,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_economic_conditions_mda",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "economic_competition_and_demand",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_competition_and_demand_quote",
+              "section": "Item 7",
+              "quote_sha256": "51a1d1ab98f62e3da82e7605b675e38602eb035ca8cb094704cc1f8aa8eb9d53",
+              "section_char_start": 3555,
+              "section_char_end": 4234,
+              "document_char_start": 192650,
+              "document_char_end": 193329,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_2_85a77caa6ac9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_2_85a77caa6ac9"
+          ]
+        },
+        {
+          "fact_id": "economic_infrastructure_costs",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_infrastructure_costs_quote",
+              "section": "Item 7",
+              "quote_sha256": "eeb1adc304e493682c529b5facfcf17ed46366b67b6bc3fbae3c3398e8a6abbd",
+              "section_char_start": 4235,
+              "section_char_end": 4612,
+              "document_char_start": 193330,
+              "document_char_end": 193707,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_2_85a77caa6ac9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_2_85a77caa6ac9"
+          ]
+        },
+        {
+          "fact_id": "economic_datacenter_dependencies",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_datacenter_dependencies_quote",
+              "section": "Item 7",
+              "quote_sha256": "ad1558bc008f203ac716d4049b542810696f30439091cc959a4f322a7b867606",
+              "section_char_start": 4613,
+              "section_char_end": 4809,
+              "document_char_start": 193708,
+              "document_char_end": 193904,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_2_85a77caa6ac9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_2_85a77caa6ac9"
+          ]
+        },
+        {
+          "fact_id": "economic_supplier_disruption",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_supplier_disruption_quote",
+              "section": "Item 7",
+              "quote_sha256": "d58041708fc51396d4c0b0cf82c5a07ceb6a2836929eda9468542e05ab6493af",
+              "section_char_start": 4888,
+              "section_char_end": 5272,
+              "document_char_start": 193983,
+              "document_char_end": 194367,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        },
+        {
+          "fact_id": "economic_talent_dependency",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_talent_dependency_quote",
+              "section": "Item 7",
+              "quote_sha256": "9ccf4d449a010c52dddd96bf0892aed9943e3fadf74359c4f5a461270a3ef7fb",
+              "section_char_start": 5273,
+              "section_char_end": 5362,
+              "document_char_start": 194368,
+              "document_char_end": 194457,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        },
+        {
+          "fact_id": "economic_foreign_exchange_exposure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_foreign_exchange_exposure_quote",
+              "section": "Item 7",
+              "quote_sha256": "025dbd3a705ef80eeb75bd2629eede5212dcdce35c0a5cf898532353ae28b7a0",
+              "section_char_start": 5680,
+              "section_char_end": 6124,
+              "document_char_start": 194775,
+              "document_char_end": 195219,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "economic_contract_manufacturing",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_contract_manufacturing_quote",
+              "section": "Item 7",
+              "quote_sha256": "1eea2867574e529795eac6d752d10ed14f20910086f715c57df36ce104e80625",
+              "section_char_start": 4810,
+              "section_char_end": 4887,
+              "document_char_start": 193905,
+              "document_char_end": 193982,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_2_85a77caa6ac9"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_2_85a77caa6ac9"
+          ]
+        },
+        {
+          "fact_id": "economic_talent_competition",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_talent_competition_quote",
+              "section": "Item 7",
+              "quote_sha256": "e00e0dc17d8419b1e168d472aa855625c5b5797ff84225a7513b1f875c46e300",
+              "section_char_start": 5363,
+              "section_char_end": 5679,
+              "document_char_start": 194458,
+              "document_char_end": 194774,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        },
+        {
+          "fact_id": "economic_cost_alignment_charge",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_cost_alignment_charge_quote",
+              "section": "Item 7",
+              "quote_sha256": "bc7ac1266f2fe61b85eb22f448c7c9c7c6383a44a1ac9c422a126c549080f0ba",
+              "section_char_start": 6125,
+              "section_char_end": 6804,
+              "document_char_start": 195220,
+              "document_char_end": 195899,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        },
+        {
+          "fact_id": "economic_ongoing_cost_actions",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "economic_ongoing_cost_actions_quote",
+              "section": "Item 7",
+              "quote_sha256": "30f713a82c91721705a6790855eb866bbc12ce0cc6172382aa963c1d0f6f0151",
+              "section_char_start": 6805,
+              "section_char_end": 7307,
+              "document_char_start": 195900,
+              "document_char_end": 196402,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_4_677ba869b46c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_4_677ba869b46c"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item7_2_85a77caa6ac9",
+        "MSFT_2023_Item7_3_1c7eb6621222"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item7_2_85a77caa6ac9",
+        "MSFT_2023_Item7_3_1c7eb6621222",
+        "MSFT_2023_Item7_4_677ba869b46c"
+      ],
+      "validation": {
+        "required_fact_count": 6,
+        "resolved_required_fact_count": 6,
+        "optional_fact_count": 4,
+        "resolved_optional_fact_count": 4,
+        "evidence_count": 10,
+        "resolved_evidence_count": 10,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 4,
-    "required_fact_count": 20,
-    "optional_fact_count": 23,
-    "evidence_count": 43,
+    "question_count": 5,
+    "required_fact_count": 26,
+    "optional_fact_count": 27,
+    "evidence_count": 53,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
