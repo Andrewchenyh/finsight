@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "ba38b09ba8d6773ce002f5c7c617ca7fe1e3ba430d1e1ec1ed9358b98e882ae5"
+    "sha256": "b5dda1e6f30db16d9c7ee0eda58cfdd5d6d6e5500ebe28eaf9c80082037fc32b"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -1383,13 +1383,211 @@
         "resolved_evidence_count": 10,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_foreign_exchange_mda",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "foreign_exchange_international_exposure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_international_exposure_quote",
+              "section": "Item 7",
+              "quote_sha256": "025dbd3a705ef80eeb75bd2629eede5212dcdce35c0a5cf898532353ae28b7a0",
+              "section_char_start": 5680,
+              "section_char_end": 6124,
+              "document_char_start": 194775,
+              "document_char_end": 195219,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_3_1c7eb6621222"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_3_1c7eb6621222"
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_consolidated_impact",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_consolidated_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "48e05b4a9011be107c4c49e327d2253803e1cdb6bbc4b84f5aeefc362aaed86b",
+              "section_char_start": 17651,
+              "section_char_end": 17871,
+              "document_char_start": 206746,
+              "document_char_end": 206966,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_11_06e2a36a890d"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_11_06e2a36a890d"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "foreign_exchange_productivity_segment_impact",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_productivity_segment_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "23dd7c1cf799fdd02ff407d37e0669acb12cfa8e529b8001fc908ca591dcbbb4",
+              "section_char_start": 20178,
+              "section_char_end": 20302,
+              "document_char_start": 209273,
+              "document_char_end": 209397,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_12_91e86e4e2cb3"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_12_91e86e4e2cb3"
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_intelligent_cloud_impact",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_intelligent_cloud_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "2891d5b4affacf4225ba842b11afff83a26b0e9f4c1e9b883c5a627c6f3c9ac0",
+              "section_char_start": 21437,
+              "section_char_end": 21632,
+              "document_char_start": 210532,
+              "document_char_end": 210727,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_13_0357984e9102"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_13_0357984e9102"
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_personal_computing_impact",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_personal_computing_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "a24351e2ba3ee4a14134cabc7cd74f884cd4dbc58e24c750f35d391048abce94",
+              "section_char_start": 23124,
+              "section_char_end": 23319,
+              "document_char_start": 212219,
+              "document_char_end": 212414,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_14_c25d7c5af883"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_14_c25d7c5af883"
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_expense_function_impacts",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_sales_marketing_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "da824d77da1f1332b75b03aa95471b94854897db0b3e2724f65aaeda5be61fcc",
+              "section_char_start": 24729,
+              "section_char_end": 24800,
+              "document_char_start": 213824,
+              "document_char_end": 213895,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_15_367c49f3fb45"
+              ]
+            },
+            {
+              "evidence_id": "foreign_exchange_general_admin_impact_quote",
+              "section": "Item 7",
+              "quote_sha256": "e3e90c31397b78cf41a83009aebe6ab62748035c249a52ebe1d6354764e98afe",
+              "section_char_start": 25609,
+              "section_char_end": 25687,
+              "document_char_start": 214704,
+              "document_char_end": 214782,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_16_995d3668082c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_15_367c49f3fb45",
+            "MSFT_2023_Item7_16_995d3668082c"
+          ]
+        },
+        {
+          "fact_id": "foreign_exchange_derivative_risk_management",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "foreign_exchange_derivative_risk_management_quote",
+              "section": "Item 7",
+              "quote_sha256": "175157af3e73d56952ad224b3412fc116f194e375a71b5b23b7d07008a730da2",
+              "section_char_start": 26111,
+              "section_char_end": 26300,
+              "document_char_start": 215206,
+              "document_char_end": 215395,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_16_995d3668082c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_16_995d3668082c"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item7_3_1c7eb6621222",
+        "MSFT_2023_Item7_11_06e2a36a890d"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item7_3_1c7eb6621222",
+        "MSFT_2023_Item7_11_06e2a36a890d",
+        "MSFT_2023_Item7_12_91e86e4e2cb3",
+        "MSFT_2023_Item7_13_0357984e9102",
+        "MSFT_2023_Item7_14_c25d7c5af883",
+        "MSFT_2023_Item7_15_367c49f3fb45",
+        "MSFT_2023_Item7_16_995d3668082c"
+      ],
+      "validation": {
+        "required_fact_count": 2,
+        "resolved_required_fact_count": 2,
+        "optional_fact_count": 5,
+        "resolved_optional_fact_count": 5,
+        "evidence_count": 8,
+        "resolved_evidence_count": 8,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 5,
-    "required_fact_count": 26,
-    "optional_fact_count": 27,
-    "evidence_count": 53,
+    "question_count": 6,
+    "required_fact_count": 28,
+    "optional_fact_count": 32,
+    "evidence_count": 61,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
