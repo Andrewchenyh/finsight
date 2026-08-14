@@ -72,7 +72,7 @@ flowchart TD
     Ingest --> SEC[SEC EDGAR]
     SEC --> Raw[Raw 10-K HTML Cache]
     Raw --> Parse[HTML Cleaning + Item Section Extraction]
-    Parse --> Chunk[Section-Aware Chunking]
+    Parse --> Chunk[Section + Sentence-Aware Chunking]
     Chunk --> Embed[OpenAI Embeddings]
     Embed --> Index[Local Index: JSON Chunks + NumPy Vectors]
 
@@ -99,7 +99,7 @@ ticker + fiscal year
   -> raw HTML download/cache
   -> clean filing text
   -> extract Item sections
-  -> section-aware chunks
+  -> section- and sentence-aware chunks
   -> OpenAI embeddings
   -> local vector index
   -> dense/BM25/hybrid retrieval
@@ -121,6 +121,14 @@ Most RAG demos split documents by arbitrary token windows. SEC 10-Ks have legall
 - Item 8: Financial Statements
 
 FinSight extracts these sections first, then chunks within each section. This preserves provenance and makes citations more useful.
+
+Within a section, the chunker also prefers readable sentence boundaries:
+
+- a chunk end moves back to a nearby newline, period, or semicolon when doing so still leaves a useful amount of text
+- the next chunk starts at the beginning of the sentence containing the proposed overlap point
+- if no sentence boundary is available, the chunker falls back to a word boundary so it can always make forward progress
+
+This uses the configured overlap as a target while reducing the partial words and sentence fragments produced by arbitrary fixed windows. Character offsets are adjusted with the boundaries, so each excerpt still maps back to the filing text.
 
 Each chunk carries metadata such as:
 
@@ -157,29 +165,104 @@ FinSight supports four retrieval modes:
 
 ---
 
-## Retrieval Evaluation
+## Source-Grounded Retrieval Evaluation
 
-FinSight includes a starter 10-question retrieval benchmark over the Microsoft 2023 10-K. The benchmark covers risk factors, MD&A, business competition, revenue recognition, market risk, and datacenter dependencies.
+The current evaluation checkpoint replaces manually selected chunk IDs and keyword lists with human-reviewed claims grounded in exact filing quotes. Chunk mappings are generated from those quotes, so the evaluation remains explainable when the chunking strategy or index changes.
+
+The Microsoft 2023 checkpoint contains:
+
+- 10 questions spanning Items 1, 1A, 7, 7A, and 8
+- 45 required facts that define the minimum complete answers
+- 55 optional facts that identify useful supporting context
+- 110 exact-quote evidence units resolved against a 193-chunk index
+
+### Gold Labels And Generated Resolution
+
+| Component | Maintained by | Role |
+|---|---|---|
+| `data/evals/gold/msft_2023_questions.json` | Human reviewer | Stores the questions, section scope, factual claims, exact source quotes, and verification status. It contains no expected chunk IDs. |
+| `scripts/resolve_retrieval_gold.py` | Code | Finds each quote in the normalized filing, verifies its section, computes offsets and SHA-256 hashes, and maps it to chunks that fully contain the evidence. |
+| `data/evals/resolved/msft_2023_sentence.json` | Generated artifact | Records the filing and index fingerprints, evidence spans, per-fact chunk mappings, and derived required/relevant chunk unions. It should not be edited manually. |
+| `scripts/run_retrieval_eval.py` | Code | Verifies that the gold file, resolved artifact, and current chunk index still match before retrieving and scoring results. |
+
+The split keeps the stable semantic judgment—what facts answer the question and which filing text proves them—in the gold file. Volatile implementation details such as chunk IDs and character mappings are reproducibly derived by the resolver.
+
+After changing the gold labels, source filing, chunker, or chunk index, regenerate the resolution before evaluating:
+
+```bash
+python -m scripts.resolve_retrieval_gold
+python -m scripts.run_retrieval_eval
+```
+
+By default, the runner evaluates all four retrieval modes at `k = 1, 3, 5`. It calls OpenAI and Cohere for the modes that use those services, so the corresponding API keys and the local `MSFT_2023` index are required.
+
+### Required And Optional Evidence
+
+Required and optional facts are reviewed using the same standard—each claim must be faithfully supported by an exact quote—but they serve different scoring roles:
+
+- **Required facts** define the minimum answer and drive Required Hit, Fact Recall, Full Coverage, and Required MRR.
+- **Optional facts** are valid supplementary context. They join required evidence for Context Precision but cannot turn an incomplete answer into a complete one.
+
+This prevents a broad question from requiring every possible related disclosure while still rewarding retrieval that supplies useful context.
+
+### Metrics
+
+All aggregate metrics are macro-averaged across questions so a question with more labeled facts does not dominate the benchmark.
+
+| Metric | Definition | What it measures |
+|---|---|---|
+| Required Hit@k | Fraction of questions with at least one required fact covered in the top `k` | Whether retrieval found any answer-bearing evidence |
+| Fact Recall@k | Mean, across questions, of covered required facts divided by required facts | Breadth of required answer coverage |
+| Full Coverage@k | Fraction of questions for which every required fact is covered | Whether retrieval can support a complete answer |
+| Context Precision@k | Mean, across questions, of retrieved chunks in the required-or-optional evidence set divided by `k` | How much of the context window is source-labeled as useful |
+| Required MRR@k | Mean reciprocal rank of the first required-evidence chunk, with misses scored as zero | How early answer-bearing evidence appears |
+
+A fact is covered when at least one of its generated evidence chunks appears in the top `k`. Context Precision uses a fixed denominator of `k`, so it should be read alongside coverage: a question with only one relevant chunk cannot score above `1/k` even if that chunk is retrieved.
+
+### Ten-Question Checkpoint
+
+Results below were recorded on the sentence-aware `MSFT_2023` index at `k = 5`:
+
+| Retrieval Mode | Required Hit@5 | Fact Recall@5 | Full Coverage@5 | Context Precision@5 | Required MRR@5 |
+|---|---:|---:|---:|---:|---:|
+| Dense | 1.00 | 0.71 | 0.40 | 0.52 | 0.72 |
+| BM25 | 0.70 | 0.58 | 0.50 | 0.40 | 0.57 |
+| Hybrid | 0.90 | 0.67 | 0.50 | 0.50 | 0.78 |
+| Hybrid + Rerank | 1.00 | 0.87 | 0.70 | 0.72 | 0.88 |
+
+Hybrid retrieval with reranking produced the strongest checkpoint result. Compared with hybrid retrieval at `k = 5`, reranking raised Fact Recall from `0.67` to `0.87`, Full Coverage from `0.50` to `0.70`, and Context Precision from `0.50` to `0.72`. It retrieved required evidence for all 10 questions and fully covered 7.
+
+The remaining incomplete cases are useful error-analysis targets: some answers span more chunks than a top-5 budget can hold, some continuation chunks lack enough local subsection context, and one relevant revenue-recognition candidate was reranked below the cutoff. This checkpoint is therefore a deep, source-grounded regression benchmark for one filing—not evidence of generalization across companies, filing years, or document types.
+
+---
+
+## Legacy Retrieval Evaluation
+
+FinSight preserves its original 10-question retrieval benchmark as a historical baseline over the Microsoft 2023 10-K. Its expected chunk IDs and terms were manually selected. This makes the original workflow inspectable and provides a clear before-and-after comparison with the source-grounded design.
+
+The results below were recorded against the original index. The legacy dataset does not fingerprint its filing, chunker, or index, so rerunning it after an index rebuild can produce different rankings even when its expected chunk IDs still exist. This reproducibility gap is one reason for the source-grounded redesign.
 
 Metrics:
 
-- `Recall@5`: whether at least one expected chunk appeared in the top 5
-- `Mean Precision@5`: approximate relevance rate across retrieved chunks
-- `Mean Expected Chunk Rank`: average rank of the first expected chunk hit
+- `Query Hit Rate@5`: fraction of questions with at least one expected chunk in the top 5
+- `Mean Heuristic Precision@5`: approximate relevance rate based on expected chunk IDs and terms
+- `Mean First-Hit Rank`: average rank of the first expected chunk among successful queries
 
-| Retrieval Mode | Recall@5 | Mean Precision@5 | Mean Expected Chunk Rank |
+| Retrieval Mode | Query Hit Rate@5 | Mean Heuristic Precision@5 | Mean First-Hit Rank |
 |---|---:|---:|---:|
 | Dense | 0.90 | 0.58 | 1.56 |
 | BM25 | 1.00 | 0.50 | 2.10 |
 | Hybrid | 1.00 | 0.60 | 1.70 |
 | Hybrid + Rerank | 1.00 | 0.70 | 1.40 |
 
-Takeaway: hybrid retrieval with Cohere reranking produced the strongest overall retrieval quality, improving Mean Precision@5 from `0.58` to `0.70` versus dense retrieval while maintaining perfect Recall@5 on the starter benchmark. Reranking was especially useful for MD&A queries such as Economic Conditions and Foreign Exchange impacts, moving both target chunks to rank 1.
+Takeaway: hybrid retrieval with Cohere reranking produced the strongest overall retrieval quality, improving Mean Heuristic Precision@5 from `0.58` to `0.70` versus dense retrieval while maintaining a perfect Query Hit Rate@5 on the starter benchmark. Reranking was especially useful for MD&A queries such as Economic Conditions and Foreign Exchange impacts, moving both target chunks to rank 1.
+
+The legacy heuristic metrics and the source-grounded fact metrics use different labels and definitions, so their absolute values should not be compared directly.
 
 Run the eval:
 
 ```bash
-python -m scripts.run_retrieval_eval
+python -m scripts.run_legacy_retrieval_eval
 ```
 
 ---
@@ -197,6 +280,7 @@ python -m scripts.run_retrieval_eval
 | Lexical retrieval | BM25 via `rank-bm25` |
 | Fusion | Reciprocal Rank Fusion |
 | Reranking | Cohere Rerank |
+| Retrieval evaluation | Source-grounded exact quotes + generated chunk mappings |
 | Local index | JSON + NumPy `.npy` |
 | API | FastAPI |
 | Frontend | Streamlit |
@@ -215,11 +299,14 @@ backend/
     schemas.py             # API request/response models
 
   chunking/
-    chunker.py             # Section-aware chunking
+    chunker.py             # Section- and sentence-aware chunking
 
   evals/
-    schemas.py             # Eval dataset/result models
-    retrieval_metrics.py   # Retrieval metric helpers
+    schemas.py                    # Source-grounded gold/resolution models
+    resolver.py                   # Exact-quote evidence resolver
+    retrieval_metrics.py          # Fact- and context-based metrics
+    legacy_schemas.py             # Legacy manually labeled eval models
+    legacy_retrieval_metrics.py   # Legacy ID/term metric helpers
 
   generation/
     answer_generator.py    # Grounded answer generation
@@ -253,10 +340,15 @@ scripts/
   smoke_test_rag.py        # End-to-end RAG smoke test
   retrieval_baseline.py    # Dense baseline inspection
   compare_retrieval_modes.py
-  run_retrieval_eval.py    # Starter benchmark runner
+  resolve_retrieval_gold.py       # Generate chunk mappings from gold quotes
+  run_retrieval_eval.py           # Source-grounded benchmark runner
+  run_legacy_retrieval_eval.py    # Legacy manual-label benchmark runner
 
 data/
-  evals/                   # Golden retrieval datasets, committed
+  evals/
+    gold/                  # Human-reviewed questions, facts, and quotes
+    resolved/              # Generated, fingerprinted chunk mappings
+    legacy/                # Original manual ID/term labels
   sec_filings/raw/         # Cached raw filings, not committed
   index/                   # Local chunks + embeddings, not committed
 ```
@@ -308,6 +400,8 @@ This creates:
 data/index/MSFT_2023_chunks.json
 data/index/MSFT_2023_embeddings.npy
 ```
+
+An index rebuild can change chunk IDs or boundaries. Regenerate the resolved evaluation artifact with `python -m scripts.resolve_retrieval_gold` before running the source-grounded benchmark.
 
 ---
 
@@ -446,6 +540,7 @@ Run optional live smoke tests:
 python -m scripts.smoke_test_rag
 python -m scripts.compare_retrieval_modes
 python -m scripts.run_retrieval_eval
+python -m scripts.run_legacy_retrieval_eval
 ```
 
 Live smoke/eval scripts call OpenAI and/or Cohere and require local indexes plus API keys.
