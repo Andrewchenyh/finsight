@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "d16729dc922fe8f65e1d5ed5e4264548b9fe053afc7cf0ab16f017bf524fdfb2"
+    "sha256": "068edde779815c26e6de991e8c65cd783defa890ba0775c0400e8bf991679c3d"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -2393,13 +2393,329 @@
         "resolved_evidence_count": 6,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_liquidity_cash_flows_mda",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "liquidity_funding_sufficiency",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_funding_sufficiency_quote",
+              "section": "Item 7",
+              "quote_sha256": "f9179e6648bf016e2588d751d7b4c84ec98f9c6584692b4388211f2a5e47bfdd",
+              "section_char_start": 32299,
+              "section_char_end": 32777,
+              "document_char_start": 221394,
+              "document_char_end": 221872,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_20_e89d57ed98fe"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_20_e89d57ed98fe"
+          ]
+        },
+        {
+          "fact_id": "liquidity_asset_balances",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_asset_balances_quote",
+              "section": "Item 7",
+              "quote_sha256": "61fdb106b1d245b0eaa6ce79dfc9979b8c12330d1091fce8a3bb7b1be26d4409",
+              "section_char_start": 32818,
+              "section_char_end": 33052,
+              "document_char_start": 221913,
+              "document_char_end": 222147,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_20_e89d57ed98fe"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_20_e89d57ed98fe"
+          ]
+        },
+        {
+          "fact_id": "liquidity_operating_cash_flow",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_operating_cash_flow_quote",
+              "section": "Item 7",
+              "quote_sha256": "1eec338d638e566348e849b3d9366a405813bb0491db85e697870b91aa60a404",
+              "section_char_start": 36060,
+              "section_char_end": 36306,
+              "document_char_start": 225155,
+              "document_char_end": 225401,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_22_04b34ba57bf5",
+                "MSFT_2023_Item7_23_0c9ce76dc42e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_22_04b34ba57bf5",
+            "MSFT_2023_Item7_23_0c9ce76dc42e"
+          ]
+        },
+        {
+          "fact_id": "liquidity_financing_cash_flow",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_financing_cash_flow_quote",
+              "section": "Item 7",
+              "quote_sha256": "57b6b3ccaadbbba22df8e684f4fe40d7a2fd9d52030e6f4a2904471f105bf278",
+              "section_char_start": 36307,
+              "section_char_end": 36571,
+              "document_char_start": 225402,
+              "document_char_end": 225666,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_23_0c9ce76dc42e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_23_0c9ce76dc42e"
+          ]
+        },
+        {
+          "fact_id": "liquidity_investing_cash_flow",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_investing_cash_flow_quote",
+              "section": "Item 7",
+              "quote_sha256": "13d5a860512504c1359d88dfe3a8ef5a1da0c67a617fc3dd78848b728da730d3",
+              "section_char_start": 36572,
+              "section_char_end": 36972,
+              "document_char_start": 225667,
+              "document_char_end": 226067,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_23_0c9ce76dc42e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_23_0c9ce76dc42e"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "liquidity_short_term_investment_profile",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_short_term_investment_profile_quote",
+              "section": "Item 7",
+              "quote_sha256": "688734d92a9e16c3f4d1ab3196413a74de2a95becf697075c038c914aec8f4ca",
+              "section_char_start": 33053,
+              "section_char_end": 33291,
+              "document_char_start": 222148,
+              "document_char_end": 222386,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_20_e89d57ed98fe"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_20_e89d57ed98fe"
+          ]
+        },
+        {
+          "fact_id": "liquidity_debt_strategy",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_debt_strategy_quote",
+              "section": "Item 7",
+              "quote_sha256": "653693a64801845b9f1ba014de2a15bf0c6151b10b2afb5209dcae1a30b9f853",
+              "section_char_start": 37005,
+              "section_char_end": 37411,
+              "document_char_start": 226100,
+              "document_char_end": 226506,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_23_0c9ce76dc42e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_23_0c9ce76dc42e"
+          ]
+        },
+        {
+          "fact_id": "liquidity_unearned_revenue",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_unearned_revenue_quote",
+              "section": "Item 7",
+              "quote_sha256": "815909b7fb06444fd0162e91ae804456e8b1bca538875f7c1e70e20d13d301b1",
+              "section_char_start": 37550,
+              "section_char_end": 38038,
+              "document_char_start": 226645,
+              "document_char_end": 227133,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_23_0c9ce76dc42e"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_23_0c9ce76dc42e"
+          ]
+        },
+        {
+          "fact_id": "liquidity_datacenter_purchase_commitments",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_datacenter_purchase_commitments_quote",
+              "section": "Item 7",
+              "quote_sha256": "d564496094ae38ffe418d91c9c63851e8a540d136801f9952331d714e696eb74",
+              "section_char_start": 39769,
+              "section_char_end": 39938,
+              "document_char_start": 228864,
+              "document_char_end": 229033,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_25_db17ffb92355"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_25_db17ffb92355"
+          ]
+        },
+        {
+          "fact_id": "liquidity_tax_payments",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_tax_payments_quote",
+              "section": "Item 7",
+              "quote_sha256": "5479960755b26bb3b7f7367c15f05c46138dbc08b0a6d686dcd996c652c28f0b",
+              "section_char_start": 40312,
+              "section_char_end": 40733,
+              "document_char_start": 229407,
+              "document_char_end": 229828,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_25_db17ffb92355"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_25_db17ffb92355"
+          ]
+        },
+        {
+          "fact_id": "liquidity_share_repurchases",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_share_repurchases_quote",
+              "section": "Item 7",
+              "quote_sha256": "939019549deb89a633fe6f660e0cbc48a3e85b3bcc4b6ba89d5357c4e954b85c",
+              "section_char_start": 40752,
+              "section_char_end": 41088,
+              "document_char_start": 229847,
+              "document_char_end": 230183,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_25_db17ffb92355"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_25_db17ffb92355"
+          ]
+        },
+        {
+          "fact_id": "liquidity_dividends",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_dividends_quote",
+              "section": "Item 7",
+              "quote_sha256": "c2125f352feee8102b9c3c7edecef651c6e4e93829abca76b4f6392c7115b3d5",
+              "section_char_start": 41236,
+              "section_char_end": 41549,
+              "document_char_start": 230331,
+              "document_char_end": 230644,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_26_5a12eff5694c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_26_5a12eff5694c"
+          ]
+        },
+        {
+          "fact_id": "liquidity_future_capital_spending",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "liquidity_future_capital_spending_quote",
+              "section": "Item 7",
+              "quote_sha256": "234f691a5513e0d1a8d44d05e15f3ab065f88e946dd34079ac3f7a660d11811b",
+              "section_char_start": 42368,
+              "section_char_end": 42896,
+              "document_char_start": 231463,
+              "document_char_end": 231991,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7_26_5a12eff5694c"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7_26_5a12eff5694c"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item7_20_e89d57ed98fe",
+        "MSFT_2023_Item7_22_04b34ba57bf5",
+        "MSFT_2023_Item7_23_0c9ce76dc42e"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item7_20_e89d57ed98fe",
+        "MSFT_2023_Item7_22_04b34ba57bf5",
+        "MSFT_2023_Item7_23_0c9ce76dc42e",
+        "MSFT_2023_Item7_25_db17ffb92355",
+        "MSFT_2023_Item7_26_5a12eff5694c"
+      ],
+      "validation": {
+        "required_fact_count": 5,
+        "resolved_required_fact_count": 5,
+        "optional_fact_count": 8,
+        "resolved_optional_fact_count": 8,
+        "evidence_count": 13,
+        "resolved_evidence_count": 13,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 9,
-    "required_fact_count": 40,
-    "optional_fact_count": 47,
-    "evidence_count": 97,
+    "question_count": 10,
+    "required_fact_count": 45,
+    "optional_fact_count": 55,
+    "evidence_count": 110,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
