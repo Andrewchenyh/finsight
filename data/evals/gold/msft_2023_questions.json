@@ -1185,6 +1185,168 @@
         "annotator": "project_author",
         "review_status": "verified"
       }
+    },
+    {
+      "id": "msft_2023_liquidity_cash_flows_mda",
+      "query": "How does Microsoft describe its liquidity position and fiscal 2023 cash-flow changes?",
+      "scope": {
+        "sections": [
+          "Item 7"
+        ]
+      },
+      "reference_answer": "Microsoft expects its cash, cash equivalents, short-term investments, operating cash flows, and capital-market access to fund operations and investing and financing commitments for at least the next 12 months and the foreseeable future. Cash, cash equivalents, and short-term investments totaled $111.3 billion at June 30, 2023, versus $104.8 billion a year earlier; equity investments were $9.9 billion versus $6.9 billion. Operating cash flow decreased $1.5 billion to $87.6 billion because of higher payments to employees, suppliers, and tax authorities, partly offset by higher customer receipts. Cash used in financing decreased $14.9 billion to $43.9 billion, mainly because of lower share repurchases and debt repayments, partly offset by higher dividends. Cash used in investing decreased $7.6 billion to $22.7 billion, mainly because of lower acquisition and intangible-asset spending, partly offset by lower net investment cash flows and higher property-and-equipment additions.",
+      "required_facts": [
+        {
+          "fact_id": "liquidity_funding_sufficiency",
+          "claim": "Microsoft expects cash, short-term investments, operating cash flows, and capital-market access to fund operating, investing, and financing commitments for at least the next 12 months and the foreseeable future.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_funding_sufficiency_quote",
+              "section": "Item 7",
+              "quote": "We expect existing cash, cash equivalents, short-term investments, cash flows from operations, and access to capital markets to continue to be sufficient to fund our operating activities and cash commitments for investing and financing activities, such as dividends, share repurchases, debt maturities, material capital expenditures, and the transition tax related to the Tax Cuts and Jobs Act (“TCJA”), for at least the next 12 months and thereafter for the foreseeable future."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_asset_balances",
+          "claim": "Cash, cash equivalents, and short-term investments increased to $111.3 billion from $104.8 billion, while equity investments increased to $9.9 billion from $6.9 billion.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_asset_balances_quote",
+              "section": "Item 7",
+              "quote": "Cash, cash equivalents, and short-term investments totaled $111.3 billion and $104.8 billion as of June 30, 2023 and 2022, respectively. Equity investments were $9.9 billion and $6.9 billion as of June 30, 2023 and 2022, respectively."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_operating_cash_flow",
+          "claim": "Operating cash flow decreased $1.5 billion to $87.6 billion because of higher employee, supplier, and income-tax payments, partly offset by higher customer receipts.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_operating_cash_flow_quote",
+              "section": "Item 7",
+              "quote": "Cash from operations decreased $1.5 billion to $87.6 billion for fiscal year 2023, mainly due to an increase in cash paid to employees and suppliers and cash used to pay income taxes, offset in part by an increase in cash received from customers."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_financing_cash_flow",
+          "claim": "Cash used in financing decreased $14.9 billion to $43.9 billion, mainly from lower share repurchases and debt repayments, partly offset by higher dividends.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_financing_cash_flow_quote",
+              "section": "Item 7",
+              "quote": "Cash used in financing decreased $14.9 billion to $43.9 billion for fiscal year 2023, mainly due to a $10.5 billion decrease in common stock repurchases and a $6.3 billion decrease in repayments of debt, offset in part by a $1.7 billion increase in dividends paid."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_investing_cash_flow",
+          "claim": "Cash used in investing decreased $7.6 billion to $22.7 billion, mainly from lower acquisition and intangible-asset spending, partly offset by lower net investment cash flows and higher property-and-equipment additions.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_investing_cash_flow_quote",
+              "section": "Item 7",
+              "quote": "Cash used in investing decreased $7.6 billion to $22.7 billion for fiscal year 2023, due to a $20.4 billion decrease in cash used for acquisitions of companies, net of cash acquired, and purchases of intangible and other assets, offset in part by a $8.2 billion decrease in cash from net investment purchases, sales, and maturities, and a $4.2 billion increase in additions to property and equipment."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "liquidity_short_term_investment_profile",
+          "claim": "Microsoft uses short-term investments for liquidity and capital preservation, primarily holding diversified, highly liquid investment-grade fixed-income securities.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_short_term_investment_profile_quote",
+              "section": "Item 7",
+              "quote": "Our short-term investments are primarily intended to facilitate liquidity and capital preservation. They consist predominantly of highly liquid investment-grade fixed-income securities, diversified among industries and individual issuers."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_debt_strategy",
+          "claim": "Microsoft issues debt when pricing and market liquidity are favorable and may use proceeds for working capital, capital expenditures, repurchases, acquisitions, or debt repayment.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_debt_strategy_quote",
+              "section": "Item 7",
+              "quote": "We issue debt to take advantage of favorable pricing and liquidity in the debt markets, reflecting our credit rating and the low interest rate environment. The proceeds of these issuances were or will be used for general corporate purposes, which may include, among other things, funding for working capital, capital expenditures, repurchases of capital stock, acquisitions, and repayment of existing debt."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_unearned_revenue",
+          "claim": "Unearned revenue primarily arises from multi-year volume-licensing, Software Assurance, and cloud-service arrangements and is generally recognized over the coverage period or when control transfers.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_unearned_revenue_quote",
+              "section": "Item 7",
+              "quote": "Unearned revenue comprises mainly unearned revenue related to volume licensing programs, which may include Software Assurance (“SA”) and cloud services. Unearned revenue is generally invoiced annually at the beginning of each contract period for multi-year agreements and recognized ratably over the coverage period. Unearned revenue also includes payments for other offerings for which we have been paid in advance and earn the revenue when we transfer control of the product or service."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_datacenter_purchase_commitments",
+          "claim": "Microsoft's purchase commitments primarily relate to datacenters and include open purchase orders and take-or-pay contracts.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_datacenter_purchase_commitments_quote",
+              "section": "Item 7",
+              "quote": "Purchase commitments primarily relate to datacenters and include open purchase orders and take-or-pay contracts that are not presented as construction commitments above."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_tax_payments",
+          "claim": "Microsoft had $10.5 billion of transition tax payable over three years and paid $4.8 billion of fiscal-2023 cash tax related to mandatory capitalization of research and development expenditures.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_tax_payments_quote",
+              "section": "Item 7",
+              "quote": "We have paid transition tax of $7.7 billion, which included $1.5 billion for fiscal year 2023. The remaining transition tax of $10.5 billion is payable over the next three years, with $2.7 billion payable within 12 months.\nIn fiscal year 2023, we paid cash tax of $4.8 billion due to the mandatory capitalization for tax purposes of research and development expenditures enacted by the TCJA and effective on July 1, 2022."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_share_repurchases",
+          "claim": "Microsoft repurchased 69 million shares for $18.4 billion in fiscal 2023 and had $22.3 billion remaining under its $60 billion authorization.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_share_repurchases_quote",
+              "section": "Item 7",
+              "quote": "During fiscal years 2023 and 2022, we repurchased 69 million shares and 95 million shares of our common stock for $18.4 billion and $28.0 billion, respectively, through our share repurchase programs. All repurchases were made using cash resources. As of June 30, 2023, $22.3 billion remained of our $60 billion share repurchase program."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_dividends",
+          "claim": "Microsoft declared $20.2 billion of dividends in fiscal 2023 and intends to continue returning capital through dividends subject to board approval.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_dividends_quote",
+              "section": "Item 7",
+              "quote": "During fiscal year 2023 and 2022, our Board of Directors declared quarterly dividends of $0.68 per share and $0.62 per share, totaling $20.2 billion and $18.6 billion, respectively. We intend to continue returning capital to shareholders in the form of dividends, subject to declaration by our Board of Directors."
+            }
+          ]
+        },
+        {
+          "fact_id": "liquidity_future_capital_spending",
+          "claim": "Microsoft expects capital expenditures to rise as it invests in facilities, datacenters, cloud growth, and AI infrastructure.",
+          "evidence_units": [
+            {
+              "evidence_id": "liquidity_future_capital_spending_quote",
+              "section": "Item 7",
+              "quote": "We will continue to invest in sales, marketing, product support infrastructure, and existing and advanced areas of technology, as well as acquisitions that align with our business strategy. Additions to property and equipment will continue, including new facilities, datacenters, and computer systems for research and development, sales and marketing, support, and administrative staff. We expect capital expenditures to increase in coming years to support growth in our cloud offerings and our investments in AI infrastructure."
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
     }
   ]
 }
