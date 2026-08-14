@@ -11,7 +11,7 @@
   "gold_source": {
     "dataset_name": "msft_2023_retrieval",
     "path": "data/evals/gold/msft_2023_questions.json",
-    "sha256": "4a9d11d9f2ec6fe0e03b787485da15896b37a0a74a840553852696f72629a083"
+    "sha256": "d16729dc922fe8f65e1d5ed5e4264548b9fe053afc7cf0ab16f017bf524fdfb2"
   },
   "filing_source": {
     "ticker": "MSFT",
@@ -45,6 +45,12 @@
         "document_char_start": 246670,
         "document_char_end": 351431,
         "normalized_text_sha256": "2eeb344164569f4beeb0dc74ae894266553973e09183c29106f7a41ae02e52d1"
+      },
+      {
+        "section": "Item 7A",
+        "document_char_start": 244732,
+        "document_char_end": 246669,
+        "normalized_text_sha256": "f052b36723e24e3722b4b834bbf6cc524b29181c160304d9f8ce85a8aa7da166"
       }
     ]
   },
@@ -2233,13 +2239,167 @@
         "resolved_evidence_count": 14,
         "status": "passed"
       }
+    },
+    {
+      "question_id": "msft_2023_derivatives_market_risk",
+      "required_fact_resolutions": [
+        {
+          "fact_id": "market_risk_derivative_categories",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_derivative_categories_quote",
+              "section": "Item 7A",
+              "quote_sha256": "3cb17dd7c8afee222a7bdb4e3df4a75545729e2a5e15772968fb049f1f35a036",
+              "section_char_start": 83,
+              "section_char_end": 315,
+              "document_char_start": 244815,
+              "document_char_end": 245047,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        }
+      ],
+      "optional_fact_resolutions": [
+        {
+          "fact_id": "market_risk_foreign_currency_exposure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_foreign_currency_exposure_quote",
+              "section": "Item 7A",
+              "quote_sha256": "e8b3c23f65dfa03b854707c7764c6d98b07bde053d50be1d97802a3b7e8ec53c",
+              "section_char_start": 335,
+              "section_char_end": 685,
+              "document_char_start": 245067,
+              "document_char_end": 245417,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        },
+        {
+          "fact_id": "market_risk_interest_rate_management",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_interest_rate_management_quote",
+              "section": "Item 7A",
+              "quote_sha256": "3e4447ef1ca9cbd8a6ad9de3ddb9e92600940ad6ba7fb58467ea6bde5356aef1",
+              "section_char_start": 700,
+              "section_char_end": 961,
+              "document_char_start": 245432,
+              "document_char_end": 245693,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        },
+        {
+          "fact_id": "market_risk_credit_management",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_credit_management_quote",
+              "section": "Item 7A",
+              "quote_sha256": "8e620f92822e55369a9ead51d752f21fb188fc61dbcb2fba2649b423494dd2de",
+              "section_char_start": 969,
+              "section_char_end": 1165,
+              "document_char_start": 245701,
+              "document_char_end": 245897,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        },
+        {
+          "fact_id": "market_risk_equity_price_exposure",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_equity_price_exposure_quote",
+              "section": "Item 7A",
+              "quote_sha256": "8fa41cd66a31c1391ff49c559584ee84637d4e9df4ffcbd13b3336882cfa2930",
+              "section_char_start": 1173,
+              "section_char_end": 1251,
+              "document_char_start": 245905,
+              "document_char_end": 245983,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        },
+        {
+          "fact_id": "market_risk_sensitivity_analysis",
+          "evidence_resolutions": [
+            {
+              "evidence_id": "market_risk_sensitivity_analysis_quote",
+              "section": "Item 7A",
+              "quote_sha256": "319b2222257e948e3a0214f9150f4702c4e7092317061a140b71e9d568957ee1",
+              "section_char_start": 1273,
+              "section_char_end": 1926,
+              "document_char_start": 246005,
+              "document_char_end": 246658,
+              "exact_match_count": 1,
+              "match_method": "exact",
+              "matched_chunk_ids": [
+                "MSFT_2023_Item7A_0_5c716780be3f"
+              ]
+            }
+          ],
+          "resolved_chunk_ids": [
+            "MSFT_2023_Item7A_0_5c716780be3f"
+          ]
+        }
+      ],
+      "required_evidence_chunk_ids": [
+        "MSFT_2023_Item7A_0_5c716780be3f"
+      ],
+      "relevant_context_chunk_ids": [
+        "MSFT_2023_Item7A_0_5c716780be3f"
+      ],
+      "validation": {
+        "required_fact_count": 1,
+        "resolved_required_fact_count": 1,
+        "optional_fact_count": 5,
+        "resolved_optional_fact_count": 5,
+        "evidence_count": 6,
+        "resolved_evidence_count": 6,
+        "status": "passed"
+      }
     }
   ],
   "validation_summary": {
-    "question_count": 8,
-    "required_fact_count": 39,
-    "optional_fact_count": 42,
-    "evidence_count": 91,
+    "question_count": 9,
+    "required_fact_count": 40,
+    "optional_fact_count": 47,
+    "evidence_count": 97,
     "unresolved_evidence_ids": [],
     "status": "passed"
   }
