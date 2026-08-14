@@ -1100,6 +1100,91 @@
         "annotator": "project_author",
         "review_status": "verified"
       }
+    },
+    {
+      "id": "msft_2023_derivatives_market_risk",
+      "query": "Which market risks does Microsoft use derivative instruments to manage?",
+      "scope": {
+        "sections": [
+          "Item 7A"
+        ]
+      },
+      "reference_answer": "Microsoft says it is exposed to economic risk from foreign-exchange rates, interest rates, credit risk, and equity prices. It uses derivative instruments to manage these risks, although they may still affect its consolidated financial statements.",
+      "required_facts": [
+        {
+          "fact_id": "market_risk_derivative_categories",
+          "claim": "Microsoft uses derivative instruments to manage exposure to foreign-exchange rates, interest rates, credit risk, and equity prices, although these risks may still affect its consolidated financial statements.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_derivative_categories_quote",
+              "section": "Item 7A",
+              "quote": "We are exposed to economic risk from foreign exchange rates, interest rates, credit risk, and equity prices. We use derivatives instruments to manage these risks, however, they may still impact our consolidated financial statements."
+            }
+          ]
+        }
+      ],
+      "optional_facts": [
+        {
+          "fact_id": "market_risk_foreign_currency_exposure",
+          "claim": "Microsoft monitors foreign-currency exposures daily, including hedges, with principal exposure to the euro, Japanese yen, British pound, Canadian dollar, and Australian dollar.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_foreign_currency_exposure_quote",
+              "section": "Item 7A",
+              "quote": "Certain forecasted transactions, assets, and liabilities are exposed to foreign currency risk. We monitor our foreign currency exposures daily to maximize the economic effectiveness of our foreign currency positions, including hedges. Principal currency exposures include the Euro, Japanese yen, British pound, Canadian dollar, and Australian dollar."
+            }
+          ]
+        },
+        {
+          "fact_id": "market_risk_interest_rate_management",
+          "claim": "Microsoft manages the average maturity of its fixed-income portfolio to target returns correlated with global fixed-income indices.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_interest_rate_management_quote",
+              "section": "Item 7A",
+              "quote": "Securities held in our fixed-income portfolio are subject to different interest rate risks based on their maturities. We manage the average maturity of the fixed-income portfolio to achieve economic returns that correlate to certain global fixed-income indices."
+            }
+          ]
+        },
+        {
+          "fact_id": "market_risk_credit_management",
+          "claim": "Microsoft's fixed-income portfolio is diversified and primarily investment grade, and credit exposures are managed relative to broad-based indices.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_credit_management_quote",
+              "section": "Item 7A",
+              "quote": "Our fixed-income portfolio is diversified and consists primarily of investment-grade securities. We manage credit exposures relative to broad-based indices to facilitate portfolio diversification."
+            }
+          ]
+        },
+        {
+          "fact_id": "market_risk_equity_price_exposure",
+          "claim": "Securities in Microsoft's equity-investment portfolio are exposed to price risk.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_equity_price_exposure_quote",
+              "section": "Item 7A",
+              "quote": "Securities held in our equity investments portfolio are subject to price risk."
+            }
+          ]
+        },
+        {
+          "fact_id": "market_risk_sensitivity_analysis",
+          "claim": "Microsoft's sensitivity analysis estimates losses from hypothetical currency, interest-rate, credit-spread, and equity-price changes, including associated derivatives.",
+          "evidence_units": [
+            {
+              "evidence_id": "market_risk_sensitivity_analysis_quote",
+              "section": "Item 7A",
+              "quote": "The following table sets forth the potential loss in future earnings or fair values, including associated derivatives, resulting from hypothetical changes in relevant market rates or prices:\n(In millions)\nRisk Categories\nHypothetical Change\nJune 30,\n2023\nImpact\nForeign currency – Revenue\n10% decrease in foreign exchange rates\n$\n(8,122\n)\nEarnings\nForeign currency – Investments\n10% decrease in foreign exchange rates\n(29\n)\nFair Value\nInterest rate\n100 basis point increase in U.S. treasury interest rates\n(1,832\n)\nFair Value\nCredit\n100 basis point increase in credit spreads\n(354\n)\nFair Value\nEquity\n10% decrease in equity market prices\n(705\n)\nEarnings"
+            }
+          ]
+        }
+      ],
+      "annotation": {
+        "method": "manual_source_review",
+        "annotator": "project_author",
+        "review_status": "verified"
+      }
     }
   ]
 }
