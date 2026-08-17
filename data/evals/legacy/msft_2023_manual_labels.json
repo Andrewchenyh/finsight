@@ -1,0 +1,194 @@
+{
+  "name": "msft_2023_manual_labels_legacy",
+  "index_name": "MSFT_2023",
+  "questions": [
+    {
+      "id": "msft_2023_cybersecurity_risks",
+      "query": "What cybersecurity risks does Microsoft describe?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 1A",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item1A_11_3859158f318b",
+        "MSFT_2023_Item1A_10_d4daa62ff465",
+        "MSFT_2023_Item1A_12_07285533f9e5"
+      ],
+      "expected_terms": [
+        "Security of our products, services, devices, and customers’ data",
+        "Cyberthreats",
+        "ransomware",
+        "supply chain cyberattacks"
+      ],
+      "notes": "Tests whether retrieval finds Microsoft's core cybersecurity risk disclosure."
+    },
+    {
+      "id": "msft_2023_ai_risks",
+      "query": "What risks does Microsoft describe related to AI?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 1A",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item1A_18_631958dc192d",
+        "MSFT_2023_Item1A_12_07285533f9e5"
+      ],
+      "expected_terms": [
+        "AI presents risks and challenges",
+        "generative AI",
+        "flawed",
+        "biased information"
+      ],
+      "notes": "Tests retrieval of AI-specific risk language."
+    },
+    {
+      "id": "msft_2023_business_competition",
+      "query": "How does Microsoft describe competition in its business?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 1",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item1_20_ce1615a6f05c",
+        "MSFT_2023_Item1_23_3f7010318222",
+        "MSFT_2023_Item1_28_3310e288bf44",
+        "MSFT_2023_Item1_29_5ae314ee67a9"
+      ],
+      "expected_terms": [
+        "Competition",
+        "Competitors",
+        "Azure faces diverse competition",
+        "Windows faces competition"
+      ],
+      "notes": "Tests exact competition subsection retrieval in Item 1."
+    },
+    {
+      "id": "msft_2023_cloud_infrastructure_risks",
+      "query": "What does Microsoft say about cloud infrastructure risks?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 1A",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item1A_20_17574329ab08",
+        "MSFT_2023_Item1A_11_3859158f318b"
+      ],
+      "expected_terms": [
+        "datacenters",
+        "infrastructure",
+        "storage and compute capacity",
+        "customer data"
+      ],
+      "notes": "Tests cloud/datacenter infrastructure risk retrieval."
+    },
+    {
+      "id": "msft_2023_economic_conditions_mda",
+      "query": "What does Microsoft say in MD&A about economic conditions?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 7",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item7_2_85a77caa6ac9"
+      ],
+      "expected_terms": [
+        "Economic Conditions, Challenges, and Risks",
+        "macroeconomic and geopolitical factors",
+        "Aggregate demand"
+      ],
+      "notes": "Tests the hard MD&A economic conditions query."
+    },
+    {
+      "id": "msft_2023_foreign_exchange_mda",
+      "query": "What foreign exchange impacts does Microsoft mention in MD&A?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 7",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item7_3_1c7eb6621222",
+        "MSFT_2023_Item7_12_91e86e4e2cb3"
+      ],
+      "expected_terms": [
+        "foreign exchange rates",
+        "foreign currency impact",
+        "U.S. dollar"
+      ],
+      "notes": "Tests currency-impact retrieval in MD&A."
+    },
+    {
+      "id": "msft_2023_revenue_growth_mda",
+      "query": "What revenue growth highlights does Microsoft report in MD&A?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 7",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item7_1_517e538f81f7"
+      ],
+      "expected_terms": [
+        "Microsoft Cloud revenue increased",
+        "Office Commercial",
+        "Azure and other cloud services"
+      ],
+      "notes": "Tests MD&A highlights retrieval."
+    },
+    {
+      "id": "msft_2023_revenue_recognition",
+      "query": "How does Microsoft recognize revenue?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 8",
+      "top_k": 5,
+    "expected_chunk_ids": [
+    "MSFT_2023_Item8_5_931c44dc3c63",
+    "MSFT_2023_Item8_6_3a244e509d86",
+    "MSFT_2023_Item8_7_e864c2b5e197",
+    "MSFT_2023_Item8_9_abd474d4117c"
+    ],
+      "expected_terms": [
+        "Revenue is recognized upon transfer of control",
+        "performance obligations",
+        "on-premises licenses"
+      ],
+      "notes": "Tests accounting policy retrieval from Item 8."
+    },
+    {
+      "id": "msft_2023_derivatives_market_risk",
+      "query": "What market risks does Microsoft use derivatives to manage?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 7A",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item7A_0_5c716780be3f"
+      ],
+      "expected_terms": [
+        "foreign exchange rates",
+        "interest rates",
+        "credit risk",
+        "equity prices",
+        "derivatives instruments"
+      ],
+      "notes": "Tests Item 7A market risk retrieval."
+    },
+    {
+      "id": "msft_2023_datacenter_dependencies",
+      "query": "What dependencies does Microsoft mention for datacenter expansion?",
+      "ticker": "MSFT",
+      "fiscal_year": 2023,
+      "section": "Item 1A",
+      "top_k": 5,
+      "expected_chunk_ids": [
+        "MSFT_2023_Item1A_20_17574329ab08"
+      ],
+      "expected_terms": [
+        "permitted and buildable land",
+        "predictable energy",
+        "networking supplies",
+        "GPUs"
+      ],
+      "notes": "Tests datacenter dependency retrieval."
+    }
+  ]
+}
