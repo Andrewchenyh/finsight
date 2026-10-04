@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
+from backend.api.errors import to_http_exception
 from backend.api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -9,7 +10,6 @@ from backend.api.schemas import (
     RetrieveRequest,
     RetrieveResponse,
 )
-from backend.retrieval.retriever import DenseRetriever
 from backend.service import answer_sec_question, build_sec_index, retrieve_sec_chunks
 
 app = FastAPI(
@@ -45,12 +45,8 @@ async def retrieve(request: RetrieveRequest) -> RetrieveResponse:
             results=results,
         )
 
-    except FileNotFoundError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        raise to_http_exception(exc) from exc
     
     
 @app.post("/chat", response_model=ChatResponse)
@@ -69,12 +65,8 @@ async def chat(request: ChatRequest) -> ChatResponse:
 
         return ChatResponse(result=result)
 
-    except FileNotFoundError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        raise to_http_exception(exc) from exc
     
     
 @app.post("/ingest", response_model=IngestResponse)
@@ -92,7 +84,5 @@ async def ingest(request: IngestRequest) -> IngestResponse:
             message=f"Built local index '{index_name}'.",
         )
 
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        raise to_http_exception(exc) from exc
