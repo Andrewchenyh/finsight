@@ -3,6 +3,7 @@ import os
 import cohere
 from dotenv import load_dotenv
 
+from backend.errors import ConfigurationError
 from backend.schemas import RetrievedChunk
 
 
@@ -19,7 +20,10 @@ class CohereReranker:
         api_key = os.getenv("COHERE_API_KEY")
 
         if not api_key:
-            raise ValueError("COHERE_API_KEY is not set.")
+            raise ConfigurationError(
+                "Cohere reranking is not configured. Set COHERE_API_KEY in the server's .env "
+                "and restart, or retry with retrieval_mode='hybrid'."
+            )
 
         self.client = cohere.ClientV2(api_key=api_key)
         self.model = model
