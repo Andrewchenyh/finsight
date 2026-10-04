@@ -59,6 +59,7 @@ def build_sec_index(
     """Build a local SEC filing index and return the index name."""
     normalized_ticker = ticker.upper().strip()
     resolved_index_name = index_name or f"{normalized_ticker}_{fiscal_year}"
+    store = LocalVectorStore(index_name=resolved_index_name)
 
     sec_client = SECClient()
     metadata = sec_client.get_10k_metadata(
@@ -78,7 +79,6 @@ def build_sec_index(
     embedding_client = EmbeddingClient()
     embeddings = embedding_client.embed_texts([chunk.text for chunk in chunks])
 
-    store = LocalVectorStore(index_name=resolved_index_name)
     store.save(chunks=chunks, embeddings=embeddings)
 
     return resolved_index_name
