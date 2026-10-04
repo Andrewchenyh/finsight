@@ -48,7 +48,7 @@ class AnswerGenerator:
             )
 
         citations = self._build_citations(retrieved_chunks)
-        context = self._build_context(citations)
+        context = self._build_context(citations, retrieved_chunks)
 
         prompt = self._build_prompt(
             query=cleaned_query,
@@ -113,17 +113,22 @@ class AnswerGenerator:
 
         return citations
 
-    def _build_context(self, citations: list[SourceCitation]) -> str:
+    def _build_context(
+        self,
+        citations: list[SourceCitation],
+        retrieved_chunks: list[RetrievedChunk],
+    ) -> str:
+        """Use full evidence for generation; citation excerpts are display previews."""
         context_blocks = []
 
-        for citation in citations:
+        for citation, retrieved_chunk in zip(citations, retrieved_chunks, strict=True):
             context_blocks.append(
                 "\n".join(
                     [
                         f"[{citation.citation_id}] "
                         f"{citation.company} {citation.fiscal_year} {citation.filing_type}, "
                         f"{citation.section} - {citation.section_title}",
-                        citation.excerpt,
+                        retrieved_chunk.chunk.text,
                     ]
                 )
             )
