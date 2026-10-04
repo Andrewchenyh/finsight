@@ -4,6 +4,7 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
+from backend.errors import ConfigurationError
 from backend.schemas import FilingMetadata
 
 
@@ -22,9 +23,9 @@ class SECClient:
         self.user_agent = user_agent or os.getenv("SEC_USER_AGENT")
 
         if not self.user_agent:
-            raise ValueError(
-                "SEC_USER_AGENT is not set. Use a value like "
-                "'AI Investment Copilot andrew@example.com'."
+            raise ConfigurationError(
+                "SEC access is not configured. Set SEC_USER_AGENT to 'FinSight your_email@example.com' "
+                "in the server's .env and restart."
             )
 
         self.session = requests.Session()
