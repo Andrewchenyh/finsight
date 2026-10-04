@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-
+import re
 import numpy as np
 
 from backend.schemas import DocumentChunk, RetrievalFilter, RetrievedChunk
@@ -9,14 +9,20 @@ from backend.schemas import DocumentChunk, RetrievalFilter, RetrievedChunk
 class LocalVectorStore:
     """Simple local vector store backed by JSON chunks and NumPy embeddings."""
 
-    def __init__(
-        self,
-        index_name: str,
-        index_dir: str | Path = "data/index",
-    ):
-        self.index_name = index_name
-        self.index_dir = Path(index_dir)
-        self.index_dir.mkdir(parents=True, exist_ok=True)
+  def __init__(
+      self,
+      index_name: str,
+      index_dir: str | Path = "data/index",
+  ):
+      if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", index_name):
+          raise ValueError(
+              "index_name must start with a letter or digit and contain "
+              "only letters, digits, dots, underscores, or hyphens."
+          )
+
+      self.index_name = index_name
+      self.index_dir = Path(index_dir)
+      self.index_dir.mkdir(parents=True, exist_ok=True)
 
     @property
     def chunks_path(self) -> Path:
