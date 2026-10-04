@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from backend.errors import ConfigurationError
 
 load_dotenv()
 
@@ -17,7 +18,9 @@ class EmbeddingClient:
         api_key = os.getenv("OPENAI_API_KEY")
 
         if not api_key:
-            raise ValueError("OPENAI_API_KEY is not set.")
+            raise ConfigurationError(
+                "OpenAI is not configured. Set OPENAI_API_KEY in the server's .env and restart."
+            )
 
         self.client = OpenAI(api_key=api_key)
         self.model = model
