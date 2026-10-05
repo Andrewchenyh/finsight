@@ -18,15 +18,22 @@ SECTION_OPTIONS = [
     "Item 8",
 ]
 
-EXAMPLE_QUESTIONS = [
-    "What cybersecurity risks does Microsoft describe?",
-    "What risks does Microsoft describe related to AI?",
-    "How does Microsoft describe competition in its business?",
-    "What does Microsoft say about cloud infrastructure risks?",
-    "What does Microsoft say in MD&A about economic conditions?",
-]
+EXAMPLE_QUESTIONS = {
+    "What cybersecurity risks does Microsoft describe?": "Item 1A",
+    "What risks does Microsoft describe related to AI?": "Item 1A",
+    "How does Microsoft describe competition in its business?": "Item 1",
+    "What does Microsoft say about cloud infrastructure risks?": "Item 1A",
+    "What does Microsoft say in MD&A about economic conditions?": "Item 7",
+}
 
 RETRIEVAL_MODES = ["hybrid_rerank", "hybrid", "dense", "bm25"]
+
+
+def _apply_example_question() -> None:
+    """Update the question and section before Streamlit reruns the widgets."""
+    question = st.session_state["example_question"]
+    st.session_state["question"] = question
+    st.session_state["section"] = EXAMPLE_QUESTIONS[question]
 
 
 def get_api_url() -> str:
@@ -151,6 +158,11 @@ def main() -> None:
 
     api_url = get_api_url()
 
+    st.session_state.setdefault("example_question", next(iter(EXAMPLE_QUESTIONS)))
+    selected_example = st.session_state["example_question"]
+    st.session_state.setdefault("question", selected_example)
+    st.session_state.setdefault("section", EXAMPLE_QUESTIONS[selected_example])
+
     st.title("FinSight")
     st.caption("SEC 10-K Q&A with grounded citations")
     st.info(
@@ -175,7 +187,7 @@ def main() -> None:
             value=2023,
             step=1,
         )
-        section = st.selectbox("10-K section", SECTION_OPTIONS, index=1)
+        section = st.selectbox("10-K section", SECTION_OPTIONS, key="section")
         top_k = st.slider("Retrieved chunks", min_value=1, max_value=10, value=5)
         retrieval_mode = st.selectbox(
             "Retrieval mode",
@@ -216,15 +228,17 @@ def main() -> None:
 
     st.markdown("### Ask a filing question")
 
-    example_question = st.selectbox(
+    st.selectbox(
         "Example questions",
-        EXAMPLE_QUESTIONS,
+        list(EXAMPLE_QUESTIONS),
         index=0,
+        key="example_question",
+        on_change=_apply_example_question,
     )
 
     query = st.text_area(
         "Question",
-        value=example_question,
+        key="question",
         height=100,
         help="Ask about the selected company's 10-K filing. Answers are grounded in retrieved SEC filing excerpts.",
     )
